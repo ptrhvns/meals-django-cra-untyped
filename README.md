@@ -18,6 +18,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Install Python a virtual environment:
 
   ```sh
+  cd server
   PYTHON_VERSON=$(awk -F/ '{print $1}' .python-version)
   pyenv install $PYTHON_VERSION
   pyenv virtualenv $PYTHON_VERSON meals
@@ -31,6 +32,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Install Node.js:
 
   ```sh
+  cd client
   NODE_VERSION=$(cat .node-version)
   nodenv install $NODE_VERSION
   ```
@@ -71,9 +73,10 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
     \q
   ```
 
-- Setup environment variables for application:
+- Setup environment variables for server application:
 
   ```sh
+  cd server
   cp config/.env.example config/.env
 
   # Generate a SECRET_KEY for use below.
@@ -86,6 +89,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Run database migrations:
 
   ```sh
+  cd server
   python manage.py migrate
   ```
 
@@ -94,11 +98,13 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Start the Django server (serves the API):
 
   ```sh
+  cd server
   python manage.py runserver
   ```
 
 - Start the React server (serves the client app):
 
   ```sh
-  (cd client; npm start)
+  cd client
+  npm start
   ```

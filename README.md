@@ -71,3 +71,14 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
     \q
   ```
 
+- Setup environment variables for application:
+
+  ```sh
+  cp config/.env.example config/.env
+
+  # Generate a SECRET_KEY for use below.
+  python -c 'from django.core.management import utils; print(utils.get_random_secret_key())'
+
+  # Edit config file, and put in valid values.
+  vim config/.env
+  ```

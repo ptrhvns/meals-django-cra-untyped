@@ -82,3 +82,23 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   # Edit config file, and put in valid values.
   vim config/.env
   ```
+
+- Run database migrations:
+
+  ```sh
+  python manage.py migrate
+  ```
+
+## Running Development Processes
+
+- Start the Django server (serves the API):
+
+  ```sh
+  python manage.py runserver
+  ```
+
+- Start the React server (serves the client app):
+
+  ```sh
+  (cd client; npm start)
+  ```

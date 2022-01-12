@@ -1,0 +1,11 @@
+.container-content {
+  max-width: 60rem;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.container-viewport {
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-items: center;
+}

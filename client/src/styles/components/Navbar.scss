@@ -1,0 +1,32 @@
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  .navbar-logo {
+    color: $color-primary-4;
+    font-size: 1.8rem;
+    font-weight: bold;
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  .navbar-menu {
+    align-self: flex-end;
+
+    a {
+      border-radius: $border-radius;
+      color: $color-gray-9;
+      font-size: 1.05rem;
+      padding: 0.4rem 0.8rem;
+
+      &:hover {
+        background-color: $color-gray-1;
+        text-decoration: none;
+      }
+    }
+  }
+}

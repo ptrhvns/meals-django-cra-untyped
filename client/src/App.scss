@@ -1,1 +1,14 @@
 @import-normalize;
+
+@import "styles/common/reset";
+
+@import "styles/common/colors";
+@import "styles/common/typography";
+
+@import "styles/common/decorations";
+@import "styles/common/elements";
+
+@import "styles/components/Container";
+@import "styles/components/Navbar";
+
+@import "styles/routes/Home";

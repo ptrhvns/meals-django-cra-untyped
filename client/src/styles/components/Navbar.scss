@@ -13,19 +13,19 @@
   .navbar-logo {
     a {
       border-radius: decorations.$border-radius;
-      color: map.get(colors.$colors, "blue-d25");
+      color: map.get(colors.$colors, "blue-d65");
       font-size: 1.8rem;
       font-weight: bold;
       padding: 0.4rem 0.8rem;
 
       &:hover {
         background-color: map.get(colors.$colors, "blue-l95");
-        color: map.get(colors.$colors, "blue-d25");
+        color: map.get(colors.$colors, "blue-d65");
         text-decoration: none;
       }
 
       &:visited {
-        color: map.get(colors.$colors, "blue-d25");
+        color: map.get(colors.$colors, "blue-d65");
       }
     }
   }

@@ -11,7 +11,7 @@ a {
   }
 
   &:visited {
-    color: map.get(colors.$colors, "blue");
+    color: map.get(colors.$colors, "blue-d25");
   }
 }
 
@@ -47,4 +47,34 @@ button.button-primary {
   &:active {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "blue-l80");
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: map.get(colors.$colors, "blue-d65");
+}
+
+input {
+  background: map.get(colors.$colors, "white");
+  border-radius: decorations.$border-radius;
+  border: 1px solid map.get(colors.$colors, "gray-l70");
+  box-shadow: decorations.$box-shadow-inset;
+  color: map.get(colors.$colors, "black");
+  font-size: 1rem;
+  padding: 0.5rem;
+
+  &:focus {
+    border: 1px solid map.get(colors.$colors, "gray-l60");
+    box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
+    outline: none;
+  }
+}
+
+label {
+  display: inline-block;
+  font-weight: 600;
 }

@@ -5,10 +5,12 @@ $border-radius-lg: 7px;
 $border-radius-sm: 3px;
 $border-radius: 5px;
 
-$box-shadow-inset: inset 1px 2px 8px
+$box-shadow-inset-light: inset 0 2px 8px
+  rgba(map.get(colors.$colors, "black"), 0.025);
+$box-shadow-inset: inset 0px 2px 8px
   rgba(map.get(colors.$colors, "black"), 0.075);
-$box-shadow-lg: 4px 8px 32px rgba(map.get(colors.$colors, "black"), 0.175);
+$box-shadow-lg: 4px 8px 16px rgba(map.get(colors.$colors, "black"), 0.175);
 $box-shadow-sm: 1px 2px 4px rgba(map.get(colors.$colors, "black"), 0.075);
-$box-shadow: 2px 4px 16px rgba(map.get(colors.$colors, "black"), 0.15);
+$box-shadow: 2px 4px 8px rgba(map.get(colors.$colors, "black"), 0.15);
 
 $text-shadow-header: 1px 3px 4px rgba(map.get(colors.$colors, "black"), 0.3);

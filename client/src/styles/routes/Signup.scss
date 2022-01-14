@@ -1,0 +1,89 @@
+@use "../shared/colors";
+@use "../shared/decorations";
+@use "sass:map";
+
+.signup {
+  .signup-viewport {
+    background-color: map.get(colors.$colors, "gray-l95");
+  }
+
+  .signup-content-wrapper {
+    display: grid;
+    height: 100vh;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .signup-content {
+    padding-top: 5vh;
+  }
+
+  .signup-home-link {
+    border-radius: decorations.$border-radius-lg;
+    color: map.get(colors.$colors, "blue-d65");
+    font-size: 2rem;
+    padding: 0.3rem 0.8rem;
+
+    &:hover {
+      background-color: map.get(colors.$colors, "white");
+      color: map.get(colors.$colors, "blue-d65");
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: map.get(colors.$colors, "blue-d65");
+    }
+  }
+
+  .signup-form-wrapper {
+    background-color: map.get(colors.$colors, "white");
+    border-radius: decorations.$border-radius-lg;
+    border: 1px solid map.get(colors.$colors, "gray-l80");
+    box-shadow: decorations.$box-shadow;
+    margin-top: 2rem;
+    padding: 2rem 1rem 2.5rem 1rem;
+    text-align: left;
+    width: clamp(1rem, 90vw, 30rem);
+  }
+
+  .signup-form-header {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  .signup-form-subheader {
+    color: map.get(colors.$colors, "gray");
+    margin-top: 0.75rem;
+  }
+
+  .signup-form {
+    margin-top: 1.5rem;
+  }
+
+  .signup-form-field + .signup-form-field {
+    margin-top: 1.25rem;
+  }
+
+  .signup-input-wrapper {
+    margin-top: 0.5rem;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .signup-form-actions {
+    margin-top: 2.5rem;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .signup-agreements {
+    color: map.get(colors.$colors, "gray");
+    // font-size: 0.85rem;
+    margin-top: 2rem;
+    // text-align: center;
+  }
+}

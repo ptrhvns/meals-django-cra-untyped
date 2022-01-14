@@ -5,6 +5,11 @@ $border-radius-lg: 7px;
 $border-radius-sm: 3px;
 $border-radius: 5px;
 
+$box-shadow-error: 2px 4px 8px rgba(map.get(colors.$colors, "red"), 0.15);
+$box-shadow-inset-error-light: inset 0 2px 8px
+  rgba(map.get(colors.$colors, "red"), 0.025);
+$box-shadow-inset-error: inset 0px 2px 8px
+  rgba(map.get(colors.$colors, "red"), 0.075);
 $box-shadow-inset-light: inset 0 2px 8px
   rgba(map.get(colors.$colors, "black"), 0.025);
 $box-shadow-inset: inset 0px 2px 8px

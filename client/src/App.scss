@@ -5,9 +5,11 @@
 @use "styles/shared/typography";
 
 @use "styles/shared/elements";
+@use "styles/shared/widgets";
 
 @use "styles/components/Container";
 @use "styles/components/Navbar";
+@use "styles/components/SignupForm";
 
 @use "styles/routes/Home";
 @use "styles/routes/Signup";

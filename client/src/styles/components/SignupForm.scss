@@ -1,0 +1,27 @@
+.signup-form {
+  margin-top: 1.5rem;
+
+  .signup-form-field + .signup-form-field {
+    margin-top: 1.25rem;
+  }
+
+  .signup-form-input-wrapper {
+    margin-top: 0.5rem;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .signup-form-actions {
+    margin-top: 2.5rem;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .field-error-text {
+    margin-top: 0.5rem;
+  }
+}

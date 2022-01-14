@@ -56,34 +56,8 @@
     margin-top: 0.75rem;
   }
 
-  .signup-form {
-    margin-top: 1.5rem;
-  }
-
-  .signup-form-field + .signup-form-field {
-    margin-top: 1.25rem;
-  }
-
-  .signup-input-wrapper {
-    margin-top: 0.5rem;
-
-    input {
-      width: 100%;
-    }
-  }
-
-  .signup-form-actions {
-    margin-top: 2.5rem;
-
-    button {
-      width: 100%;
-    }
-  }
-
   .signup-agreements {
     color: map.get(colors.$colors, "gray");
-    // font-size: 0.85rem;
     margin-top: 2rem;
-    // text-align: center;
   }
 }

@@ -72,6 +72,18 @@ input {
     box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
     outline: none;
   }
+
+  &.error {
+    border: 1px solid map.get(colors.$colors, "red-l50");
+    box-shadow: decorations.$box-shadow-inset-error;
+    color: map.get(colors.$colors, "red-d25");
+
+    &:focus {
+      border: 1px solid map.get(colors.$colors, "red-l60");
+      box-shadow: decorations.$box-shadow-inset-error-light,
+        decorations.$box-shadow-error;
+    }
+  }
 }
 
 label {

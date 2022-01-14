@@ -1,6 +1,7 @@
 import Container from "../components/Container";
+import SignupForm from "../components/SignupForm";
 import { buildTitle } from "../lib/utils";
-import { faCookieBite, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
@@ -26,33 +27,7 @@ function Signup() {
                   Make meals easy. Save time.
                 </p>
 
-                <form className="signup-form">
-                  <div className="signup-form-field">
-                    <div>
-                      <label>Email</label>
-                    </div>
-
-                    <div className="signup-input-wrapper">
-                      <input type="text" />
-                    </div>
-                  </div>
-
-                  <div className="signup-form-field">
-                    <div>
-                      <label>Password</label>
-                    </div>
-
-                    <div className="signup-input-wrapper">
-                      <input type="password" />
-                    </div>
-                  </div>
-
-                  <div className="signup-form-actions">
-                    <button className="button-primary" type="submit">
-                      <FontAwesomeIcon icon={faPlusCircle} /> Create account
-                    </button>
-                  </div>
-                </form>
+                <SignupForm />
 
                 <p className="signup-agreements">
                   By creating an account with us, you agree to our{" "}

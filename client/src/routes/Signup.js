@@ -2,20 +2,20 @@ import Container from "../components/Container";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 
-function Login() {
+function Signup() {
   return (
     <div>
       <Helmet>
-        <title>{buildTitle("Login")}</title>
+        <title>{buildTitle("Signup")}</title>
       </Helmet>
 
       <Container variant="viewport">
         <Container variant="content">
-          <div>Login</div>
+          <div>Signup</div>
         </Container>
       </Container>
     </div>
   );
 }
 
-export default Login;
+export default Signup;

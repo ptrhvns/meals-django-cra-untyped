@@ -1,14 +1,12 @@
-@import-normalize;
+@use "sass:map";
 
-@import "styles/common/reset";
+@use "styles/shared/reset";
 
-@import "styles/common/colors";
-@import "styles/common/typography";
+@use "styles/shared/typography";
 
-@import "styles/common/decorations";
-@import "styles/common/elements";
+@use "styles/shared/elements";
 
-@import "styles/components/Container";
-@import "styles/components/Navbar";
+@use "styles/components/Container";
+@use "styles/components/Navbar";
 
-@import "styles/routes/Home";
+@use "styles/routes/Home";

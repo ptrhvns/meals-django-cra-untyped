@@ -1,0 +1,50 @@
+@use "colors";
+@use "decorations";
+@use "sass:map";
+
+a {
+  color: map.get(colors.$colors, "blue-d25");
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: map.get(colors.$colors, "blue");
+  }
+}
+
+button {
+  background-color: map.get(colors.$colors, "gray-l85");
+  border-radius: decorations.$border-radius;
+  border: 1px solid map.get(colors.$colors, "gray-l75");
+  color: map.get(colors.$colors, "gray-d20");
+  display: inline-block;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+
+  &:hover {
+    background-color: map.get(colors.$colors, "gray-l90");
+  }
+
+  &:active {
+    box-shadow: inset 0 2px 8px map.get(colors.$colors, "gray-l75");
+  }
+}
+
+button.button-primary {
+  background-color: map.get(colors.$colors, "blue-l90");
+  border: 1px solid map.get(colors.$colors, "blue-l80");
+  color: map.get(colors.$colors, "blue-d25");
+
+  &:hover {
+    background-color: map.get(colors.$colors, "blue-l95");
+  }
+
+  &:active {
+    box-shadow: inset 0 2px 8px map.get(colors.$colors, "blue-l80");
+  }
+}

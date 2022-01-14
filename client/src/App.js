@@ -1,4 +1,3 @@
-import Navbar from "./components/Navbar";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { Outlet } from "react-router-dom";
 
@@ -10,7 +9,6 @@ function App() {
       <Helmet>
         <title>Meals</title>
       </Helmet>
-      <Navbar />
       <Outlet />
     </HelmetProvider>
   );

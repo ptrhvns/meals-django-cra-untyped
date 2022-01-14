@@ -1,0 +1,44 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+
+// https://coolors.co/0795ed-f93943-ffa62b-9bc53d-af2bbf
+
+$colors: (
+  "blue": #0795ed,
+  "gray": #71716f,
+  "green": #9bc53d,
+  "purple": #af2bbf,
+  "red": #f93943,
+  "yellow": #ffa62b,
+);
+
+// Generate lighter and darker versions of $colors in increments of 5 from 5% to
+// 95%. Lighter versions are named <color>-l<increment>, and darker ones are
+// named <color>-d<increment>.
+@each $key in map.keys($colors) {
+  @for $i from 5 through 95 {
+    @if $i % 5 == 0 {
+      $colors: map.set(
+        $colors,
+        #{$key}-l#{$i},
+        color.scale(
+          map.get($colors, $key),
+          $lightness: math.div(math.percentage($i), 100)
+        )
+      );
+
+      $colors: map.set(
+        $colors,
+        #{$key}-d#{$i},
+        color.scale(
+          map.get($colors, $key),
+          $lightness: math.div(math.percentage($i), 100) * -1
+        )
+      );
+    }
+  }
+}
+
+$colors: map.set($colors, "black", map.get($colors, "gray-d95"));
+$colors: map.set($colors, "white", #ffffff);

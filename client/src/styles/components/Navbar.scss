@@ -1,31 +1,51 @@
+@use "../shared/colors";
+@use "../shared/decorations";
+@use "sass:map";
+
 .navbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 1rem 0;
+  .navbar-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
 
   .navbar-logo {
-    color: $color-primary-4;
-    font-size: 1.8rem;
-    font-weight: bold;
+    a {
+      border-radius: decorations.$border-radius;
+      color: map.get(colors.$colors, "blue-d25");
+      font-size: 1.8rem;
+      font-weight: bold;
+      padding: 0.4rem 0.8rem;
 
-    a:hover {
-      text-decoration: none;
+      &:hover {
+        background-color: map.get(colors.$colors, "blue-l95");
+        color: map.get(colors.$colors, "blue-d25");
+        text-decoration: none;
+      }
+
+      &:visited {
+        color: map.get(colors.$colors, "blue-d25");
+      }
     }
   }
 
   .navbar-menu {
-    align-self: flex-end;
+    align-self: center;
 
     a {
-      border-radius: $border-radius;
-      color: $color-gray-9;
+      border-radius: decorations.$border-radius;
       font-size: 1.05rem;
       padding: 0.4rem 0.8rem;
 
       &:hover {
-        background-color: $color-gray-1;
+        background-color: map.get(colors.$colors, "blue-l95");
+        color: map.get(colors.$colors, "blue-d25");
         text-decoration: none;
+      }
+
+      &:visited {
+        color: map.get(colors.$colors, "blue-d25");
       }
     }
   }

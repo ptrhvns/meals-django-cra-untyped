@@ -1,5 +1,5 @@
 const routes = {
-  csrfTokenCookie: () => "/api/csrf-token-cookie/",
+  csrfTokenCookie: () => "/api/csrf_token_cookie/",
   signup: () => "/api/signup/",
 };
 

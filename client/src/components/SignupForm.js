@@ -25,6 +25,25 @@ function SignupForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="signup-form-field">
           <div>
+            <label htmlFor="username">Username</label>
+          </div>
+
+          <div className="signup-form-input-wrapper">
+            <input
+              className={`${errors.username ? "error" : ""}`}
+              id="username"
+              type="username"
+              {...register("username", { required: "Username is required." })}
+            />
+          </div>
+
+          {errors.username && (
+            <div className="field-error-text">{errors.username.message}</div>
+          )}
+        </div>
+
+        <div className="signup-form-field">
+          <div>
             <label htmlFor="email">Email</label>
           </div>
 

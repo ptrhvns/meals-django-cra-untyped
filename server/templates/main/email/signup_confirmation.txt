@@ -1,0 +1,10 @@
+Hi,
+
+It looks like you signed up for an account at {{ site_title }} ({{ site_uri }}). If that's true, please visit the following address in your web browser to confirm your email address.
+
+{{ confirmation_uri }}
+
+If you didn't sign up for an account, you can safely ignore this message.
+
+Thanks,
+{{ site_title }}

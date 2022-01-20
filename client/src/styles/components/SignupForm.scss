@@ -1,3 +1,6 @@
+@use "../shared/colors";
+@use "sass:map";
+
 .signup-form {
   margin-top: 1.5rem;
 
@@ -23,5 +26,14 @@
 
   .field-error-text {
     margin-top: 0.5rem;
+  }
+
+  .signup-form-alert + .signup-form-field {
+    margin-top: 1.25rem;
+  }
+
+  .signup-agreements {
+    color: map.get(colors.$colors, "gray");
+    margin-top: 2rem;
   }
 }

@@ -1,28 +1,59 @@
+import Alert from "./Alert";
+import PropTypes from "prop-types";
 import { faPlusCircle, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { forOwn, head } from "lodash";
+import { Link } from "react-router-dom";
+import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-function SignupForm() {
+const propTypes = {
+  setShowConfirmation: PropTypes.func.isRequired,
+};
+
+function SignupForm({ setShowConfirmation }) {
+  const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     formState: { errors },
     handleSubmit,
     register,
+    setError,
   } = useForm();
 
   const onSubmit = async (data) => {
-    // TODO implement form submission
     setIsSubmitting(true);
-    console.log(data);
-    await new Promise((r) => setTimeout(r, 500));
+    const response = await post({ data, route: "signup" });
     setIsSubmitting(false);
+
+    if (response.isError) {
+      setAlertMessage(response.message);
+
+      forOwn(response.errors, (value, key) => {
+        setError(key, { message: head(value), type: "manual" });
+      });
+
+      return;
+    }
+
+    setShowConfirmation(true);
   };
 
   return (
     <div className="signup-form">
       <form onSubmit={handleSubmit(onSubmit)}>
+        {alertMessage && (
+          <Alert
+            className="signup-form-alert"
+            onDismiss={() => setAlertMessage(null)}
+            variant="error"
+          >
+            {alertMessage}
+          </Alert>
+        )}
+
         <div className="signup-form-field">
           <div>
             <label htmlFor="username">Username</label>
@@ -91,8 +122,16 @@ function SignupForm() {
           </button>
         </div>
       </form>
+
+      <p className="signup-agreements">
+        By creating an account with us, you agree to our{" "}
+        <Link to="/terms-and-conditions">Terms and Conditions</Link>, and to our{" "}
+        <Link to="/privacy-policy">Privacy Policy</Link>.
+      </p>
     </div>
   );
 }
+
+SignupForm.propTypes = propTypes;
 
 export default SignupForm;

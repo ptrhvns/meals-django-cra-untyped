@@ -73,6 +73,29 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
     \q
   ```
 
+- Install [Redis](https://redis.io/) (tested on version 6.0.6):
+
+  ```sh
+  sudo apt update -y
+  sudo apt install redis-server
+  ```
+
+- Configure Redis:
+
+  ```sh
+  sudo vim /etc/redis/redis.conf
+
+    # ...
+    # supervised no
+    supervised systemd
+    # ...
+    # requirepass foobared
+    requirepass $PASSWORD
+    # ...
+
+  sudo systemctl restart redis.service
+  ```
+
 - Setup environment variables for server application:
 
   ```sh
@@ -100,6 +123,13 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   ```sh
   cd server
   python manage.py runserver
+  ```
+
+- Start Celery:
+
+  ```sh
+  cd server
+  watchmedo auto-restart --directory=./ -p '*tasks*.py' -R -- celery -A config worker -l INFO
   ```
 
 - Start the React server (serves the client app):

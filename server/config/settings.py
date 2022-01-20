@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import re
 from pathlib import Path
 
 import environ
@@ -139,3 +140,7 @@ REST_FRAMEWORK = {
 }
 
 SITE_TITLE = "Meals"
+
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_TASK_DEFAULT_QUEUE = re.sub(r"\W+", "_", SITE_TITLE.lower())
+CELERY_TIMEZONE = TIME_ZONE

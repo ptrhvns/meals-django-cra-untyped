@@ -149,3 +149,66 @@ EMAIL_ADDRESSES = {"support": env("EMAIL_SUPPORT")}
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+if DEBUG:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "console": {
+                "datefmt": "%Y-%m-%dT%H:%M:%S%z",
+                "format": "{asctime} | {levelname} | {filename}:{lineno} | {name} | {message}",
+                "style": "{",
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "formatter": "console",
+            },
+        },
+        "loggers": {
+            "django": {
+                "formatters": ["console"],
+                "handlers": ["console"],
+                "level": "INFO",
+                "propagate": False,
+            },
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+    }
+else:
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "file": {
+                "datefmt": "%Y-%m-%dT%H:%M:%S%z",
+                "format": "{asctime} | {levelname} | {filename}:{lineno} | {name} | {message}",
+                "style": "{",
+            }
+        },
+        "handlers": {
+            "file": {
+                "class": "logging.FileHandler",
+                "filename": env("LOGFILE"),
+                "formatter": "file",
+                "level": "INFO",
+            }
+        },
+        "loggers": {
+            "django": {
+                "formatters": ["file"],
+                "handlers": ["file"],
+                "level": "INFO",
+                "propagate": False,
+            },
+        },
+        "root": {
+            "handlers": ["file"],
+            "level": "INFO",
+        },
+    }

@@ -212,3 +212,5 @@ else:
             "level": "INFO",
         },
     }
+
+BASE_CLIENT_URI = env("BASE_CLIENT_URI")

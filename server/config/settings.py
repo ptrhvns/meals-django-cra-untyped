@@ -144,3 +144,8 @@ SITE_TITLE = "Meals"
 CELERY_BROKER_URL = env("CELERY_BROKER_URL")
 CELERY_TASK_DEFAULT_QUEUE = re.sub(r"\W+", "_", SITE_TITLE.lower())
 CELERY_TIMEZONE = TIME_ZONE
+
+EMAIL_ADDRESSES = {"support": env("EMAIL_SUPPORT")}
+
+if DEBUG:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

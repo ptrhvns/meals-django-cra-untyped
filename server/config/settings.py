@@ -137,3 +137,5 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {"anon": "50/second", "user": "50/second"},
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
+
+SITE_TITLE = "Meals"

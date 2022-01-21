@@ -3,6 +3,7 @@ import { omit } from "lodash";
 const routes = {
   csrfTokenCookie: () => "/api/csrf_token_cookie/",
   signup: () => "/api/signup/",
+  signupConfirmation: () => "/api/signup_confirmation/",
 };
 
 export async function send({ data, method, route, routeData }) {

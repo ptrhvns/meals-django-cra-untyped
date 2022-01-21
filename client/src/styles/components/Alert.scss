@@ -18,6 +18,22 @@
   &.alert-error {
     background-color: map.get(colors.$colors, "red-l90");
     color: map.get(colors.$colors, "red-d30");
+
+    a {
+      color: map.get(colors.$colors, "red-d30");
+      font-weight: bold;
+      text-decoration: underline;
+
+      &:hover,
+      &:hover:visited {
+        color: map.get(colors.$colors, "red-d15");
+        text-decoration: underline dotted;
+      }
+
+      &:visited {
+        color: map.get(colors.$colors, "red-d30");
+      }
+    }
   }
 
   &.alert-error .alert-button {
@@ -29,9 +45,55 @@
     }
   }
 
+  &.alert-info {
+    background-color: map.get(colors.$colors, "gray-l85");
+    color: map.get(colors.$colors, "gray-d20");
+
+    a {
+      color: map.get(colors.$colors, "gray-d20");
+      font-weight: bold;
+      text-decoration: underline;
+
+      &:hover,
+      &:hover:visited {
+        color: map.get(colors.$colors, "gray-d5");
+        text-decoration: underline dotted;
+      }
+
+      &:visited {
+        color: map.get(colors.$colors, "gray-d20");
+      }
+    }
+  }
+
+  &.alert-info .alert-button {
+    background-color: map.get(colors.$colors, "gray-l85");
+    color: map.get(colors.$colors, "gray-d20");
+
+    &:hover {
+      color: map.get(colors.$colors, "gray-d15");
+    }
+  }
+
   &.alert-success {
     background-color: map.get(colors.$colors, "green-l80");
     color: map.get(colors.$colors, "green-d45");
+
+    a {
+      color: map.get(colors.$colors, "green-d45");
+      font-weight: bold;
+      text-decoration: underline;
+
+      &:hover,
+      &:hover:visited {
+        color: map.get(colors.$colors, "green-d30");
+        text-decoration: underline dotted;
+      }
+
+      &:visited {
+        color: map.get(colors.$colors, "green-d45");
+      }
+    }
   }
 
   &.alert-success .alert-button {

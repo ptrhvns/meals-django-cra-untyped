@@ -1,7 +1,17 @@
 from django.contrib import auth
 from rest_framework import serializers, validators
 
+from main import models
+
 User = auth.get_user_model()
+
+
+class SignupConfirmationSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(max_length=256, required=True)
+
+    class Meta:
+        model = models.Token
+        fields = ("token",)
 
 
 class UserSerializer(serializers.ModelSerializer):

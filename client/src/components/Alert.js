@@ -8,7 +8,7 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   onDismiss: PropTypes.func,
-  variant: PropTypes.oneOf(["error", "success"]).isRequired,
+  variant: PropTypes.oneOf(["error", "info", "success"]).isRequired,
 };
 
 const defaultProps = {

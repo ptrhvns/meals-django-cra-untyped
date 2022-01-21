@@ -6,7 +6,8 @@ a {
   color: map.get(colors.$colors, "blue-d25");
   text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:hover:visited {
     text-decoration: underline;
   }
 

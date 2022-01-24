@@ -28,7 +28,7 @@ def send_signup_confirmation(user_id, site_uri, confirmation_uri):
 
     recipient_list = [models.User.objects.get(pk=user_id).email]
 
-    logger.info(f"sending email confirmation to user ID {user_id}")
+    logger.info(f"sending email confirmation to user with ID {user_id}")
 
     mail.send_mail(
         fail_silently=False,
@@ -39,4 +39,4 @@ def send_signup_confirmation(user_id, site_uri, confirmation_uri):
         subject=_(f"Signup confirmation for {settings.SITE_TITLE}."),
     )
 
-    logger.info(f"email confirmation sent successfully to user ID {user_id}")
+    logger.info(f"email confirmation sent successfully to user with ID {user_id}")

@@ -34,7 +34,6 @@ def signup(request):
         )
 
     user = serializer.save()
-    logging.info(f"signup created new user with ID {user.id}")
 
     token = models.Token.objects.create(
         category=models.Token.EMAIL_CONFIRMATION,
@@ -92,6 +91,7 @@ def signup_confirmation(request):
     token.delete()
     user.is_active = True
     user.save()
+    logger.info(f"set user with ID {user.id} to active")
 
     return response.Response(
         {"message": _("Your signup was successfully confirmed.")},

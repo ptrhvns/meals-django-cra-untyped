@@ -4,12 +4,12 @@ from rest_framework import status
 from main import views
 
 
-def test_cookie(client):
+def test_csrf_cookie(client):
     response = client.get(urls.reverse("csrf_token_cookie"))
     assert len(response.client.cookies["csrftoken"]) > 0
 
 
-def test_http_method_names():
+def test_allowed_http_method_names():
     assert sorted(views.csrf_token_cookie.view_class.http_method_names) == [
         "get",
         "options",

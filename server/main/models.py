@@ -37,6 +37,7 @@ class Token(db_models.Model):
     category = db_models.CharField(choices=CATEGORY_CHOICES, max_length=32)
     expiration = db_models.DateTimeField()
     token = db_models.CharField(max_length=256, default=utils.build_token, unique=True)
+
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="tokens"
     )

@@ -49,7 +49,7 @@ def signup(request):
 
     return response.Response(
         {
-            "data": serializer.data,
+            "data": {k: v for (k, v) in serializer.data.items() if k != "password"},
             "message": _("You were signed up successfully."),
         },
         status=status.HTTP_201_CREATED,

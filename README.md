@@ -145,3 +145,20 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   cd client
   npm start
   ```
+
+## Running tests
+
+- Run server tests:
+
+  ```sh
+  cd server
+  pytest -vv
+  ```
+
+- Run server tests and create an HTML test coverage report:
+
+  ```sh
+  cd server
+  pytest --cov --cov-report html
+  # Open htmlcov/index.html with a browser.
+  ```

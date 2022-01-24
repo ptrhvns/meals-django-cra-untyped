@@ -155,14 +155,14 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   pytest -vv
   ```
 
-- Run server tests and create an HTML test coverage report:
+- Run server tests, and report on test coverage:
 
   ```sh
   cd server
 
   # Pick one of:
-  pytest --cov --cov-report html
-  pytest --cov --cov-report term-missing
+  pytest --cov --cov-report html # HTML report
+  pytest --cov --cov-report term-missing # terminal report
 
   # Open htmlcov/index.html with a browser.
   ```

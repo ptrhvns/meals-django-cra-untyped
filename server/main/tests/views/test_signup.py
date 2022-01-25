@@ -23,7 +23,7 @@ def test_signing_up_with_invalid_data(client):
     assert len(json["message"]) > 0
 
 
-@pytest.mark.django_db(transaction=True)
+@pytest.mark.django_db
 def test_signing_up(client, freezer, mocker):
     data = {
         "email": "smith@example.com",

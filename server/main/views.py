@@ -71,7 +71,7 @@ def signup_confirmation(request):
 
     try:
         token = models.Token.objects.get(token=serializer.data["token"])
-    except (models.Token.DoesNotExist, models.Token.MultipleObjectsReturned):
+    except models.Token.DoesNotExist:
         return response.Response(
             {"message": _("The confirmation ID you provided was invalid.")},
             status=status.HTTP_422_UNPROCESSABLE_ENTITY,

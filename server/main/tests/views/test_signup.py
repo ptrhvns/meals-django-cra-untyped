@@ -13,7 +13,7 @@ def test_allowed_http_method_names():
     assert method_names == ["options", "post"]
 
 
-def test_signing_up_user_with_invalid_data(client):
+def test_signing_up_with_invalid_data(client):
     response = client.post(urls.reverse("signup"), {})
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -23,7 +23,7 @@ def test_signing_up_user_with_invalid_data(client):
 
 
 @pytest.mark.django_db(transaction=True)
-def test_signing_up_a_user(client, freezer, mocker):
+def test_signing_up(client, freezer, mocker):
     data = {
         "email": "smith@example.com",
         "password": "alongpassword",

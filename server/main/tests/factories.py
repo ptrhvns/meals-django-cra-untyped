@@ -14,3 +14,5 @@ class UserFactory(factory.django.DjangoModelFactory):
 class TokenFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Token
+
+    user = factory.SubFactory(UserFactory)

@@ -5,7 +5,8 @@ from django import urls
 from django.utils import timezone
 from rest_framework import status
 
-from main import client as main_client, models, views
+from main import client as main_client
+from main import models, views
 
 
 def test_allowed_http_method_names():

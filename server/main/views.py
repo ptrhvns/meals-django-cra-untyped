@@ -2,7 +2,6 @@ import datetime
 import logging
 import zoneinfo
 
-import pytz
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -45,7 +44,11 @@ def signup(request):
     site_uri = client.urls["home"]
     confirmation_uri = client.urls["signup_confirmation"].format(token=token.token)
 
-    logger.info(f"dispatching task send_signup_confirmation for user ID {user.id}")
+    logger.info(
+        "dispatching task send_signup_confirmation for user ID {user_id}",
+        extra={"user_id": user.id},
+    )
+
     tasks.send_signup_confirmation.delay(user.id, site_uri, confirmation_uri)
 
     return response.Response(
@@ -92,7 +95,7 @@ def signup_confirmation(request):
     token.delete()
     user.is_active = True
     user.save()
-    logger.info(f"set user with ID {user.id} to active")
+    logger.info("set user with ID {user_id} to active", extra={"user_id": user.id})
 
     return response.Response(
         {"message": _("Your signup was successfully confirmed.")},

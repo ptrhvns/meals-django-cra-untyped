@@ -26,6 +26,7 @@ function Alert({ children, className, onDismiss, variant }) {
         <div>
           <button className="alert-button" onClick={onDismiss} type="button">
             <FontAwesomeIcon icon={faTimes} />
+            <span className="sr-only">Dismiss</span>
           </button>
         </div>
       )}

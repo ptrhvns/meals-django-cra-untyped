@@ -12,6 +12,15 @@ class User(auth_models.AbstractUser):
 
     email = db_models.EmailField(_("email address"), blank=False)
 
+    is_active = db_models.BooleanField(
+        _("active"),
+        default=False,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
+
     username = db_models.CharField(
         _("username"),
         error_messages={"unique": _("That username already exists.")},

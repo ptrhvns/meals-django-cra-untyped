@@ -1,5 +1,6 @@
 import datetime
 import logging
+import zoneinfo
 
 import pytz
 from django.conf import settings
@@ -77,7 +78,7 @@ def signup_confirmation(request):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
-    now = datetime.datetime.now().replace(tzinfo=getattr(pytz, settings.TIME_ZONE))
+    now = datetime.datetime.now().replace(tzinfo=zoneinfo.ZoneInfo(settings.TIME_ZONE))
 
     if token.expiration < now:
         token.delete()

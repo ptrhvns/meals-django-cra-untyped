@@ -1,3 +1,4 @@
 [flake8]
+enable-extensions=G
 exclude = .git,__pycache__
 ignore = E231,E501

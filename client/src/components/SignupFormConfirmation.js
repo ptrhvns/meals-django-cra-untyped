@@ -2,7 +2,7 @@ import Alert from "./Alert";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function SignupConfirmation() {
+function SignupFormConfirmation() {
   return (
     <Alert variant="success">
       <FontAwesomeIcon icon={faExclamationCircle} /> You were successfully
@@ -12,4 +12,4 @@ function SignupConfirmation() {
   );
 }
 
-export default SignupConfirmation;
+export default SignupFormConfirmation;

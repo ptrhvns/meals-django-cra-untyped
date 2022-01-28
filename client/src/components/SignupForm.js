@@ -9,10 +9,10 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 const propTypes = {
-  setShowConfirmation: PropTypes.func.isRequired,
+  setSubmitSuccess: PropTypes.func.isRequired,
 };
 
-function SignupForm({ setShowConfirmation }) {
+function SignupForm({ setSubmitSuccess }) {
   const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,7 +38,7 @@ function SignupForm({ setShowConfirmation }) {
       return;
     }
 
-    setShowConfirmation(true);
+    setSubmitSuccess(true);
   };
 
   return (

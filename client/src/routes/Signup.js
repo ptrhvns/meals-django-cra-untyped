@@ -36,7 +36,7 @@ function Signup() {
                     <SignupFormConfirmation />
                   </div>
                 ) : (
-                  <SignupForm setShowConfirmation={setShowConfirmation} />
+                  <SignupForm setSubmitSuccess={setShowConfirmation} />
                 )}
               </div>
             </div>

@@ -114,7 +114,11 @@ function SignupForm({ setSubmitSuccess }) {
         <div className="signup-form-actions">
           <button className="button-primary" type="submit">
             {isSubmitting ? (
-              <FontAwesomeIcon icon={faSpinner} spin />
+              <FontAwesomeIcon
+                data-testid="submit-spinner"
+                icon={faSpinner}
+                spin
+              />
             ) : (
               <FontAwesomeIcon icon={faPlusCircle} />
             )}{" "}

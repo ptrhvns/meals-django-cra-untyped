@@ -1,6 +1,7 @@
 import { omit } from "lodash";
 
-const routes = {
+/* istanbul ignore next */
+export const routes = {
   csrfTokenCookie: () => "/api/csrf_token_cookie/",
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
@@ -36,11 +37,9 @@ export async function send({ data, method, route, routeData }) {
   }
 
   if (!response.ok) {
-    return {
-      isError: true,
-      message: json.message ?? "An error occurred.",
-      ...omit(json, (value, key) => key === "message"),
-    };
+    const message = json.message ?? "An error occurred.";
+    const rest = omit(json, (value, key) => key === "message");
+    return { isError: true, message, ...rest };
   }
 
   return json;

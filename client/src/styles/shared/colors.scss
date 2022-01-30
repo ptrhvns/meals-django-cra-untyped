@@ -2,8 +2,7 @@
 @use "sass:map";
 @use "sass:math";
 
-// https://coolors.co/0795ed-f93943-ffa62b-9bc53d-af2bbf
-
+// https://coolors.co/0795ed-71716f-9bc53d-af2bbf-f93943-ffa62b
 $colors: (
   "blue": #0795ed,
   "gray": #71716f,
@@ -13,12 +12,12 @@ $colors: (
   "yellow": #ffa62b,
 );
 
-// Generate lighter and darker versions of $colors in increments of 5 from 5% to
-// 95%. Lighter versions are named <color>-l<increment>, and darker ones are
-// named <color>-d<increment>.
+// Generate variations of $colors in increments of 5 from 5% to 95%.
 @each $key in map.keys($colors) {
   @for $i from 5 through 95 {
     @if $i % 5 == 0 {
+
+      // The lighter variations: <color>-l<increment>
       $colors: map.set(
         $colors,
         #{$key}-l#{$i},
@@ -28,6 +27,7 @@ $colors: (
         )
       );
 
+      // The darker variations: <color>-d<increment>
       $colors: map.set(
         $colors,
         #{$key}-d#{$i},

@@ -7,7 +7,7 @@ function PrivacyPolicy() {
   return (
     <div>
       <Helmet>
-        <title>{buildTitle("Not Found")}</title>
+        <title>{buildTitle("Privacy Policy")}</title>
       </Helmet>
 
       <Navbar />

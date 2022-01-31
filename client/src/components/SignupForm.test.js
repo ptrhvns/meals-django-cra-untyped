@@ -14,12 +14,10 @@ jest.mock("../lib/api", () => {
   };
 });
 
-function buildComponent(props = {}) {
-  props = { setSubmitSuccess: jest.fn(), ...props };
-
+function buildComponent() {
   return (
     <MemoryRouter>
-      <SignupForm {...props} />
+      <SignupForm />
     </MemoryRouter>
   );
 }
@@ -121,10 +119,9 @@ describe("when the form has been submitted", () => {
     it("renders a confirmation message", async () => {
       post.mockResolvedValue({});
       const user = userEvent.setup();
-      const setSubmitSuccess = jest.fn();
-      const container = render(buildComponent({ setSubmitSuccess }));
+      const container = render(buildComponent());
       await act(() => submitForm(user, container));
-      expect(setSubmitSuccess).toHaveBeenCalled();
+      expect(container.queryByTestId("signup-form-confirmation")).toBeTruthy();
     });
   });
 });

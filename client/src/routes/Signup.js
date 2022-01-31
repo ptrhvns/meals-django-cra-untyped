@@ -1,16 +1,12 @@
 import Container from "../components/Container";
 import SignupForm from "../components/SignupForm";
-import SignupFormConfirmation from "../components/SignupFormConfirmation";
 import { buildTitle } from "../lib/utils";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 function Signup() {
-  const [showConfirmation, setShowConfirmation] = useState(false);
-
   return (
     <div className="signup">
       <Helmet>
@@ -31,13 +27,7 @@ function Signup() {
                   Make meals easy. Save time.
                 </p>
 
-                {showConfirmation ? (
-                  <div className="signup-confirmation-wrapper">
-                    <SignupFormConfirmation />
-                  </div>
-                ) : (
-                  <SignupForm setSubmitSuccess={setShowConfirmation} />
-                )}
+                <SignupForm />
               </div>
             </div>
           </div>

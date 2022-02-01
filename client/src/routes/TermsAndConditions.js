@@ -7,7 +7,7 @@ function TermsAndConditions() {
   return (
     <div>
       <Helmet>
-        <title>{buildTitle("Not Found")}</title>
+        <title>{buildTitle("Terms and Conditions")}</title>
       </Helmet>
 
       <Navbar />

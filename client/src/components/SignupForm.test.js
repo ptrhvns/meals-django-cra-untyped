@@ -1,3 +1,5 @@
+jest.mock("../lib/api", () => ({ post: jest.fn() }));
+
 import ReactDOM from "react-dom";
 import SignupForm from "./SignupForm";
 import userEvent from "@testing-library/user-event";
@@ -5,14 +7,6 @@ import { act, render, waitFor } from "@testing-library/react";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
 import { post } from "../lib/api";
-
-jest.mock("../lib/api", () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual("../lib/api"),
-    post: jest.fn(),
-  };
-});
 
 function buildComponent() {
   return (

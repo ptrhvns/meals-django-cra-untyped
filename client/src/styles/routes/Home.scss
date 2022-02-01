@@ -28,10 +28,10 @@
   }
 
   .home-hero-call-to-action {
-    background-color: map.get(colors.$colors, "blue-l90");
+    background-color: map.get(colors.$colors, "blue-bg");
     border-radius: decorations.$border-radius;
-    border: 1px solid map.get(colors.$colors, "blue-l80");
-    color: map.get(colors.$colors, "blue-d25");
+    border: 1px solid map.get(colors.$colors, "blue-border");
+    color: map.get(colors.$colors, "blue-fg");
     display: inline-block;
     font-size: clamp(1rem, 5vw, 1.2rem);
     margin-top: 2.5rem;
@@ -42,7 +42,7 @@
     width: 100%;
 
     &:hover {
-      background-color: map.get(colors.$colors, "blue-l95");
+      background-color: map.get(colors.$colors, "blue-bg-hover");
       text-decoration: none;
     }
 

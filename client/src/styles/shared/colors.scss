@@ -16,7 +16,6 @@ $colors: (
 @each $key in map.keys($colors) {
   @for $i from 5 through 95 {
     @if $i % 5 == 0 {
-
       // The lighter variations: <color>-l<increment>
       $colors: map.set(
         $colors,
@@ -41,4 +40,29 @@ $colors: (
 }
 
 $colors: map.set($colors, "black", map.get($colors, "gray-d95"));
+
+$colors: map.set($colors, "blue-bg", map.get($colors, "blue-l90"));
+$colors: map.set($colors, "blue-bg-hover", map.get($colors, "blue-l95"));
+$colors: map.set($colors, "blue-border", map.get($colors, "blue-l70"));
+$colors: map.set($colors, "blue-fg", map.get($colors, "blue-d25"));
+$colors: map.set($colors, "blue-fg-hover", map.get($colors, "blue-d10"));
+
+$colors: map.set($colors, "gray-bg", map.get($colors, "gray-l90"));
+$colors: map.set($colors, "gray-bg-hover", map.get($colors, "gray-l95"));
+$colors: map.set($colors, "gray-border", map.get($colors, "gray-l70"));
+$colors: map.set($colors, "gray-fg", map.get($colors, "gray-d5"));
+$colors: map.set($colors, "gray-fg-hover", map.get($colors, "gray-l20"));
+
+$colors: map.set($colors, "green-bg", map.get($colors, "green-l90"));
+$colors: map.set($colors, "green-bg-hover", map.get($colors, "green-l95"));
+$colors: map.set($colors, "green-border", map.get($colors, "green-l70"));
+$colors: map.set($colors, "green-fg", map.get($colors, "green-d40"));
+$colors: map.set($colors, "green-fg-hover", map.get($colors, "green-d20"));
+
+$colors: map.set($colors, "red-bg", map.get($colors, "red-l90"));
+$colors: map.set($colors, "red-bg-hover", map.get($colors, "red-l95"));
+$colors: map.set($colors, "red-border", map.get($colors, "red-l70"));
+$colors: map.set($colors, "red-fg", map.get($colors, "red-d30"));
+$colors: map.set($colors, "red-fg-hover", map.get($colors, "red-d15"));
+
 $colors: map.set($colors, "white", #ffffff);

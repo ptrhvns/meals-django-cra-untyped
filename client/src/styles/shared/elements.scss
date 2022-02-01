@@ -17,10 +17,10 @@ a {
 }
 
 button {
-  background-color: map.get(colors.$colors, "gray-l85");
+  background-color: map.get(colors.$colors, "gray-bg");
   border-radius: decorations.$border-radius;
-  border: 1px solid map.get(colors.$colors, "gray-l75");
-  color: map.get(colors.$colors, "gray-d20");
+  border: 1px solid map.get(colors.$colors, "gray-border");
+  color: map.get(colors.$colors, "gray-fg");
   display: inline-block;
   font-size: 1rem;
   padding: 0.5rem 1rem;
@@ -28,7 +28,7 @@ button {
   vertical-align: middle;
 
   &:hover {
-    background-color: map.get(colors.$colors, "gray-l90");
+    background-color: map.get(colors.$colors, "gray-bg-hover");
   }
 
   &:active {
@@ -37,12 +37,12 @@ button {
 }
 
 button.button-primary {
-  background-color: map.get(colors.$colors, "blue-l90");
-  border: 1px solid map.get(colors.$colors, "blue-l80");
-  color: map.get(colors.$colors, "blue-d25");
+  background-color: map.get(colors.$colors, "blue-bg");
+  border: 1px solid map.get(colors.$colors, "blue-border");
+  color: map.get(colors.$colors, "blue-fg");
 
   &:hover {
-    background-color: map.get(colors.$colors, "blue-l95");
+    background-color: map.get(colors.$colors, "blue-bg-hover");
   }
 
   &:active {
@@ -62,25 +62,25 @@ h6 {
 input {
   background: map.get(colors.$colors, "white");
   border-radius: decorations.$border-radius;
-  border: 1px solid map.get(colors.$colors, "gray-l70");
+  border: 1px solid map.get(colors.$colors, "gray-border");
   box-shadow: decorations.$box-shadow-inset;
   color: map.get(colors.$colors, "black");
   font-size: 1rem;
   padding: 0.5rem;
 
   &:focus {
-    border: 1px solid map.get(colors.$colors, "gray-l60");
+    border: 2px solid map.get(colors.$colors, "gray-border");
     box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
     outline: none;
   }
 
   &.error {
-    border: 1px solid map.get(colors.$colors, "red-l50");
+    border: 1px solid map.get(colors.$colors, "red-border");
     box-shadow: decorations.$box-shadow-inset-error;
     color: map.get(colors.$colors, "red-d25");
 
     &:focus {
-      border: 1px solid map.get(colors.$colors, "red-l60");
+      border: 2px solid map.get(colors.$colors, "red-border");
       box-shadow: decorations.$box-shadow-inset-error-light,
         decorations.$box-shadow-error;
     }

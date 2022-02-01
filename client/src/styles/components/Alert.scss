@@ -16,92 +16,92 @@
   }
 
   &.alert-error {
-    background-color: map.get(colors.$colors, "red-l90");
-    color: map.get(colors.$colors, "red-d30");
+    background-color: map.get(colors.$colors, "red-bg");
+    color: map.get(colors.$colors, "red-fg");
 
     a {
-      color: map.get(colors.$colors, "red-d30");
+      color: map.get(colors.$colors, "red-fg");
       font-weight: bold;
       text-decoration: underline;
 
       &:hover,
       &:hover:visited {
-        color: map.get(colors.$colors, "red-d15");
+        color: map.get(colors.$colors, "red-fg-hover");
         text-decoration: underline dotted;
       }
 
       &:visited {
-        color: map.get(colors.$colors, "red-d30");
+        color: map.get(colors.$colors, "red-fg");
       }
     }
   }
 
   &.alert-error .alert-button {
-    background-color: map.get(colors.$colors, "red-l90");
-    color: map.get(colors.$colors, "red-d30");
+    background-color: map.get(colors.$colors, "red-bg");
+    color: map.get(colors.$colors, "red-fg");
 
     &:hover {
-      color: map.get(colors.$colors, "red-l25");
+      color: map.get(colors.$colors, "red-fg-hover");
     }
   }
 
   &.alert-info {
-    background-color: map.get(colors.$colors, "gray-l85");
-    color: map.get(colors.$colors, "gray-d20");
+    background-color: map.get(colors.$colors, "gray-bg");
+    color: map.get(colors.$colors, "gray-fg");
 
     a {
-      color: map.get(colors.$colors, "gray-d20");
+      color: map.get(colors.$colors, "gray-fg");
       font-weight: bold;
       text-decoration: underline;
 
       &:hover,
       &:hover:visited {
-        color: map.get(colors.$colors, "gray-d5");
+        color: map.get(colors.$colors, "gray-fg-hover");
         text-decoration: underline dotted;
       }
 
       &:visited {
-        color: map.get(colors.$colors, "gray-d20");
+        color: map.get(colors.$colors, "gray-fg");
       }
     }
   }
 
   &.alert-info .alert-button {
-    background-color: map.get(colors.$colors, "gray-l85");
-    color: map.get(colors.$colors, "gray-d20");
+    background-color: map.get(colors.$colors, "gray-bg");
+    color: map.get(colors.$colors, "gray-fg");
 
     &:hover {
-      color: map.get(colors.$colors, "gray-d15");
+      color: map.get(colors.$colors, "gray-fg-hover");
     }
   }
 
   &.alert-success {
-    background-color: map.get(colors.$colors, "green-l80");
-    color: map.get(colors.$colors, "green-d45");
+    background-color: map.get(colors.$colors, "green-bg");
+    color: map.get(colors.$colors, "green-fg");
 
     a {
-      color: map.get(colors.$colors, "green-d45");
+      color: map.get(colors.$colors, "green-fg");
       font-weight: bold;
       text-decoration: underline;
 
       &:hover,
       &:hover:visited {
-        color: map.get(colors.$colors, "green-d30");
+        color: map.get(colors.$colors, "green-fg-hover");
         text-decoration: underline dotted;
       }
 
       &:visited {
-        color: map.get(colors.$colors, "green-d45");
+        color: map.get(colors.$colors, "green-fg");
       }
     }
   }
 
   &.alert-success .alert-button {
-    background-color: map.get(colors.$colors, "green-l80");
-    color: map.get(colors.$colors, "green-d45");
+    background-color: map.get(colors.$colors, "green-bg");
+    color: map.get(colors.$colors, "green-fg");
 
     &:hover {
-      color: map.get(colors.$colors, "green-d35");
+      color: map.get(colors.$colors, "green-fg-hover");
     }
   }
 }

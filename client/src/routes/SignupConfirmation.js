@@ -54,7 +54,7 @@ function SignupConfirmation() {
                   <Alert variant="info">
                     <FontAwesomeIcon icon={faSpinner} spin />{" "}
                     <span className="signup-confirmation-message-info-text">
-                      Confirming your signup ...
+                      Confirming your signup...
                     </span>
                   </Alert>
                 ) : (

@@ -62,13 +62,13 @@ function SignupConfirmation() {
                     <div>
                       {message}
                       {isError ? (
-                        <p>
+                        <p data-testid="signup-confirmation-message-error">
                           Please double check the address you visited to make
                           sure it's correct, or you can try{" "}
                           <Link to="/signup">signing up</Link>.
                         </p>
                       ) : (
-                        <p>
+                        <p data-testid="signup-confirmation-message-success">
                           You may now <Link to="/login">log in</Link> to your
                           new account.
                         </p>

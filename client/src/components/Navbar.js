@@ -19,17 +19,19 @@ function Navbar({ className }) {
   return (
     <div className={cn}>
       <Container variant="viewport">
-        <Container variant="content">
-          <nav className="navbar-content">
-            <span className="navbar-logo">
-              <Link to="/">
-                <FontAwesomeIcon icon={faCookieBite} /> Meals
-              </Link>
-            </span>
+        <Container className="navbar-content" variant="content">
+          <span className="navbar-logo">
+            <Link to="/">
+              <FontAwesomeIcon icon={faCookieBite} /> Meals
+            </Link>
+          </span>
 
-            <span className="navbar-menu">
-              <Link to="/login">Log in</Link>
-            </span>
+          <nav>
+            <ul className="navbar-primary-navigation">
+              <li>
+                <Link to="/login">Log in</Link>
+              </li>
+            </ul>
           </nav>
         </Container>
       </Container>

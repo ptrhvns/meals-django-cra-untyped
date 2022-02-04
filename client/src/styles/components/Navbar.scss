@@ -4,10 +4,11 @@
 
 .navbar {
   .navbar-content {
+    align-items: center;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
   }
 
   .navbar-logo {
@@ -16,7 +17,6 @@
       color: map.get(colors.$colors, "blue-d65");
       font-size: 1.8rem;
       font-weight: bold;
-      padding: 0.4rem 0.8rem;
 
       &:hover {
         background-color: map.get(colors.$colors, "blue-l95");
@@ -30,23 +30,11 @@
     }
   }
 
-  .navbar-menu {
-    align-self: center;
-
-    a {
-      border-radius: decorations.$border-radius;
-      font-size: 1.05rem;
-      padding: 0.4rem 0.8rem;
-
-      &:hover {
-        background-color: map.get(colors.$colors, "blue-l95");
-        color: map.get(colors.$colors, "blue-d25");
-        text-decoration: none;
-      }
-
-      &:visited {
-        color: map.get(colors.$colors, "blue-d25");
-      }
-    }
+  .navbar-primary-navigation {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 }

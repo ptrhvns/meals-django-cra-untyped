@@ -11,6 +11,7 @@ class User(auth_models.AbstractUser):
     username_validator = validators.UnicodeUsernameValidator()
 
     email = db_models.EmailField(_("email address"), blank=False)
+    email_confirmed_datetime = db_models.DateTimeField(blank=True, null=True)
 
     is_active = db_models.BooleanField(
         _("active"),

@@ -41,6 +41,7 @@ def test_confirming_signup(client):
     assert len(json["message"]) > 0
     assert not models.Token.objects.filter(token=token.token).exists()
     user.refresh_from_db()
+    assert user.email_confirmed_datetime is not None
     assert user.is_active is True
 
 

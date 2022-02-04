@@ -73,7 +73,7 @@ function SignupForm() {
                 <input
                   className={`${errors.username ? "error" : ""}`}
                   id="username"
-                  type="username"
+                  type="text"
                   {...register("username", {
                     required: "Username is required.",
                   })}

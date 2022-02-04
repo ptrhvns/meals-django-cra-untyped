@@ -3,6 +3,7 @@ import logging
 import zoneinfo
 
 from django.conf import settings
+from django.contrib import auth
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators import csrf
@@ -17,6 +18,55 @@ logger = logging.getLogger(__name__)
 @csrf.ensure_csrf_cookie
 @rf_decorators.api_view(http_method_names=["GET"])
 def csrf_token_cookie(request):
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+def login(request):
+    username = request.data.get("username")
+    logger.info("attempting login for username %(username)s", {"username": username})
+    serializer = serializers.LoginSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        logger.warning(
+            "login failed with invalid request data for username %(username)s",
+            {"username": username},
+        )
+
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    # Authentication will fail if user isn't active.
+    user = auth.authenticate(
+        request,
+        password=serializer.validated_data["password"],
+        username=serializer.validated_data["username"],
+    )
+
+    if user is None:
+        logger.warning(
+            "login failed authentication check for username %(username)s",
+            {"username": username},
+        )
+
+        return response.Response(
+            {
+                "message": _(
+                    "We couldn't authentication you. Your username or"
+                    " password might be wrong, or there might be an"
+                    " issue with your account."
+                )
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    logger.info("login succeeded for username %(username)s", {"username": username})
+    auth.login(request, user)
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -45,8 +95,8 @@ def signup(request):
     confirmation_uri = client.urls["signup_confirmation"].format(token=token.token)
 
     logger.info(
-        "dispatching task send_signup_confirmation for user ID {user_id}",
-        extra={"user_id": user.id},
+        "dispatching task send_signup_confirmation for user ID %(user_id)s",
+        {"user_id": user.id},
     )
 
     tasks.send_signup_confirmation.delay(user.id, site_uri, confirmation_uri)
@@ -93,9 +143,10 @@ def signup_confirmation(request):
 
     user = token.user
     token.delete()
+    user.email_confirmed_datetime = now
     user.is_active = True
     user.save()
-    logger.info("set user with ID {user_id} to active", extra={"user_id": user.id})
+    logger.info("set user with ID %(user_id)s to active", {"user_id": user.id})
 
     return response.Response(
         {"message": _("Your signup was successfully confirmed.")},

@@ -18,8 +18,8 @@ def send_signup_confirmation(user_id, site_uri, confirmation_uri):
 
 def _send_signup_confirmation(user_id, site_uri, confirmation_uri):
     logger.info(
-        "attempting to send signup confirmation email to user ID {user_id}",
-        extra={"user_id": user_id},
+        "attempting to send signup confirmation email to user ID %(user_id)s",
+        {"user_id": user_id},
     )
 
     context = {
@@ -40,8 +40,8 @@ def _send_signup_confirmation(user_id, site_uri, confirmation_uri):
         user = models.User.objects.get(pk=user_id)
     except models.User.DoesNotExist:
         logger.error(
-            "user ID {user_id} does not exist in database",
-            extra={"user_id": user_id},
+            "user ID %(user_id)s does not exist in database",
+            {"user_id": user_id},
         )
         return
 
@@ -55,11 +55,11 @@ def _send_signup_confirmation(user_id, site_uri, confirmation_uri):
         )
     except smtplib.SMTPException:
         logger.error(
-            "failed to deliver email to user ID {user_id}", extra={"user_id": user.id}
+            "failed to deliver email to user ID %(user_id)s", {"user_id": user.id}
         )
         return
 
     logger.info(
-        "successfully sent signup confirmation email to user with ID {user_id}",
-        extra={"user_id": user_id},
+        "successfully sent signup confirmation email to user with ID %(user_id)s",
+        {"user_id": user_id},
     )

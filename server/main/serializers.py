@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
         )
 
-        logger.info("created new user with ID {user_id}", extra={"user_id": user.id})
+        logger.info("created new user with ID %(user_id)s", {"user_id": user.id})
         return user
 
     class Meta:

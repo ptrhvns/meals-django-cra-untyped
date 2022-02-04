@@ -3,6 +3,7 @@ import { omit } from "lodash";
 /* istanbul ignore next */
 export const routes = {
   csrfTokenCookie: () => "/api/csrf_token_cookie/",
+  login: () => "/api/login/",
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
 };

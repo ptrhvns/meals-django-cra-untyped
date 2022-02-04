@@ -1,13 +1,16 @@
 import Login from "./Login";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
+import { MemoryRouter } from "react-router-dom";
 import { render, waitFor } from "@testing-library/react";
 
 function buildComponent() {
   return (
-    <HelmetProvider>
-      <Login />
-    </HelmetProvider>
+    <MemoryRouter>
+      <HelmetProvider>
+        <Login />
+      </HelmetProvider>
+    </MemoryRouter>
   );
 }
 

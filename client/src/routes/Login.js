@@ -1,19 +1,19 @@
-import Container from "../components/Container";
+import FullPageCard from "../components/FullPageCard";
+import LoginForm from "../components/LoginForm";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 
 function Login() {
   return (
-    <div>
+    <div className="login">
       <Helmet>
         <title>{buildTitle("Login")}</title>
       </Helmet>
 
-      <Container variant="viewport">
-        <Container variant="content">
-          <div>Login</div>
-        </Container>
-      </Container>
+      <FullPageCard>
+        <h1 className="login-header">Login</h1>
+        <LoginForm />
+      </FullPageCard>
     </div>
   );
 }

@@ -1,36 +1,17 @@
 import App from "./App";
-import Dashboard from "./routes/Dashboard";
-import Home from "./routes/Home";
-import Login from "./routes/Login";
-import NotFound from "./routes/NotFound";
-import PrivacyPolicy from "./routes/PrivacyPolicy";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import Signup from "./routes/Signup";
-import SignupConfirmation from "./routes/SignupConfirmation";
-import TermsAndConditions from "./routes/TermsAndConditions";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="login" element={<Login />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="signup" element={<Signup />} />
-          <Route
-            path="signup-confirmation/:token"
-            element={<SignupConfirmation />}
-          />
-          <Route path="terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

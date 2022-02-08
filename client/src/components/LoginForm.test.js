@@ -2,21 +2,25 @@ jest.mock("../lib/api", () => ({ post: jest.fn() }));
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
+  useLocation: jest.fn(),
   useNavigate: jest.fn(),
 }));
 
+import AuthnProvider from "../providers/AuthnProvider";
 import LoginForm from "./LoginForm";
 import ReactDOM from "react-dom";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
 import { head } from "lodash";
-import { MemoryRouter, useNavigate } from "react-router-dom";
+import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import { post } from "../lib/api";
 
 function buildComponent() {
   return (
     <MemoryRouter>
-      <LoginForm />
+      <AuthnProvider>
+        <LoginForm />
+      </AuthnProvider>
     </MemoryRouter>
   );
 }
@@ -37,6 +41,7 @@ let navigate;
 beforeEach(() => {
   navigate = jest.fn();
   useNavigate.mockReturnValue(navigate);
+  useLocation.mockReturnValue({ state: {} });
 });
 
 describe("when the form has been submitted", () => {
@@ -117,12 +122,26 @@ describe("when the form has been submitted", () => {
   });
 
   describe("when the API returns success", () => {
-    it("navigates browser to /dashboard", async () => {
-      post.mockResolvedValue({});
-      const user = userEvent.setup();
-      const container = render(buildComponent());
-      await act(() => submitForm(user, container));
-      expect(navigate).toHaveBeenCalledWith("/dashboard");
+    describe("when given location does not have `from` state", () => {
+      it("navigates browser to /dashboard", async () => {
+        post.mockResolvedValue({});
+        const user = userEvent.setup();
+        const container = render(buildComponent());
+        await act(() => submitForm(user, container));
+        expect(navigate).toHaveBeenCalledWith("/dashboard", { replace: true });
+      });
+    });
+
+    describe("when given location has `from` state", () => {
+      it("navigates browser to `from` state's pathname", async () => {
+        post.mockResolvedValue({});
+        const pathname = "/test/path";
+        useLocation.mockReturnValue({ state: { from: { pathname } } });
+        const user = userEvent.setup();
+        const container = render(buildComponent());
+        await act(() => submitForm(user, container));
+        expect(navigate).toHaveBeenCalledWith(pathname, { replace: true });
+      });
     });
   });
 });

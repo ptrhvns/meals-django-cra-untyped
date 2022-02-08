@@ -1,15 +1,18 @@
 import Alert from "./Alert";
+import useAuthn from "../hooks/useAuthn";
 import { faSignInAlt, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { forOwn, head } from "lodash";
 import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function LoginForm() {
   const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const authn = useAuthn();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const {
@@ -34,7 +37,11 @@ function LoginForm() {
       return;
     }
 
-    navigate("/dashboard");
+    authn.login(() =>
+      navigate(location.state?.from?.pathname || "/dashboard", {
+        replace: true,
+      })
+    );
   };
 
   return (

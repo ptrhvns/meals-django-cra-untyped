@@ -1,4 +1,5 @@
 import App from "./App";
+import AuthnProvider from "./providers/AuthnProvider";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
@@ -9,7 +10,9 @@ ReactDOM.render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <AuthnProvider>
+          <App />
+        </AuthnProvider>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,

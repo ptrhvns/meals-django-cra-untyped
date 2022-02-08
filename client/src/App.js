@@ -3,6 +3,8 @@ import Home from "./routes/Home";
 import Login from "./routes/Login";
 import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
+import RequireAuthn from "./components/RequireAuthn";
+import RequireGuest from "./components/RequireGuest";
 import Signup from "./routes/Signup";
 import SignupConfirmation from "./routes/SignupConfirmation";
 import TermsAndConditions from "./routes/TermsAndConditions";
@@ -19,14 +21,46 @@ function App() {
       </Helmet>
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <RequireGuest>
+              <Home />
+            </RequireGuest>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuthn>
+              <Dashboard />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <RequireGuest>
+              <Login />
+            </RequireGuest>
+          }
+        />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/signup"
+          element={
+            <RequireGuest>
+              <Signup />
+            </RequireGuest>
+          }
+        />
         <Route
           path="/signup-confirmation/:token"
-          element={<SignupConfirmation />}
+          element={
+            <RequireGuest>
+              <SignupConfirmation />
+            </RequireGuest>
+          }
         />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="*" element={<NotFound />} />

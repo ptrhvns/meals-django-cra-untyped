@@ -164,5 +164,5 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   pytest --cov --cov-report html # HTML report
   pytest --cov --cov-report term-missing # terminal report
 
-  # Open htmlcov/index.html with a browser if html report chosen.
+  # Open htmlcov/index.html with a browser if HTML report chosen.
   ```

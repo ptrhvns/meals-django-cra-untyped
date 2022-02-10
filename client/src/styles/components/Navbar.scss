@@ -11,7 +11,7 @@
     padding-top: 1rem;
   }
 
-  .navbar-logo {
+  .navbar-logo-wrapper {
     a {
       border-radius: decorations.$border-radius;
       color: map.get(colors.$colors, "blue-d65");
@@ -30,11 +30,59 @@
     }
   }
 
-  .navbar-primary-navigation {
-    display: flex;
-    gap: 1rem;
+  .navbar-menu-button {
+    color: map.get(colors.$colors, "blue-d65");
+
+    &:active {
+      box-shadow: none;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .navbar-menu-wrapper {
+    position: relative;
+  }
+
+  .navbar-menu-list-wrapper {
+    background-color: map.get(colors.$colors, "white");
+    border-radius: decorations.$border-radius;
+    border: 1px solid map.get(colors.$colors, "gray-l75");
+    color: map.get(colors.$colors, "blue-d65");
+    position: absolute;
+    right: 0;
+    top: 1.75rem;
+    white-space: nowrap;
+  }
+
+  .navbar-menu-list {
     list-style: none;
     margin: 0;
     padding: 0;
+
+    li {
+      padding: 0.5rem 1.5rem;
+
+      &:hover {
+        background-color: map.get(colors.$colors, "gray-l95");
+      }
+    }
+
+    a,
+    button {
+      color: map.get(colors.$colors, "blue-d65");
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    button {
+      &:active {
+        box-shadow: none;
+      }
+    }
   }
 }

@@ -33,8 +33,59 @@ it("renders successfully", () => {
   ReactDOM.render(buildComponent(), div);
 });
 
-describe("when user clicks on button to log out", () => {
-  it("sends logout request to server", async () => {
+describe("when user is logged out", () => {
+  it("renders the login button", () => {
+    useAuthn.mockReturnValue({ isAuthenticated: false });
+
+    act(() => {
+      const { queryByRole } = render(buildComponent());
+      expect(queryByRole("link", { name: "Log in" })).toBeTruthy();
+    });
+  });
+});
+
+describe("when user is logged in", () => {
+  it("renders the menu button", () => {
+    useAuthn.mockReturnValue({ isAuthenticated: true });
+    const { queryByRole } = render(buildComponent());
+    expect(queryByRole("button", { name: "Menu" })).toBeTruthy();
+  });
+});
+
+describe("when user clicks on menu button and it's closed", () => {
+  it("opens the menu", async () => {
+    useAuthn.mockReturnValue({ isAuthenticated: true });
+    const user = userEvent.setup();
+    const { getByRole, queryByTestId } = render(buildComponent());
+    await user.click(getByRole("button", { name: "Menu" }));
+    expect(queryByTestId("navbar-menu-list")).toBeTruthy();
+  });
+});
+
+describe("when user clicks on menu button and it's open", () => {
+  it("closes the menu", async () => {
+    useAuthn.mockReturnValue({ isAuthenticated: true });
+    const user = userEvent.setup();
+    const { getByRole, queryByTestId } = render(buildComponent());
+    await user.click(getByRole("button", { name: "Menu" }));
+    await user.click(getByRole("button", { name: "Menu" }));
+    expect(queryByTestId("navbar-menu-list")).not.toBeTruthy();
+  });
+});
+
+describe("when user clicks outside menu and it's open", () => {
+  it("closes the menu", async () => {
+    useAuthn.mockReturnValue({ isAuthenticated: true });
+    const user = userEvent.setup();
+    const { getByRole, getByTestId, queryByTestId } = render(buildComponent());
+    await user.click(getByRole("button", { name: "Menu" }));
+    await user.click(getByTestId("navbar-logo-wrapper"));
+    expect(queryByTestId("navbar-menu-list")).not.toBeTruthy();
+  });
+});
+
+describe("when user clicks on logout button", () => {
+  it("logs user out", async () => {
     const logout = jest.fn();
     useAuthn.mockReturnValue({ isAuthenticated: true, logout });
     post.mockResolvedValue({});
@@ -42,11 +93,11 @@ describe("when user clicks on button to log out", () => {
 
     await act(async () => {
       const { getByRole } = render(buildComponent());
+      await user.click(getByRole("button", { name: "Menu" }));
       await user.click(getByRole("button", { name: "Log out" }));
     });
 
+    expect(post).toHaveBeenCalled();
     expect(logout).toHaveBeenCalled();
   });
-
-  it.todo("calls logout from authentication provider");
 });

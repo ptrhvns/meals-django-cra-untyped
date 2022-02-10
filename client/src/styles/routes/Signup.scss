@@ -55,4 +55,9 @@
     color: map.get(colors.$colors, "gray");
     margin-top: 0.75rem;
   }
+
+  .signup-login-link {
+    color: map.get(colors.$colors, "gray");
+    margin-top: 2rem;
+  }
 }

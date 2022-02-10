@@ -2,6 +2,7 @@ import FullPageCard from "../components/FullPageCard";
 import LoginForm from "../components/LoginForm";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 function Login() {
   return (
@@ -12,7 +13,12 @@ function Login() {
 
       <FullPageCard>
         <h1 className="login-header">Login</h1>
+
         <LoginForm />
+
+        <p className="login-signup-link">
+          Don't have an account? <Link to="/signup">Sign up</Link>.
+        </p>
       </FullPageCard>
     </div>
   );

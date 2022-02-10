@@ -28,6 +28,10 @@ function Signup() {
                 </p>
 
                 <SignupForm />
+
+                <p className="signup-login-link">
+                  Already have an account? <Link to="/login">Log in</Link>.
+                </p>
               </div>
             </div>
           </div>

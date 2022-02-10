@@ -83,7 +83,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Configure Redis:
 
   ```sh
-  sudo vim /etc/redis/redis.conf
+  sudo $EDITOR /etc/redis/redis.conf
 
     # ...
     # supervised no
@@ -106,7 +106,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   python -c 'from django.core.management import utils; print(utils.get_random_secret_key())'
 
   # Edit config file, and put in valid values.
-  vim config/.env
+  $EDITOR config/.env
   ```
 
 - Run database migrations:

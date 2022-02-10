@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators import csrf
 from rest_framework import decorators as rf_decorators
-from rest_framework import response, status
+from rest_framework import permissions, response, status
 
 from main import client, models, serializers, tasks
 
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 @csrf.ensure_csrf_cookie
 @rf_decorators.api_view(http_method_names=["GET"])
-def csrf_token_cookie(request):
+def csrf_token(request):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -67,6 +67,13 @@ def login(request):
 
     logger.info("login succeeded for username %(username)s", {"username": username})
     auth.login(request, user)
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def logout(request):
+    auth.logout(request)
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 

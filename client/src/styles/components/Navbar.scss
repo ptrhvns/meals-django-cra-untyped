@@ -18,9 +18,9 @@
       font-size: 1.8rem;
       font-weight: bold;
 
-      &:hover {
-        background-color: map.get(colors.$colors, "blue-l95");
-        color: map.get(colors.$colors, "blue-d65");
+      &:hover,
+      &:hover:visited {
+        color: map.get(colors.$colors, "blue-d45");
         text-decoration: none;
       }
 

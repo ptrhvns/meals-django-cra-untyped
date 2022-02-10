@@ -36,6 +36,20 @@ button {
   }
 }
 
+button.button-link {
+  background: transparent;
+  border: none;
+  color: map.get(colors.$colors, "blue-d25");
+  cursor: pointer;
+  display: inline;
+  padding: 0;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 button.button-primary {
   background-color: map.get(colors.$colors, "blue-bg");
   border: 1px solid map.get(colors.$colors, "blue-border");

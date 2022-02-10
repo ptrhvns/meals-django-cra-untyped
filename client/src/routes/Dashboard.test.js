@@ -1,14 +1,17 @@
+import AuthnProvider from "../providers/AuthnProvider";
 import Dashboard from "./Dashboard";
 import ReactDOM from "react-dom";
-import { render, waitFor } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
+import { render, waitFor } from "@testing-library/react";
 
 function buildComponent() {
   return (
     <MemoryRouter>
       <HelmetProvider>
-        <Dashboard />
+        <AuthnProvider>
+          <Dashboard />
+        </AuthnProvider>
       </HelmetProvider>
     </MemoryRouter>
   );

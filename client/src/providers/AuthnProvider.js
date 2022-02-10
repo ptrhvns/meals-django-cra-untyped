@@ -1,5 +1,4 @@
 import AuthnContext from "../contexts/AuthnContext";
-import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
@@ -9,11 +8,11 @@ const propTypes = {
 
 function AuthnProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!Cookies.get("isAuthenticated")
+    !!localStorage.getItem("isAuthenticated")
   );
 
   const login = (callback) => {
-    Cookies.set("isAuthenticated", "true");
+    localStorage.setItem("isAuthenticated", "true");
     setIsAuthenticated(true);
 
     if (callback) {
@@ -22,7 +21,7 @@ function AuthnProvider({ children }) {
   };
 
   const logout = (callback) => {
-    Cookies.remove("isAuthenticated");
+    localStorage.removeItem("isAuthenticated");
     setIsAuthenticated(false);
 
     if (callback) {

@@ -1,3 +1,4 @@
+import AuthnProvider from "../providers/AuthnProvider";
 import PrivacyPolicy from "./PrivacyPolicy";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -8,7 +9,9 @@ function buildComponent() {
   return (
     <MemoryRouter>
       <HelmetProvider>
-        <PrivacyPolicy />
+        <AuthnProvider>
+          <PrivacyPolicy />
+        </AuthnProvider>
       </HelmetProvider>
     </MemoryRouter>
   );

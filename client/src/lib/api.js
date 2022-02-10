@@ -1,19 +1,22 @@
+import Cookies from "js-cookie";
 import { omit } from "lodash";
 
 /* istanbul ignore next */
 export const routes = {
-  csrfTokenCookie: () => "/api/csrf_token_cookie/",
+  csrfToken: () => "/api/csrf_token/",
   login: () => "/api/login/",
+  logout: () => "/api/logout/",
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
 };
 
-export async function send({ data, method, route, routeData }) {
+export async function send({ data, headers, method, route, routeData }) {
   const body = data ? JSON.stringify(data) : null;
 
-  const headers = {
+  headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
+    ...headers,
   };
 
   const mode = "same-origin";
@@ -29,18 +32,28 @@ export async function send({ data, method, route, routeData }) {
     };
   }
 
-  let json = {};
+  let json;
 
   try {
     json = await response.json();
-  } catch (_) {
-    // noop
+  } catch (error) {
+    json = {};
   }
 
   if (!response.ok) {
-    const message = json.message ?? "An error occurred.";
-    const rest = omit(json, (value, key) => key === "message");
-    return { isError: true, message, ...rest };
+    if (response.status === 401 || response.status === 403) {
+      return {
+        isError: true,
+        isUnauthorized: true,
+        message: json.message ?? "Your request was unauthorized.",
+      };
+    }
+
+    return {
+      isError: true,
+      message: json.message ?? "An error occurred.",
+      ...omit(json, "message"),
+    };
   }
 
   return json;
@@ -51,6 +64,11 @@ export function get({ ...args }) {
 }
 
 export async function post({ ...args }) {
-  await get({ route: "csrfTokenCookie" });
-  return await send({ method: "POST", ...args });
+  await get({ route: "csrfToken" });
+
+  return await send({
+    headers: { "X-CSRFToken": Cookies.get("csrftoken"), ...args.headers },
+    method: "POST",
+    ...omit(args, "headers"),
+  });
 }

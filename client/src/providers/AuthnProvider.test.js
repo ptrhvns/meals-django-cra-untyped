@@ -1,5 +1,4 @@
 import AuthnProvider from "./AuthnProvider";
-import Cookies from "js-cookie";
 import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
 import { act, render } from "@testing-library/react";
@@ -13,23 +12,23 @@ function buildComponent(Component) {
 }
 
 afterEach(() => {
-  Cookies.remove("isAuthenticated");
+  localStorage.removeItem("isAuthenticated");
 });
 
-describe("when isAuthenticated cookie is set", () => {
+describe("when isAuthenticated is set in localStorage", () => {
   it("sets isAuthenticated context value to true", () => {
     function FakeComponent() {
       const authn = useAuthn();
       return <>{authn.isAuthenticated && <>isAuthenticated is true</>}</>;
     }
 
-    Cookies.set("isAuthenticated", "true");
+    localStorage.setItem("isAuthenticated", "true");
     const { queryByText } = render(buildComponent(FakeComponent));
     expect(queryByText("isAuthenticated is true")).toBeTruthy();
   });
 });
 
-describe("when isAuthenticated cookie is not set", () => {
+describe("when isAuthenticated is not set in localStorage", () => {
   it("sets isAuthenticated context value to false", () => {
     function FakeComponent() {
       const authn = useAuthn();
@@ -42,7 +41,7 @@ describe("when isAuthenticated cookie is not set", () => {
 });
 
 describe("login()", () => {
-  it("sets isAuthenticated cookie to true", async () => {
+  it("sets isAuthenticated in localStorage to true", async () => {
     function FakeComponent() {
       const authn = useAuthn();
 
@@ -60,7 +59,7 @@ describe("login()", () => {
       getByRole("button", { hidden: true, name: "test button" })
     );
 
-    expect(Cookies.get("isAuthenticated")).toBeTruthy();
+    expect(localStorage.getItem("isAuthenticated")).toBeTruthy();
   });
 
   it("sets isAuthenticated context value to true", async () => {
@@ -115,7 +114,7 @@ describe("login()", () => {
 });
 
 describe("logout()", () => {
-  it("removes isAuthenticated cookie", async () => {
+  it("removes isAuthenticated from localStorage", async () => {
     function FakeComponent() {
       const authn = useAuthn();
 
@@ -133,7 +132,7 @@ describe("logout()", () => {
       getByRole("button", { hidden: true, name: "test button" })
     );
 
-    expect(Cookies.get("isAuthenticated")).not.toBeTruthy();
+    expect(localStorage.getItem("isAuthenticated")).not.toBeTruthy();
   });
 
   it("sets isAuthenticated context value to false", async () => {

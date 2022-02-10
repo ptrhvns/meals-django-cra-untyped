@@ -1,9 +1,11 @@
 import Container from "./Container";
 import PropTypes from "prop-types";
+import useAuthn from "../hooks/useAuthn";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { join } from "lodash";
 import { Link } from "react-router-dom";
+import { post } from "../lib/api";
 
 const propTypes = {
   className: PropTypes.string,
@@ -14,7 +16,13 @@ const defaultProps = {
 };
 
 function Navbar({ className }) {
+  const authn = useAuthn();
   const cn = join(["navbar", className], " ");
+
+  const handleLogout = async () => {
+    await post({ route: "logout" });
+    authn.logout();
+  };
 
   return (
     <div className={cn}>
@@ -29,7 +37,17 @@ function Navbar({ className }) {
           <nav>
             <ul className="navbar-primary-navigation">
               <li>
-                <Link to="/login">Log in</Link>
+                {authn.isAuthenticated ? (
+                  <button
+                    className="button-link"
+                    onClick={handleLogout}
+                    type="button"
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <Link to="/login">Log in</Link>
+                )}
               </li>
             </ul>
           </nav>

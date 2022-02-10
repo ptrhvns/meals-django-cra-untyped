@@ -1,3 +1,4 @@
+import AuthnProvider from "../providers/AuthnProvider";
 import NotFound from "./NotFound";
 import ReactDOM from "react-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -8,7 +9,9 @@ function buildComponent() {
   return (
     <MemoryRouter>
       <HelmetProvider>
-        <NotFound />
+        <AuthnProvider>
+          <NotFound />
+        </AuthnProvider>
       </HelmetProvider>
     </MemoryRouter>
   );

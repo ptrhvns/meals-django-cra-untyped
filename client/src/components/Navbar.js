@@ -76,6 +76,14 @@ function Navbar({ className }) {
                       data-testid="navbar-menu-list"
                     >
                       <li>
+                        <Link to="/dashboard">Dashboard</Link>
+                      </li>
+
+                      <li>
+                        <Link to="/settings">Settings</Link>
+                      </li>
+
+                      <li className="navbar-menu-group-first">
                         <button
                           className="button-link"
                           onClick={handleLogout}

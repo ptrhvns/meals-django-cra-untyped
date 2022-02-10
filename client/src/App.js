@@ -5,6 +5,7 @@ import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import RequireAuthn from "./components/RequireAuthn";
 import RequireGuest from "./components/RequireGuest";
+import Settings from "./routes/Settings";
 import Signup from "./routes/Signup";
 import SignupConfirmation from "./routes/SignupConfirmation";
 import TermsAndConditions from "./routes/TermsAndConditions";
@@ -46,6 +47,14 @@ function App() {
           }
         />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/settings"
+          element={
+            <RequireAuthn>
+              <Settings />
+            </RequireAuthn>
+          }
+        />
         <Route
           path="/signup"
           element={

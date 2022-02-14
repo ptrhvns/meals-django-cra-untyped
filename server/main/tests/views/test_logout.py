@@ -6,7 +6,7 @@ from main import models, views
 
 
 def test_allowed_http_method_names():
-    method_names = sorted(views.login.view_class.http_method_names)
+    method_names = sorted(views.logout.view_class.http_method_names)
     assert method_names == ["options", "post"]
 
 

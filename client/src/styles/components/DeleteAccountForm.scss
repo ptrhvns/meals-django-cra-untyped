@@ -1,0 +1,42 @@
+.delete-account-form {
+  $max-form-width: 25rem;
+
+  margin-top: 2rem;
+
+  .delete-account-form-alert {
+    max-width: $max-form-width;
+  }
+
+  .delete-account-form-alert + .delete-account-form-field {
+    margin-top: 1.25rem;
+  }
+
+  .delete-account-form-input-wrapper {
+    margin-top: 0.5rem;
+
+    input {
+      width: min($max-form-width, 100%);
+    }
+  }
+
+  .delete-account-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    max-width: $max-form-width;
+
+    button {
+      flex-grow: 1;
+    }
+  }
+
+  .field-error-text {
+    margin-top: 0.5rem;
+  }
+
+  .delete-account-form-button + .delete-account-form-button {
+    margin-left: 0.5rem;
+  }
+}

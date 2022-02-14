@@ -9,6 +9,12 @@ logger = logging.getLogger(__name__)
 User = auth.get_user_model()
 
 
+class DeleteAccountSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        max_length=User._meta.get_field("password").max_length, required=True
+    )
+
+
 class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(
         max_length=User._meta.get_field("password").max_length, required=True

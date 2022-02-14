@@ -4,6 +4,7 @@ import { omit } from "lodash";
 /* istanbul ignore next */
 export const routes = {
   csrfToken: () => "/api/csrf_token/",
+  deleteAccount: () => "/api/delete_account/",
   login: () => "/api/login/",
   logout: () => "/api/logout/",
   signup: () => "/api/signup/",

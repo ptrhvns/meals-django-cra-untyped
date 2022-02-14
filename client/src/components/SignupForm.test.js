@@ -42,7 +42,7 @@ describe("when the form has been submitted", () => {
 
   it("renders submit spinner appropriately throughout", async () => {
     let resolve;
-    post.mockResolvedValue(new Promise((res, _) => (resolve = res)));
+    post.mockReturnValue(new Promise((res, _) => (resolve = res)));
     const user = userEvent.setup();
     const container = render(buildComponent());
     const { getByLabelText, getByRole, queryByTestId } = container;
@@ -56,7 +56,7 @@ describe("when the form has been submitted", () => {
   });
 
   it("submits form data to the API", async () => {
-    post.mockResolvedValue(Promise.resolve({ message: "success" }));
+    post.mockReturnValue(Promise.resolve({ message: "success" }));
     const user = userEvent.setup();
     const container = render(buildComponent());
     await act(() => submitForm(user, container));
@@ -74,7 +74,7 @@ describe("when the form has been submitted", () => {
   describe("when the API returns a general error message", () => {
     it("renders a dismissable error Alert", async () => {
       const message = "An error occurred.";
-      post.mockResolvedValue(Promise.resolve({ isError: true, message }));
+      post.mockReturnValue(Promise.resolve({ isError: true, message }));
       const user = userEvent.setup();
       const container = render(buildComponent());
       await act(() => submitForm(user, container));
@@ -92,7 +92,7 @@ describe("when the form has been submitted", () => {
         username: ["Username is invalid."],
       };
 
-      post.mockResolvedValue(
+      post.mockReturnValue(
         Promise.resolve({
           errors,
           isError: true,
@@ -111,7 +111,7 @@ describe("when the form has been submitted", () => {
 
   describe("when the API returns success", () => {
     it("renders a confirmation message", async () => {
-      post.mockResolvedValue({});
+      post.mockReturnValue(Promise.resolve({ message: "success" }));
       const user = userEvent.setup();
       const container = render(buildComponent());
       await act(() => submitForm(user, container));

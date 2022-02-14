@@ -22,6 +22,50 @@ def csrf_token(request):
 
 
 @rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def delete_account(request):
+    serializer = serializers.DeleteAccountSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        logger.warning(
+            "account deletion failed with invalid request data for user ID %(user_id)s",
+            {"user_id": request.user.id},
+        )
+
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    password = serializer.validated_data["password"]
+
+    logger.info(
+        "checking password for user ID %(user_id)s", {"user_id": request.user.id}
+    )
+
+    if not request.user.check_password(password):
+        logger.error(
+            "invalid password given for user ID %(user_id)s",
+            {"user_id": request.user.id},
+        )
+        return response.Response(
+            {"message": _("Invalid password.")},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    logger.info(
+        "deleting account for user ID %(user_id)s, username %(username)s",
+        {"user_id": request.user.id, "username": request.user.username},
+    )
+    request.user.delete()
+    auth.logout(request)
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
 def login(request):
     username = request.data.get("username")
     logger.info("attempting login for username %(username)s", {"username": username})

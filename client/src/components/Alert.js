@@ -20,7 +20,7 @@ function Alert({ children, className, onDismiss, variant }) {
   const cn = join(compact(["alert", `alert-${variant}`, className]), " ");
 
   return (
-    <div className={cn}>
+    <div className={cn} data-testid="alert">
       <div>{children}</div>
       {onDismiss && (
         <div>

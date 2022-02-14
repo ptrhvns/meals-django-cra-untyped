@@ -63,8 +63,6 @@
     padding: 0;
 
     li {
-      padding: 0.5rem 1.5rem;
-
       &:hover {
         background-color: map.get(colors.$colors, "gray-l95");
       }
@@ -73,6 +71,11 @@
     a,
     button {
       color: map.get(colors.$colors, "blue-d65");
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      text-align: left;
+      vertical-align: middle;
+      width: 100%;
 
       &:hover {
         text-decoration: none;

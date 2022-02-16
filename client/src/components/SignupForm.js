@@ -5,7 +5,7 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { forOwn, head } from "lodash";
+import { handleResponseErrors } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
@@ -29,12 +29,7 @@ function SignupForm() {
     setIsSubmitting(false);
 
     if (response.isError) {
-      setAlertMessage(response.message);
-
-      forOwn(response.errors, (value, key) => {
-        setError(key, { message: head(value), type: "manual" });
-      });
-
+      handleResponseErrors({ response, setAlertMessage, setError });
       return;
     }
 

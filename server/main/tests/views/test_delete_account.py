@@ -1,8 +1,4 @@
-import importlib
-
-import pytest
 from django import urls
-from django.conf import settings
 from rest_framework import permissions, status, test
 
 from main import views

@@ -1,0 +1,27 @@
+.create-recipe-form {
+  margin-top: 2rem;
+
+  .create-recipe-form-alert + .create-recipe-form-field {
+    margin-top: 1rem;
+  }
+
+  .create-recipe-form-input-wrapper {
+    margin-top: 0.5rem;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .field-error-text {
+    margin-top: 0.5rem;
+  }
+
+  .create-recipe-form-actions {
+    margin-top: 2rem;
+
+    button {
+      width: 100%;
+    }
+  }
+}

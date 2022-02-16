@@ -7,12 +7,20 @@ from django.utils.translation import gettext_lazy as _
 from main import utils
 
 
+class Recipe(db_models.Model):
+    title = db_models.CharField(max_length=256)
+    user = db_models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="recipes"
+    )
+
+    def __str__(self):
+        return self.title
+
+
 class User(auth_models.AbstractUser):
     username_validator = validators.UnicodeUsernameValidator()
-
     email = db_models.EmailField(_("email address"), blank=False)
     email_confirmed_datetime = db_models.DateTimeField(blank=True, null=True)
-
     is_active = db_models.BooleanField(
         _("active"),
         default=False,
@@ -21,7 +29,6 @@ class User(auth_models.AbstractUser):
             "Unselect this instead of deleting accounts."
         ),
     )
-
     username = db_models.CharField(
         _("username"),
         error_messages={"unique": _("That username already exists.")},
@@ -47,7 +54,6 @@ class Token(db_models.Model):
     category = db_models.CharField(choices=CATEGORY_CHOICES, max_length=32)
     expiration = db_models.DateTimeField()
     token = db_models.CharField(max_length=256, default=utils.build_token, unique=True)
-
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="tokens"
     )

@@ -1,8 +1,11 @@
 @use "../shared/colors";
 @use "../shared/decorations";
+@use "../shared/widgets";
 @use "sass:map";
 
 .navbar {
+  height: widgets.$navbar-height;
+
   .navbar-content {
     align-items: center;
     display: flex;

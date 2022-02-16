@@ -25,15 +25,25 @@ class LoginSerializer(serializers.Serializer):
     )
 
 
-class SignupConfirmationSerializer(serializers.ModelSerializer):
-    token = serializers.CharField(max_length=256, required=True)
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("title",)
 
+
+class SignupConfirmationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Token
         fields = ("token",)
 
+    token = serializers.CharField(max_length=256, required=True)
+
 
 class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id", "username", "email", "password")
+
     email = serializers.EmailField(
         required=True,
         validators=[validators.UniqueValidator(queryset=User.objects.all())],
@@ -54,7 +64,3 @@ class UserSerializer(serializers.ModelSerializer):
 
         logger.info("created new user with ID %(user_id)s", {"user_id": user.id})
         return user
-
-    class Meta:
-        model = User
-        fields = ("id", "username", "email", "password")

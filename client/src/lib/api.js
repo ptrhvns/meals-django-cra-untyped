@@ -3,6 +3,7 @@ import { omit } from "lodash";
 
 /* istanbul ignore next */
 export const routes = {
+  createRecipe: () => "/api/create_recipe/",
   csrfToken: () => "/api/csrf_token/",
   deleteAccount: () => "/api/delete_account/",
   login: () => "/api/login/",

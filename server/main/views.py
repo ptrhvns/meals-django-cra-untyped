@@ -15,6 +15,26 @@ from main import client, models, serializers, tasks
 logger = logging.getLogger(__name__)
 
 
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def create_recipe(request):
+    serializer = serializers.RecipeSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    recipe = serializer.save(user=request.user)
+    return response.Response(
+        {"data": {"id": recipe.id}}, status=status.HTTP_201_CREATED
+    )
+
+
 @csrf.ensure_csrf_cookie
 @rf_decorators.api_view(http_method_names=["GET"])
 def csrf_token(request):

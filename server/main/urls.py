@@ -3,6 +3,7 @@ from django import urls
 from main import views
 
 urlpatterns = [
+    urls.path("create_recipe/", views.create_recipe, name="create_recipe"),
     urls.path("csrf_token/", views.csrf_token, name="csrf_token"),
     urls.path("delete_account/", views.delete_account, name="delete_account"),
     urls.path("login/", views.login, name="login"),

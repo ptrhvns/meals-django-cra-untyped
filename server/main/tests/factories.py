@@ -17,6 +17,14 @@ class UserFactory(factory.django.DjangoModelFactory):
             obj.set_password(extracted)
 
 
+class RecipeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Recipe
+
+    title = factory.Sequence(lambda n: f"Recipe #{n}")
+    user = factory.SubFactory(UserFactory)
+
+
 class TokenFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Token

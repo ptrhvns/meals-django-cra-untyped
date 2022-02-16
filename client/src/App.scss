@@ -11,12 +11,14 @@
 
 @use "styles/components/Alert";
 @use "styles/components/Container";
+@use "styles/components/CreateRecipeForm";
 @use "styles/components/DeleteAccountForm";
 @use "styles/components/FullPageCard";
 @use "styles/components/LoginForm";
 @use "styles/components/Navbar";
 @use "styles/components/SignupForm";
 
+@use "styles/routes/CreateRecipe";
 @use "styles/routes/Dashboard";
 @use "styles/routes/Home";
 @use "styles/routes/Login";

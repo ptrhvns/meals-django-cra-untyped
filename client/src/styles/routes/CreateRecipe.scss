@@ -1,0 +1,35 @@
+@use "../shared/colors";
+@use "../shared/decorations";
+@use "../shared/widgets";
+@use "sass:map";
+@use "sass:math";
+
+.create-recipe {
+  $create-recipe-height: calc(100vh - widgets.$navbar-height);
+
+  background-color: map.get(colors.$colors, "gray-l95");
+
+  .create-recipe-viewport {
+    height: $create-recipe-height;
+  }
+
+  .create-recipe-content {
+    display: grid;
+    justify-content: center;
+    padding-top: calc($create-recipe-height / 8);
+  }
+
+  .create-recipe-card {
+    background-color: map.get(colors.$colors, "white");
+    border-radius: decorations.$border-radius-lg;
+    border: 1px solid map.get(colors.$colors, "gray-l80");
+    box-shadow: decorations.$box-shadow;
+    height: fit-content;
+    padding: 1rem 1rem 2rem 1rem;
+    width: clamp(1rem, 90vw, 30rem);
+  }
+
+  .create-recipe-instructions {
+    color: map.get(colors.$colors, "gray");
+  }
+}

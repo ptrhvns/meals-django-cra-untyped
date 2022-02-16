@@ -3,11 +3,11 @@ from django import urls
 from rest_framework import permissions, status
 
 from main import models, views
+from main.tests.support import drf_view_helpers as dvh
 
 
-def test_allowed_http_method_names():
-    method_names = sorted(views.logout.view_class.http_method_names)
-    assert method_names == ["options", "post"]
+def test_http_method_names():
+    assert dvh.has_http_method_names(views.logout, ["options", "post"])
 
 
 def test_required_permissions():

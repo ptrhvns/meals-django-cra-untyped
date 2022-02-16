@@ -7,13 +7,11 @@ from rest_framework import status
 
 from main import models, views
 from main.tests import factories
+from main.tests.support import drf_view_helpers as dvh
 
 
-def test_allowed_http_method_names():
-    assert sorted(views.signup_confirmation.view_class.http_method_names) == [
-        "options",
-        "post",
-    ]
+def test_http_method_names():
+    assert dvh.has_http_method_names(views.signup_confirmation, ["options", "post"])
 
 
 def test_confirming_signup_with_invalid_data(client):

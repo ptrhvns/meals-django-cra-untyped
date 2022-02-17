@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def create_recipe(request):
-    serializer = serializers.RecipeSerializer(data=request.data)
+    serializer = serializers.CreateRecipeSerializer(data=request.data)
 
     if not serializer.is_valid():
         return response.Response(

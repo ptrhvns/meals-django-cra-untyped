@@ -29,7 +29,7 @@ def test_creating_recipe_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
     rs_instance = mocker.patch(
-        "main.views.serializers.RecipeSerializer", autospec=True
+        "main.views.serializers.CreateRecipeSerializer", autospec=True
     ).return_value
     rs_instance.is_valid.return_value = True
     rs_instance.save.return_value = recipe

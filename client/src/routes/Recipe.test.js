@@ -1,9 +1,13 @@
+jest.mock("../lib/api", () => ({ get: jest.fn() }));
+
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
-import Recipe from "./Recipe";
+import Recipe, { reducer } from "./Recipe";
+import userEvent from "@testing-library/user-event";
+import { act, render, waitFor } from "@testing-library/react";
+import { get } from "../lib/api";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitFor } from "@testing-library/react";
 
 function buildComponent() {
   return (
@@ -22,9 +26,56 @@ it("renders successfully", () => {
   ReactDOM.render(buildComponent(), div);
 });
 
-it("renders the correct <title>", async () => {
-  const component = render(buildComponent());
-
-  // TODO ensure page title reflects recipe title
+it("renders the correct <title> throughout lifecycle", async () => {
+  let resolve;
+  get.mockReturnValue(new Promise((res, _) => (resolve = res)));
+  render(buildComponent());
   await waitFor(() => expect(document.title).toContain("Recipe"));
+  const title = "Test Title";
+  act(() => resolve({ data: { title } }));
+  await waitFor(() => expect(document.title).toContain(title));
+});
+
+describe("reducer()", () => {
+  describe("when action.type is 'set'", () => {
+    it("returns action.data", () => {
+      const action = { type: "set", data: { title: "Test Title" } };
+      const newState = reducer({}, action);
+      expect(newState).toEqual(action.data);
+    });
+  });
+
+  describe("when action.type is 'updateTitle'", () => {
+    it("returns old state updated with new title", () => {
+      const title = "New Test Title";
+      const oldState = { foo: "bar", title: "Old Test Title" };
+      const newState = reducer(oldState, { type: "updateTitle", title });
+      expect(newState).toEqual({ ...oldState, title });
+    });
+  });
+
+  describe("when action.type is not known", () => {
+    it("returns previous state", () => {
+      const oldState = { title: "Old Test Title" };
+      const newState = reducer(oldState, { type: "invalid" });
+      expect(newState).toEqual(oldState);
+    });
+  });
+});
+
+describe("when recipe is still loading", () => {
+  it("renders a loading message", () => {
+    get.mockReturnValue(new Promise(() => {}));
+    const { queryByText } = render(buildComponent());
+    expect(queryByText("Loading")).toBeTruthy();
+  });
+});
+
+describe("when loading recipe generates an error", () => {
+  it("renders that error", async () => {
+    const message = "test error";
+    get.mockResolvedValue({ isError: true, message });
+    const { queryByText } = render(buildComponent());
+    await waitFor(() => expect(queryByText(message)).toBeTruthy());
+  });
 });

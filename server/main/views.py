@@ -2,6 +2,7 @@ import datetime
 import logging
 import zoneinfo
 
+from django import shortcuts
 from django.conf import settings
 from django.contrib import auth
 from django.utils import timezone
@@ -141,6 +142,14 @@ def logout(request):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.RecipeSerializer(recipe)
+    return response.Response({"data": serializer.data})
+
+
 @rf_decorators.api_view(http_method_names=["POST"])
 def signup(request):
     serializer = serializers.UserSerializer(data=request.data)
@@ -223,3 +232,23 @@ def signup_confirmation(request):
         {"message": _("Your signup was successfully confirmed.")},
         status=status.HTTP_200_OK,
     )
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def update_recipe_title(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.UpdateRecipeTitleSerializer(
+        data=request.data, instance=recipe
+    )
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            }
+        )
+
+    recipe = serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)

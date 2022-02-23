@@ -1,0 +1,30 @@
+@use "../shared/colors";
+@use "../shared/decorations";
+@use "../shared/widgets";
+@use "sass:map";
+
+.recipe {
+  $recipe-height: calc(100vh - widgets.$navbar-height);
+
+  background-color: map.get(colors.$colors, "gray-l95");
+
+  .recipe-viewport {
+    min-height: $recipe-height;
+  }
+
+  .recipe-loading-alert {
+    margin-top: calc($recipe-height / 15);
+  }
+
+  .recipe-card {
+    background-color: map.get(colors.$colors, "white");
+    border-radius: decorations.$border-radius;
+    border: 1px solid map.get(colors.$colors, "gray-l80");
+    box-shadow: decorations.$box-shadow;
+    padding: 1rem;
+
+    &:first-of-type {
+      margin-top: 2rem;
+    }
+  }
+}

@@ -1,8 +1,4 @@
-@use "sass:map";
-
 @use "styles/shared/reset";
-
-@use "styles/shared/utils";
 
 @use "styles/shared/typography";
 
@@ -16,12 +12,14 @@
 @use "styles/components/FullPageCard";
 @use "styles/components/LoginForm";
 @use "styles/components/Navbar";
+@use "styles/components/RecipeTitleForm";
 @use "styles/components/SignupForm";
 
 @use "styles/routes/CreateRecipe";
 @use "styles/routes/Dashboard";
 @use "styles/routes/Home";
 @use "styles/routes/Login";
+@use "styles/routes/Recipe";
 @use "styles/routes/Settings";
 @use "styles/routes/Signup";
 @use "styles/routes/SignupConfirmation";

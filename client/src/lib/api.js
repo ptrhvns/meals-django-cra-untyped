@@ -1,15 +1,17 @@
 import Cookies from "js-cookie";
 import { omit } from "lodash";
 
-/* istanbul ignore next */
+// istanbul ignore next
 export const routes = {
   createRecipe: () => "/api/create_recipe/",
   csrfToken: () => "/api/csrf_token/",
   deleteAccount: () => "/api/delete_account/",
   login: () => "/api/login/",
   logout: () => "/api/logout/",
+  recipe: ({ recipeId }) => `/api/recipe/${recipeId}/`,
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
+  updateRecipeTitle: ({ recipeId }) => `/api/update_recipe_title/${recipeId}/`,
 };
 
 export async function send({ data, headers, method, route, routeData }) {

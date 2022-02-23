@@ -39,6 +39,18 @@ class SignupConfirmationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=256, required=True)
 
 
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("id", "title")
+
+
+class UpdateRecipeTitleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("title",)
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

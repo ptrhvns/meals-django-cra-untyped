@@ -70,7 +70,7 @@ function Navbar({ className }) {
                 </button>
 
                 {showMenu && (
-                  <span className="navbar-menu-list-wrapper">
+                  <div className="navbar-menu-list-wrapper">
                     <ul
                       className="navbar-menu-list"
                       data-testid="navbar-menu-list"
@@ -93,7 +93,7 @@ function Navbar({ className }) {
                         </button>
                       </li>
                     </ul>
-                  </span>
+                  </div>
                 )}
               </>
             ) : (

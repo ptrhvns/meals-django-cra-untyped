@@ -12,7 +12,7 @@ $colors: (
   "yellow": #ffa62b,
 );
 
-// Generate variations of $colors in increments of 5 from 5% to 95%.
+// Generate variations of $colors.
 @each $key in map.keys($colors) {
   @for $i from 5 through 95 {
     @if $i % 5 == 0 {

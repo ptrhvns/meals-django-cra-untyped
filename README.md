@@ -116,7 +116,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   python manage.py migrate
   ```
 
-- Create Django superuser for access admin site:
+- Create Django superuser for access to the admin site:
 
   ```sh
   cd server

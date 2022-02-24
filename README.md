@@ -152,7 +152,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
   ```sh
   cd server
-  pytest -vv
+  pytest
   ```
 
 - Run server tests, and report on test coverage:

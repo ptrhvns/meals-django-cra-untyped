@@ -247,7 +247,8 @@ def update_recipe_title(request, recipe_id):
             {
                 "errors": serializer.errors,
                 "message": _("The information you provided was invalid."),
-            }
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
     recipe = serializer.save()

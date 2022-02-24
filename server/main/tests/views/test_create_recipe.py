@@ -28,14 +28,13 @@ def test_invalid_request_data(api_rf):
 def test_creating_recipe_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
-    rs_instance = mocker.patch(
-        "main.views.serializers.CreateRecipeSerializer", autospec=True
-    ).return_value
-    rs_instance.is_valid.return_value = True
-    rs_instance.save.return_value = recipe
+    crs_class = mocker.patch("main.serializers.CreateRecipeSerializer", autospec=True)
+    crs_instance = crs_class.return_value
+    crs_instance.is_valid.return_value = True
+    crs_instance.save.return_value = recipe
     request = api_rf.post(urls.reverse("create_recipe"), {"title": "Test Recipe"})
     test.force_authenticate(request, user=user)
     request.user = user
     response = views.create_recipe(request)
     assert response.status_code == status.HTTP_201_CREATED
-    rs_instance.save.assert_called_with(user=user)
+    crs_instance.save.assert_called_with(user=user)

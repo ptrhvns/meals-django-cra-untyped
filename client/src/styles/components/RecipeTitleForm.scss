@@ -45,12 +45,10 @@
   }
 
   .recipe-title-form-edit-button {
-    border-radius: 50%;
-    margin-left: 1rem;
-    padding: 0.5rem 0.5rem 0.5rem 0.7rem;
+    color: map.get(colors.$colors, "blue-d65");
 
     &:hover {
-      background-color: map.get(colors.$colors, "gray-l95");
+      transform: scale(120%);
     }
   }
 }

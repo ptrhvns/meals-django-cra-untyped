@@ -24,7 +24,15 @@
     padding: 1rem;
 
     &:first-of-type {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
     }
+
+    &:last-of-type {
+      margin-bottom: 3rem;
+    }
+  }
+
+  .recipe-card + .recipe-card {
+    margin-top: 1.5rem;
   }
 }

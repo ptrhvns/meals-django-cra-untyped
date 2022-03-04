@@ -28,23 +28,31 @@ button {
   text-align: center;
   vertical-align: middle;
 
-  &:hover {
-    background-color: map.get(colors.$colors, "gray-bg-hover");
-  }
-
   &:active {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "gray-l75");
+  }
+
+  &:hover {
+    background-color: map.get(colors.$colors, "gray-bg-hover");
   }
 }
 
 button.button-plain {
-  background: transparent;
+  background-color: transparent;
   border: none;
   color: inherit;
   cursor: pointer;
   display: inline;
   padding: 0;
   text-decoration: none;
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &:hover {
+    background-color: transparent;
+  }
 }
 
 button.button-link {
@@ -66,12 +74,12 @@ button.button-danger {
   border: 1px solid map.get(colors.$colors, "red-border");
   color: map.get(colors.$colors, "red-fg");
 
-  &:hover {
-    background-color: map.get(colors.$colors, "red-bg-hover");
-  }
-
   &:active {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "red-l80");
+  }
+
+  &:hover {
+    background-color: map.get(colors.$colors, "red-bg-hover");
   }
 }
 
@@ -80,12 +88,12 @@ button.button-primary {
   border: 1px solid map.get(colors.$colors, "blue-border");
   color: map.get(colors.$colors, "blue-fg");
 
-  &:hover {
-    background-color: map.get(colors.$colors, "blue-bg-hover");
-  }
-
   &:active {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "blue-l80");
+  }
+
+  &:hover {
+    background-color: map.get(colors.$colors, "blue-bg-hover");
   }
 }
 
@@ -96,6 +104,7 @@ h4,
 h5,
 h6 {
   color: map.get(colors.$colors, "blue-d65");
+  margin: 0;
 }
 
 input {
@@ -129,4 +138,21 @@ input {
 label {
   display: inline-block;
   font-weight: 600;
+}
+
+select {
+  background: map.get(colors.$colors, "white");
+  border-radius: decorations.$border-radius;
+  border: 1px solid map.get(colors.$colors, "gray-border");
+  box-shadow: decorations.$box-shadow-inset;
+  color: map.get(colors.$colors, "black");
+  font-family: inherit;
+  font-size: typography.$font-size-base;
+  padding: 0.452rem;
+
+  &:focus {
+    border: 2px solid map.get(colors.$colors, "gray-border");
+    box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
+    outline: none;
+  }
 }

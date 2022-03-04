@@ -1,0 +1,36 @@
+@use "../shared/colors";
+@use "../shared/typography";
+@use "sass:map";
+
+.recipe-times {
+  .recipe-times-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .recipe-times-title {
+    font-size: clamp(typography.$font-size-h4, 2.5vw, typography.$font-size-h3);
+  }
+
+  .recipe-times-header-actions {
+    color: map.get(colors.$colors, "blue-d65");
+  }
+
+  .recipe-times-header-action {
+    color: map.get(colors.$colors, "blue-d65");
+    margin-left: 0.75rem;
+
+    &:active {
+      color: map.get(colors.$colors, "blue-d35");
+    }
+
+    &:hover {
+      transform: scale(120%);
+    }
+  }
+
+  .recipe-times-create-form-wrapper {
+    margin-top: 1rem;
+  }
+}

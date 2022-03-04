@@ -22,7 +22,6 @@ function RecipeTitleForm({ dispatch, state }) {
   const [alertMessage, setAlertMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [submissionCompleted, setSubmissionCompleted] = useState(false);
 
   const {
     formState: { errors },

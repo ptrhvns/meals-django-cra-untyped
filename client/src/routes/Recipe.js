@@ -1,6 +1,7 @@
 import Alert from "../components/Alert";
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
+import RecipeTimes from "../components/RecipeTimes";
 import RecipeTitleForm from "../components/RecipeTitleForm";
 import { buildTitle } from "../lib/utils";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -70,9 +71,15 @@ function Recipe() {
                   {routeLoadingError}
                 </Alert>
               ) : (
-                <div className="recipe-card">
-                  <RecipeTitleForm dispatch={dispatch} state={state} />
-                </div>
+                <>
+                  <div className="recipe-card">
+                    <RecipeTitleForm dispatch={dispatch} state={state} />
+                  </div>
+
+                  <div className="recipe-card">
+                    <RecipeTimes dispatch={dispatch} state={state} />
+                  </div>
+                </>
               )}
             </div>
           )}

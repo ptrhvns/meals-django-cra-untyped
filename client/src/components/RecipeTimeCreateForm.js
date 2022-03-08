@@ -10,7 +10,7 @@ const propTypes = {
 
 function RecipeTimesForm({ dispatch, setShowForm, state }) {
   return (
-    <div className="recipe-times-form">
+    <form className="recipe-times-form">
       <div className="recipe-times-form-fields">
         <div className="recipe-times-form-field-group">
           <div>
@@ -85,7 +85,7 @@ function RecipeTimesForm({ dispatch, setShowForm, state }) {
           Dismiss
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 

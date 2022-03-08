@@ -25,9 +25,7 @@ export function recipeReducer(state, action) {
 
 function Recipe() {
   const [isRouteLoading, setIsRouteLoading] = useState(true);
-  const [recipeState, recipeDispatch] = useReducer(recipeReducer, {
-    foo: "bar",
-  });
+  const [recipeState, recipeDispatch] = useReducer(recipeReducer, {});
   const [routeLoadingError, setRouteLoadingError] = useState(null);
   const { recipeId } = useParams();
 

@@ -3,15 +3,32 @@ import RecipeTimeCreateForm from "./RecipeTimeCreateForm";
 import RecipeTimesList from "./RecipeTimesList";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useReducer } from "react";
 
 const propTypes = {
-  recipeDispatch: PropTypes.func.isRequired,
   recipeState: PropTypes.object.isRequired,
 };
 
-function RecipeTimes({ recipeDispatch, recipeState }) {
-  const [showCreateForm, setShowCreateForm] = useState(false);
+function recipeTimesReducer(state, action) {
+  switch (action.type) {
+    case "hideCreateForm":
+      return { ...state, showCreateForm: false };
+    case "toggleCreateForm":
+      return { ...state, showCreateForm: !state.showCreateForm };
+    default:
+      return state;
+  }
+}
+
+const initialRecipeTimesState = {
+  showCreateForm: false,
+};
+
+function RecipeTimes({ recipeState }) {
+  const [recipeTimesState, recipeTimesDispatch] = useReducer(
+    recipeTimesReducer,
+    initialRecipeTimesState
+  );
 
   return (
     <div className="recipe-times">
@@ -24,7 +41,7 @@ function RecipeTimes({ recipeDispatch, recipeState }) {
           <button className="button-plain" title="Create">
             <FontAwesomeIcon
               className="recipe-times-header-action"
-              onClick={() => setShowCreateForm(!showCreateForm)}
+              onClick={() => recipeTimesDispatch({ type: "toggleCreateForm" })}
               icon={faCirclePlus}
             />
             <span className="sr-only">Create</span>
@@ -34,13 +51,9 @@ function RecipeTimes({ recipeDispatch, recipeState }) {
 
       <RecipeTimesList recipeState={recipeState} />
 
-      {showCreateForm && (
+      {recipeTimesState.showCreateForm && (
         <div className="recipe-times-create-form-wrapper">
-          <RecipeTimeCreateForm
-            recipeDispatch={recipeDispatch}
-            recipeState={recipeState}
-            setShowForm={setShowCreateForm}
-          />
+          <RecipeTimeCreateForm recipeTimesDispatch={recipeTimesDispatch} />
         </div>
       )}
     </div>

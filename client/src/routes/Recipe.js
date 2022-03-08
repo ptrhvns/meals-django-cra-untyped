@@ -82,10 +82,7 @@ function Recipe() {
                   </div>
 
                   <div className="recipe-card">
-                    <RecipeTimes
-                      recipeDispatch={recipeDispatch}
-                      recipeState={recipeState}
-                    />
+                    <RecipeTimes recipeState={recipeState} />
                   </div>
                 </>
               )}

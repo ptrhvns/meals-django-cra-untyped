@@ -12,9 +12,9 @@ import { truncate } from "lodash";
 import { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export function reducer(state, action) {
+export function recipeReducer(state, action) {
   switch (action.type) {
-    case "set":
+    case "setData":
       return action.data;
     case "updateTitle":
       return { ...state, title: action.title };
@@ -25,8 +25,10 @@ export function reducer(state, action) {
 
 function Recipe() {
   const [isRouteLoading, setIsRouteLoading] = useState(true);
+  const [recipeState, recipeDispatch] = useReducer(recipeReducer, {
+    foo: "bar",
+  });
   const [routeLoadingError, setRouteLoadingError] = useState(null);
-  const [state, dispatch] = useReducer(reducer, { foo: "bar" });
   const { recipeId } = useParams();
 
   useEffect(
@@ -43,7 +45,7 @@ function Recipe() {
           return;
         }
 
-        dispatch({ type: "set", data: response.data });
+        recipeDispatch({ type: "setData", data: response.data });
       })(),
     [recipeId]
   );
@@ -52,7 +54,9 @@ function Recipe() {
     <div className="recipe">
       <Helmet>
         <title>
-          {buildTitle(state?.title ? truncate(state.title) : "Recipe")}
+          {buildTitle(
+            recipeState?.title ? truncate(recipeState.title) : "Recipe"
+          )}
         </title>
       </Helmet>
 
@@ -73,11 +77,17 @@ function Recipe() {
               ) : (
                 <>
                   <div className="recipe-card">
-                    <RecipeTitleForm dispatch={dispatch} state={state} />
+                    <RecipeTitleForm
+                      recipeDispatch={recipeDispatch}
+                      recipeState={recipeState}
+                    />
                   </div>
 
                   <div className="recipe-card">
-                    <RecipeTimes dispatch={dispatch} state={state} />
+                    <RecipeTimes
+                      recipeDispatch={recipeDispatch}
+                      recipeState={recipeState}
+                    />
                   </div>
                 </>
               )}

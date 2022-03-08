@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 const propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
+  recipeDispatch: PropTypes.func.isRequired,
+  recipeState: PropTypes.object.isRequired,
 };
 
-function RecipeTimes({ dispatch, state }) {
+function RecipeTimes({ recipeDispatch, recipeState }) {
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   return (
@@ -32,14 +32,14 @@ function RecipeTimes({ dispatch, state }) {
         </div>
       </div>
 
-      <RecipeTimesList state={state} />
+      <RecipeTimesList recipeState={recipeState} />
 
       {showCreateForm && (
         <div className="recipe-times-create-form-wrapper">
           <RecipeTimeCreateForm
-            dispatch={dispatch}
+            recipeDispatch={recipeDispatch}
+            recipeState={recipeState}
             setShowForm={setShowCreateForm}
-            state={state}
           />
         </div>
       )}

@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 
 const propTypes = {
-  state: PropTypes.object.isRequired,
+  recipeState: PropTypes.object.isRequired,
 };
 
-function RecipeTimesList({ state }) {
+function RecipeTimesList({ recipeState }) {
   return (
     <div className="recipe-times-list">
-      {(state?.times?.length || 0) < 1 && (
+      {(recipeState?.times?.length || 0) < 1 && (
         <p className="recipe-times-list-empty-notice">
           No times have been created yet.
         </p>

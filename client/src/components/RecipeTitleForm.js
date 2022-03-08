@@ -14,11 +14,11 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 const propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
+  recipeDispatch: PropTypes.func.isRequired,
+  recipeState: PropTypes.object.isRequired,
 };
 
-function RecipeTitleForm({ dispatch, state }) {
+function RecipeTitleForm({ recipeDispatch, recipeState }) {
   const [alertMessage, setAlertMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -35,7 +35,7 @@ function RecipeTitleForm({ dispatch, state }) {
   // Prevent form from "flashing" new title inside the input by only setting the
   // form value from props when the form isn't showing.
   if (!showForm) {
-    setValue("title", state.title);
+    setValue("title", recipeState.title);
   }
 
   const onSubmit = async (data) => {
@@ -43,7 +43,7 @@ function RecipeTitleForm({ dispatch, state }) {
     const response = await post({
       data,
       route: "updateRecipeTitle",
-      routeData: { recipeId: state.id },
+      routeData: { recipeId: recipeState.id },
     });
     setIsSubmitting(false);
 
@@ -54,7 +54,7 @@ function RecipeTitleForm({ dispatch, state }) {
 
     setShowForm(false);
     reset({ keepErrors: false });
-    dispatch({ type: "updateTitle", title: data.title });
+    recipeDispatch({ type: "updateTitle", title: data.title });
   };
 
   const handleDismissAlert = () => {
@@ -136,7 +136,7 @@ function RecipeTitleForm({ dispatch, state }) {
         </form>
       ) : (
         <div className="recipe-title-form-static">
-          <h1 className="recipe-title-form-title">{state.title}</h1>
+          <h1 className="recipe-title-form-title">{recipeState.title}</h1>
 
           <button
             className="button-plain recipe-title-form-edit-button"

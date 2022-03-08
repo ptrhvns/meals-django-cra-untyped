@@ -3,12 +3,12 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  recipeDispatch: PropTypes.func.isRequired,
+  recipeState: PropTypes.object.isRequired,
   setShowForm: PropTypes.func.isRequired,
-  state: PropTypes.object.isRequired,
 };
 
-function RecipeTimesForm({ dispatch, setShowForm, state }) {
+function RecipeTimesForm({ recipeDispatch, recipeState, setShowForm }) {
   return (
     <form className="recipe-times-form">
       <div className="recipe-times-form-fields">

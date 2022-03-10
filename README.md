@@ -2,8 +2,7 @@
 
 ## Description
 
-This is a website for managing meals (recipes, menus, shopping lists, grocery
-stores, etc.). It's built with React for client, and Django for the server.
+This is a demonstration website using Django and React to managing recipes.
 
 ## Setting Up a Development Environment
 

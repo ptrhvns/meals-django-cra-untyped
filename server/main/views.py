@@ -36,6 +36,26 @@ def create_recipe(request):
     )
 
 
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def create_recipe_time(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    pruned_data = {k: v for k, v in request.data.items() if v}
+    serializer = serializers.CreateRecipeTimeSerialzer(data=pruned_data)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    serializer.save(recipe=recipe)
+    return response.Response({"data": serializer.data}, status=status.HTTP_201_CREATED)
+
+
 @csrf.ensure_csrf_cookie
 @rf_decorators.api_view(http_method_names=["GET"])
 def csrf_token(request):

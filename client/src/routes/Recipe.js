@@ -14,6 +14,8 @@ import { useParams } from "react-router-dom";
 
 export function recipeReducer(state, action) {
   switch (action.type) {
+    case "addRecipeTime":
+      return { ...state, recipe_times: [...state.recipe_times, action.data] };
     case "setData":
       return action.data;
     case "updateTitle":
@@ -82,7 +84,10 @@ function Recipe() {
                   </div>
 
                   <div className="recipe-card">
-                    <RecipeTimes recipeState={recipeState} />
+                    <RecipeTimes
+                      recipeDispatch={recipeDispatch}
+                      recipeState={recipeState}
+                    />
                   </div>
                 </>
               )}

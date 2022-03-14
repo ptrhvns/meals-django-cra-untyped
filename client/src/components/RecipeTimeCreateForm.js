@@ -1,27 +1,110 @@
+import Alert from "./Alert";
 import PropTypes from "prop-types";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { compact, isEmpty, join, pick, some } from "lodash";
+import { faCirclePlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { handleResponseErrors } from "../lib/utils";
+import { post } from "../lib/api";
+import { useState } from "react";
 
 const propTypes = {
+  createFormMethods: PropTypes.object.isRequired,
+  recipeDispatch: PropTypes.func.isRequired,
+  recipeState: PropTypes.object.isRequired,
   recipeTimesDispatch: PropTypes.func.isRequired,
+  recipeTimesState: PropTypes.object.isRequired,
 };
 
-function RecipeTimesForm({ recipeTimesDispatch }) {
+function RecipeTimesForm({
+  createFormMethods,
+  recipeDispatch,
+  recipeState,
+  recipeTimesDispatch,
+  recipeTimesState,
+}) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    formState: { errors },
+    getValues,
+    handleSubmit,
+    register,
+    setError,
+  } = createFormMethods;
+
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    const response = await post({
+      data: pick(data, ["time_type", "days", "hours", "minutes"]),
+      route: "createRecipeTime",
+      routeData: { recipeId: recipeState.id },
+    });
+    setIsSubmitting(false);
+
+    if (response.isError) {
+      handleResponseErrors({
+        response,
+        setAlertMessage: (message) =>
+          recipeTimesDispatch({ type: "setCreateFormAlertMessage", message }),
+        setError,
+      });
+      return;
+    }
+
+    recipeTimesDispatch({ type: "resetCreateForm", createFormMethods });
+    recipeDispatch({ type: "addRecipeTime", data: response.data });
+  };
+
+  const handleDismissCreateForm = () => {
+    recipeTimesDispatch({ type: "dismissCreateForm" });
+  };
+
+  const validateUnitsOfTime = () =>
+    some(
+      [getValues("days"), getValues("hours"), getValues("minutes")],
+      (v) => !isEmpty(v)
+    ) || "At least one unit is required.";
+
   return (
-    <form className="recipe-times-form">
+    <form className="recipe-times-form" onSubmit={handleSubmit(onSubmit)}>
+      {recipeTimesState.createFormAlertMessage && (
+        <Alert
+          className="recipe-times-form-alert"
+          onDismiss={() =>
+            recipeTimesDispatch({ type: "dismissCreateFormAlert" })
+          }
+          variant="error"
+        >
+          {recipeTimesState.createFormAlertMessage}
+        </Alert>
+      )}
+
       <div className="recipe-times-form-fields">
         <div className="recipe-times-form-field-group">
           <div>
-            <label htmlFor="time-type">Type</label>
+            <label htmlFor="recipe-times-form-input-type">Type</label>
           </div>
 
           <div className="recipe-times-form-input-wrapper">
-            <select id="time-type" className="recipe-times-form-input">
+            <select
+              className={join(
+                compact([
+                  errors.time_type && "error",
+                  "recipe-times-form-input",
+                ]),
+                " "
+              )}
+              id="recipe-times-form-input-type"
+              {...register("time_type", { required: "Type is required." })}
+            >
               <option value="">Select a type...</option>
               <option value="additional">Additional</option>
               <option value="cook">Cook</option>
               <option value="preparation">Preparation</option>
             </select>
+
+            {errors.time_type && (
+              <div className="field-error-text">{errors.time_type.message}</div>
+            )}
           </div>
         </div>
 
@@ -33,10 +116,23 @@ function RecipeTimesForm({ recipeTimesDispatch }) {
 
             <div className="recipe-times-form-input-wrapper">
               <input
-                className="recipe-times-form-input"
+                className={join(
+                  compact([errors.days && "error", "recipe-times-form-input"]),
+                  " "
+                )}
                 id="recipe-times-form-input-days"
+                type="number"
+                {...register("days", {
+                  validate: validateUnitsOfTime,
+                })}
               />
             </div>
+
+            {errors.days && (
+              <div className="field-error-text recipe-times-form-unit-error">
+                {errors.days.message}
+              </div>
+            )}
           </div>
 
           <div className="recipe-times-form-field-unit">
@@ -46,23 +142,50 @@ function RecipeTimesForm({ recipeTimesDispatch }) {
 
             <div className="recipe-times-form-input-wrapper">
               <input
-                className="recipe-times-form-input"
+                className={join(
+                  compact([errors.hours && "error", "recipe-times-form-input"]),
+                  " "
+                )}
                 id="recipe-times-form-input-hours"
+                type="number"
+                {...register("hours", {
+                  validate: validateUnitsOfTime,
+                })}
               />
             </div>
+
+            {errors.hours && (
+              <div className="field-error-text recipe-times-form-unit-error">
+                {errors.hours.message}
+              </div>
+            )}
           </div>
 
           <div className="recipe-times-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-form-input-seconds">Seconds</label>
+              <label htmlFor="recipe-times-form-input-minutes">Minutes</label>
             </div>
 
             <div className="recipe-times-form-input-wrapper">
               <input
-                className="recipe-times-form-input"
-                id="recipe-times-form-input-seconds"
+                className={join(
+                  compact([
+                    errors.minutes && "error",
+                    "recipe-times-form-input",
+                  ]),
+                  " "
+                )}
+                id="recipe-times-form-input-minutes"
+                type="number"
+                {...register("minutes", { validate: validateUnitsOfTime })}
               />
             </div>
+
+            {errors.minutes && (
+              <div className="field-error-text recipe-times-form-unit-error">
+                {errors.minutes.message}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -70,14 +193,20 @@ function RecipeTimesForm({ recipeTimesDispatch }) {
       <div className="recipe-times-form-actions">
         <button
           className="button-primary recipe-times-form-action"
+          disabled={isSubmitting}
           type="submit"
         >
-          <FontAwesomeIcon icon={faCirclePlus} /> Create time
+          {isSubmitting ? (
+            <FontAwesomeIcon icon={faSpinner} spin />
+          ) : (
+            <FontAwesomeIcon icon={faCirclePlus} />
+          )}{" "}
+          Create time
         </button>
 
         <button
           className="recipe-times-form-action"
-          onClick={() => recipeTimesDispatch({ type: "hideCreateForm" })}
+          onClick={handleDismissCreateForm}
           type="button"
         >
           Dismiss

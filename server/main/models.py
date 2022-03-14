@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import models as auth_models
 from django.contrib.auth import validators
+from django.core import exceptions
 from django.db import models as db_models
 from django.utils.translation import gettext_lazy as _
 
@@ -15,6 +16,31 @@ class Recipe(db_models.Model):
 
     def __str__(self):
         return self.title
+
+
+class RecipeTime(db_models.Model):
+    ADDITIONAL = "additional"
+    COOK = "cook"
+    PREPARATION = "preparation"
+    TIME_TYPE_CHOICES = [
+        (ADDITIONAL, "Additional"),
+        (COOK, "Cook"),
+        (PREPARATION, "Preparation"),
+    ]
+
+    days = db_models.PositiveIntegerField(blank=True, null=True)
+    hours = db_models.PositiveIntegerField(blank=True, null=True)
+    minutes = db_models.PositiveIntegerField(blank=True, null=True)
+    recipe = db_models.ForeignKey(
+        Recipe, on_delete=db_models.CASCADE, related_name="recipe_times"
+    )
+    time_type = db_models.CharField(choices=TIME_TYPE_CHOICES, max_length=20)
+
+    def clean(self):
+        units = ["days", "hours", "minutes"]
+        if not any([getattr(self, u) for u in units]):
+            error = _("At least one unit is required.")
+            raise exceptions.ValidationError({u: error for u in units})
 
 
 class User(auth_models.AbstractUser):

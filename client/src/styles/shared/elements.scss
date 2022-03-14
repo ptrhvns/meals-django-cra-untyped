@@ -1,5 +1,6 @@
 @use "colors";
 @use "decorations";
+@use "sass:color";
 @use "sass:map";
 @use "typography";
 
@@ -30,6 +31,17 @@ button {
 
   &:active {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "gray-l75");
+  }
+
+  &:disabled {
+    background-color: color.scale(
+      map.get(colors.$colors, "gray-bg"),
+      $saturation: -30%
+    );
+    border: 1px solid
+      color.scale(map.get(colors.$colors, "gray-border"), $saturation: -30%);
+    color: color.scale(map.get(colors.$colors, "gray-fg"), $saturation: -30%);
+    cursor: not-allowed;
   }
 
   &:hover {
@@ -78,6 +90,16 @@ button.button-danger {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "red-l80");
   }
 
+  &:disabled {
+    background-color: color.scale(
+      map.get(colors.$colors, "red-bg"),
+      $saturation: -30%
+    );
+    border: 1px solid
+      color.scale(map.get(colors.$colors, "red-border"), $saturation: -30%);
+    color: color.scale(map.get(colors.$colors, "red-fg"), $saturation: -30%);
+  }
+
   &:hover {
     background-color: map.get(colors.$colors, "red-bg-hover");
   }
@@ -90,6 +112,16 @@ button.button-primary {
 
   &:active {
     box-shadow: inset 0 2px 8px map.get(colors.$colors, "blue-l80");
+  }
+
+  &:disabled {
+    background-color: color.scale(
+      map.get(colors.$colors, "blue-bg"),
+      $saturation: -30%
+    );
+    border: 1px solid
+      color.scale(map.get(colors.$colors, "blue-border"), $saturation: -30%);
+    color: color.scale(map.get(colors.$colors, "blue-fg"), $saturation: -30%);
   }
 
   &:hover {

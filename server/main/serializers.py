@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib import auth
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers, validators
 
 from main import models
@@ -13,6 +14,19 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
         fields = ("title",)
+
+
+class CreateRecipeTimeSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTime
+        fields = ("days", "hours", "id", "minutes", "time_type")
+
+    def validate(self, data):
+        units = ["days", "hours", "minutes"]
+        if not any([data.get(u) for u in units]):
+            error = _("At least one unit is required.")
+            raise serializers.ValidationError({u: error for u in units})
+        return data
 
 
 class DeleteAccountSerializer(serializers.Serializer):
@@ -42,7 +56,7 @@ class SignupConfirmationSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
-        fields = ("id", "title")
+        fields = ("id", "recipe_times", "title")
 
 
 class UpdateRecipeTitleSerializer(serializers.ModelSerializer):

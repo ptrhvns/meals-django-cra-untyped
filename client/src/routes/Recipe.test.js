@@ -39,12 +39,18 @@ it("renders the correct <title> throughout lifecycle", async () => {
 describe("recipeReducer()", () => {
   describe("when action.type is 'addRecipeTime'", () => {
     it("returns old state updated with added recipe time", () => {
-      const cookTime = { time_type: "Cook", days: "1", hours: "1", days: "1" };
+      const cookTime = {
+        days: "1",
+        hours: "1",
+        minutes: "1",
+        time_type: "Cook",
+      };
       const prepTime = {
-        time_type: "Preparation",
         days: "2",
         hours: "2",
-        days: "2",
+        id: 2,
+        minutes: "2",
+        time_type: "Preparation",
       };
       const oldState = { recipe_times: [cookTime] };
       const newState = recipeReducer(oldState, {

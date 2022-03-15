@@ -37,7 +37,25 @@ it("renders the correct <title> throughout lifecycle", async () => {
 });
 
 describe("recipeReducer()", () => {
-  describe("when action.type is 'set'", () => {
+  describe("when action.type is 'addRecipeTime'", () => {
+    it("returns old state updated with added recipe time", () => {
+      const cookTime = { time_type: "Cook", days: "1", hours: "1", days: "1" };
+      const prepTime = {
+        time_type: "Preparation",
+        days: "2",
+        hours: "2",
+        days: "2",
+      };
+      const oldState = { recipe_times: [cookTime] };
+      const newState = recipeReducer(oldState, {
+        type: "addRecipeTime",
+        data: prepTime,
+      });
+      expect(newState).toEqual({ recipe_times: [cookTime, prepTime] });
+    });
+  });
+
+  describe("when action.type is 'setData'", () => {
     it("returns action.data", () => {
       const action = { type: "setData", data: { title: "Test Title" } };
       const newState = recipeReducer({}, action);

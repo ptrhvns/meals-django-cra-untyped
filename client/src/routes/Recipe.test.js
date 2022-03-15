@@ -2,7 +2,7 @@ jest.mock("../lib/api", () => ({ get: jest.fn() }));
 
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
-import Recipe, { reducer } from "./Recipe";
+import Recipe, { recipeReducer } from "./Recipe";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
 import { get } from "../lib/api";
@@ -36,11 +36,11 @@ it("renders the correct <title> throughout lifecycle", async () => {
   await waitFor(() => expect(document.title).toContain(title));
 });
 
-describe("reducer()", () => {
+describe("recipeReducer()", () => {
   describe("when action.type is 'set'", () => {
     it("returns action.data", () => {
-      const action = { type: "set", data: { title: "Test Title" } };
-      const newState = reducer({}, action);
+      const action = { type: "setData", data: { title: "Test Title" } };
+      const newState = recipeReducer({}, action);
       expect(newState).toEqual(action.data);
     });
   });
@@ -49,7 +49,7 @@ describe("reducer()", () => {
     it("returns old state updated with new title", () => {
       const title = "New Test Title";
       const oldState = { foo: "bar", title: "Old Test Title" };
-      const newState = reducer(oldState, { type: "updateTitle", title });
+      const newState = recipeReducer(oldState, { type: "updateTitle", title });
       expect(newState).toEqual({ ...oldState, title });
     });
   });
@@ -57,7 +57,7 @@ describe("reducer()", () => {
   describe("when action.type is not known", () => {
     it("returns previous state", () => {
       const oldState = { title: "Old Test Title" };
-      const newState = reducer(oldState, { type: "invalid" });
+      const newState = recipeReducer(oldState, { type: "invalid" });
       expect(newState).toEqual(oldState);
     });
   });

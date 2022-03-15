@@ -8,18 +8,30 @@ import { head } from "lodash";
 import { post } from "../lib/api";
 import { within } from "@testing-library/dom";
 
-function buildComponent({ dispatch = () => {}, state = { id: 777 } } = {}) {
-  return <RecipeTitleForm dispatch={dispatch} state={state} />;
+function buildComponent(props = {}) {
+  props = {
+    recipeDispatch: jest.fn(),
+    recipeState: {
+      id: 777,
+      title: "Test Title",
+    },
+    ...props,
+  };
+  return <RecipeTitleForm {...props} />;
 }
+
+beforeEach(() => {
+  post.mockReturnValue({});
+});
 
 it("renders successfully", () => {
   const div = document.createElement("div");
   ReactDOM.render(buildComponent(), div);
 });
 
-it("renders state.title", () => {
+it("renders recipeState.title", () => {
   const title = "Test Title";
-  const { queryByText } = render(buildComponent({ state: { title } }));
+  const { queryByText } = render(buildComponent({ recipeState: { title } }));
   expect(queryByText(title)).toBeTruthy();
 });
 
@@ -55,13 +67,17 @@ async function submitForm(
 }
 
 describe("when the form as been submitted", () => {
-  describe("when the required form field is missing", () => {
+  describe("when required form field is missing", () => {
     it("renders a field error", async () => {
       const user = userEvent.setup();
-      const { getByRole, getByText } = render(buildComponent());
-      await user.click(getByRole("button", { name: "Edit" }));
-      await user.click(getByRole("button", { name: "Save" }));
-      getByText("Title is required.");
+      const { getByRole, queryByText } = render(
+        buildComponent({ recipeState: {} })
+      );
+      await user.click(getByRole("button", { hidden: true, name: "Edit" }));
+      await user.click(getByRole("button", { hidden: true, name: "Save" }));
+      await waitFor(() =>
+        expect(queryByText("Title is required.")).toBeTruthy()
+      );
     });
   });
 
@@ -70,7 +86,7 @@ describe("when the form as been submitted", () => {
     const user = userEvent.setup();
     const recipeId = 555;
     const container = render(
-      buildComponent({ state: { id: recipeId, title: "Good Food" } })
+      buildComponent({ recipeState: { id: recipeId, title: "Good Food" } })
     );
     const title = "Good Soup";
     await act(() => submitForm(user, container, { title }));
@@ -111,11 +127,14 @@ describe("when the form as been submitted", () => {
     it("renders the updated title", async () => {
       post.mockResolvedValue({});
       const user = userEvent.setup();
-      const dispatch = jest.fn();
-      const container = render(buildComponent({ dispatch }));
+      const recipeDispatch = jest.fn();
+      const container = render(buildComponent({ recipeDispatch }));
       const title = "Test Title";
       await act(() => submitForm(user, container, { title }));
-      expect(dispatch).toHaveBeenCalledWith({ type: "updateTitle", title });
+      expect(recipeDispatch).toHaveBeenCalledWith({
+        type: "updateTitle",
+        title,
+      });
     });
   });
 });

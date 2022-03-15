@@ -53,7 +53,15 @@ class SignupConfirmationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=256, required=True)
 
 
+class RecipeTimeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTime
+        fields = ("days", "hours", "id", "minutes", "time_type")
+
+
 class RecipeSerializer(serializers.ModelSerializer):
+    recipe_times = RecipeTimeSerializer(many=True, required=False)
+
     class Meta:
         model = models.Recipe
         fields = ("id", "recipe_times", "title")

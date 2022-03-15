@@ -1,7 +1,15 @@
 @use "../shared/colors";
+@use "../shared/decorations";
 @use "sass:map";
 
 .recipe-times-form {
+  background-color: map.get(colors.$colors, "gray-l95");
+  border-radius: decorations.$border-radius;
+  border: 1px solid map.get(colors.$colors, "gray-l85");
+  box-shadow: decorations.$box-shadow;
+  margin-top: 2rem;
+  padding: 1rem;
+
   .recipe-times-form-alert {
     margin-top: 2rem;
   }

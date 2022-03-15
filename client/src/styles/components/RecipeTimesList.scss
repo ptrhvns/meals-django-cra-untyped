@@ -7,4 +7,14 @@
   .recipe-times-list-empty-notice {
     color: map.get(colors.$colors, "gray");
   }
+
+  .recipe-times-list-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .recipe-times-list-list-item + .recipe-times-list-list-item {
+    margin-top: 0.5rem;
+  }
 }

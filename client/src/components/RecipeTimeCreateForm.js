@@ -97,9 +97,9 @@ function RecipeTimesForm({
               {...register("time_type", { required: "Type is required." })}
             >
               <option value="">Select a type...</option>
-              <option value="additional">Additional</option>
-              <option value="cook">Cook</option>
-              <option value="preparation">Preparation</option>
+              <option value="Additional">Additional</option>
+              <option value="Cook">Cook</option>
+              <option value="Preparation">Preparation</option>
             </select>
 
             {errors.time_type && (

@@ -19,9 +19,9 @@ class Recipe(db_models.Model):
 
 
 class RecipeTime(db_models.Model):
-    ADDITIONAL = "additional"
-    COOK = "cook"
-    PREPARATION = "preparation"
+    ADDITIONAL = "Additional"
+    COOK = "Cook"
+    PREPARATION = "Preparation"
     TIME_TYPE_CHOICES = [
         (ADDITIONAL, "Additional"),
         (COOK, "Cook"),

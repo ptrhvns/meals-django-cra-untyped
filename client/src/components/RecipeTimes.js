@@ -11,7 +11,7 @@ const propTypes = {
   recipeState: PropTypes.object.isRequired,
 };
 
-function recipeTimesReducer(state, action) {
+export function recipeTimesReducer(state, action) {
   switch (action.type) {
     case "dismissCreateForm":
       return {
@@ -27,7 +27,10 @@ function recipeTimesReducer(state, action) {
     case "setCreateFormAlertMessage":
       return { ...state, createFormAlertMessage: action.message };
     case "toggleCreateForm":
-      action.createFormMethods.reset({ keepErrors: false });
+      if (state.showCreateForm) {
+        action.createFormMethods.reset();
+      }
+
       return {
         ...state,
         createFormAlertMessage: null,
@@ -62,10 +65,14 @@ function RecipeTimes({ recipeDispatch, recipeState }) {
         </div>
 
         <div className="recipe-times-header-actions">
-          <button className="button-plain" title="Create">
+          <button
+            className="button-plain"
+            onClick={handleToggleCreateForm}
+            title="Create"
+            type="button"
+          >
             <FontAwesomeIcon
               className="recipe-times-header-action"
-              onClick={handleToggleCreateForm}
               icon={faCirclePlus}
             />
             <span className="sr-only">Create</span>
@@ -76,7 +83,10 @@ function RecipeTimes({ recipeDispatch, recipeState }) {
       <RecipeTimesList recipeState={recipeState} />
 
       {recipeTimesState.showCreateForm && (
-        <div className="recipe-times-create-form-wrapper">
+        <div
+          className="recipe-time-create-form-wrapper"
+          data-testid="recipe-time-create-form-wrapper"
+        >
           <RecipeTimeCreateForm
             createFormMethods={createFormMethods}
             recipeDispatch={recipeDispatch}

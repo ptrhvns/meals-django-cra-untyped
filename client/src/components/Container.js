@@ -1,18 +1,18 @@
-import PropTypes from 'prop-types';
-import { join } from 'lodash';
+import PropTypes from "prop-types";
+import { join } from "lodash";
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  variant: PropTypes.oneOf(['content', 'viewport']).isRequired,
+  variant: PropTypes.oneOf(["content", "viewport"]).isRequired,
 };
 
 const defaultProps = {
-  className: '',
+  className: "",
 };
 
 function Container({ children, className, variant }) {
-  const cn = join([`container-${variant}`, className], ' ');
+  const cn = join([`container-${variant}`, className], " ");
   return <div className={cn}>{children}</div>;
 }
 

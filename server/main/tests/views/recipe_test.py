@@ -1,5 +1,4 @@
 import pytest
-
 from django import http, urls
 from rest_framework import permissions, status, test
 

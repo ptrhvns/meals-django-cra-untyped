@@ -1,3 +1,5 @@
+import pytest
+
 from django import http, urls
 from rest_framework import permissions, status, test
 
@@ -15,6 +17,7 @@ def test_permission_classes():
     assert dvh.has_permission_classes(views.recipe, permission_classes)
 
 
+@pytest.mark.django_db
 def test_getting_recipe_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
@@ -25,7 +28,9 @@ def test_getting_recipe_successfully(api_rf, mocker):
     goo4.return_value = recipe
     response = views.recipe(request, recipe.id)
     assert response.status_code == status.HTTP_200_OK
-    assert response.data == {"data": {"id": recipe.id, "title": recipe.title}}
+    assert response.data == {
+        "data": {"id": recipe.id, "recipe_times": [], "title": recipe.title}
+    }
 
 
 def test_getting_missing_recipe(api_rf, mocker):

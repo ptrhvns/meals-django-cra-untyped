@@ -61,7 +61,7 @@ async function submitForm(
 ) {
   await user.click(getByRole("button", { name: "Edit" }));
   const input = getByTestId("recipe-title-form-input");
-  await user.type(input, "{Control>}a{Backspace}");
+  await user.clear(input);
   await user.type(input, title);
   await user.click(getByRole("button", { name: "Save" }));
 }

@@ -1,7 +1,8 @@
 import Alert from "./Alert";
 import PropTypes from "prop-types";
+import Spinner from "./Spinner";
 import { compact, isEmpty, join, pick, some } from "lodash";
-import { faCirclePlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { post } from "../lib/api";
@@ -196,12 +197,10 @@ function RecipeTimesForm({
           disabled={isSubmitting}
           type="submit"
         >
-          {isSubmitting ? (
-            <FontAwesomeIcon icon={faSpinner} spin />
-          ) : (
+          <Spinner spin={isSubmitting}>
             <FontAwesomeIcon icon={faCirclePlus} />
-          )}{" "}
-          Create time
+          </Spinner>{" "}
+          Create
         </button>
 
         <button

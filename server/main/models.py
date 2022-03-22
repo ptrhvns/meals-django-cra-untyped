@@ -36,6 +36,13 @@ class RecipeTime(db_models.Model):
     )
     time_type = db_models.CharField(choices=TIME_TYPE_CHOICES, max_length=20)
 
+    def __str__(self):
+        d = f"{self.days}d" if self.days else None
+        h = f"{self.hours}h" if self.hours else None
+        m = f"{self.minutes}m" if self.minutes else None
+        times = " ".join([t for t in [d, h, m] if t])
+        return f"{self.time_type}: {times}"
+
     def clean(self):
         units = ["days", "hours", "minutes"]
         if not any([getattr(self, u) for u in units]):

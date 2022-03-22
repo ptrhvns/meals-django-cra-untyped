@@ -25,6 +25,15 @@ class RecipeFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
 
 
+class RecipeTimeFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.RecipeTime
+
+    minutes = 10
+    recipe = factory.SubFactory(RecipeFactory)
+    time_type = "Cook"
+
+
 class TokenFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Token

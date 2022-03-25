@@ -41,8 +41,8 @@ def create_recipe(request):
 def create_recipe_time(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
     pruned_data = {k: v for k, v in request.data.items() if v}
-    serializer = serializers.CreateRecipeTimeSerialzer(data=pruned_data)
 
+    serializer = serializers.CreateRecipeTimeSerializer(data=pruned_data)
     if not serializer.is_valid():
         return response.Response(
             {

@@ -16,15 +16,15 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
         fields = ("title",)
 
 
-class CreateRecipeTimeSerialzer(serializers.ModelSerializer):
+class CreateRecipeTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTime
         fields = ("days", "hours", "id", "minutes", "time_type")
 
     def validate(self, data):
         units = ["days", "hours", "minutes"]
+        error = _("At least one unit is required.")
         if not any([data.get(u) for u in units]):
-            error = _("At least one unit is required.")
             raise serializers.ValidationError({u: error for u in units})
         return data
 

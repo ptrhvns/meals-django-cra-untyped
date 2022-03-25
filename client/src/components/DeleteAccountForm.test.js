@@ -89,27 +89,6 @@ describe("when form has been sumbitted", () => {
     });
   });
 
-  it("renders a loading spinner appropriately throughout", async () => {
-    let resolve;
-    post.mockReturnValue(new Promise((res, _) => (resolve = res)));
-    const logout = jest.fn();
-    useAuthn.mockReturnValue({ logout });
-    const user = userEvent.setup();
-    const container = render(buildComponent());
-    await act(() => submitForm(user, container));
-    const { queryByTestId } = container;
-
-    await waitFor(() =>
-      expect(queryByTestId("delete-account-spinner")).toBeTruthy()
-    );
-
-    act(() => resolve({}));
-
-    await waitFor(() =>
-      expect(queryByTestId("delete-account-spinner")).not.toBeTruthy()
-    );
-  });
-
   it("sends form data to API", async () => {
     post.mockResolvedValue({ message: "test success" });
     const logout = jest.fn();

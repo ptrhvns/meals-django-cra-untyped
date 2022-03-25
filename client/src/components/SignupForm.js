@@ -1,8 +1,8 @@
 import Alert from "./Alert";
+import Spinner from "./Spinner";
 import {
   faExclamationCircle,
   faPlusCircle,
-  faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
@@ -126,15 +126,9 @@ function SignupForm() {
 
             <div className="signup-form-actions">
               <button className="button-primary" type="submit">
-                {isSubmitting ? (
-                  <FontAwesomeIcon
-                    data-testid="submit-spinner"
-                    icon={faSpinner}
-                    spin
-                  />
-                ) : (
+                <Spinner spin={isSubmitting}>
                   <FontAwesomeIcon icon={faPlusCircle} />
-                )}{" "}
+                </Spinner>{" "}
                 Create account
               </button>
             </div>

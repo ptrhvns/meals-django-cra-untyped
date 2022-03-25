@@ -1,6 +1,7 @@
 import Alert from "./Alert";
+import Spinner from "./Spinner";
 import useAuthn from "../hooks/useAuthn";
-import { faSpinner, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { post } from "../lib/api";
@@ -82,15 +83,9 @@ function DeleteAccountForm() {
 
           <div className="delete-account-form-actions">
             <button className="button-danger" type="submit">
-              {isSubmitting ? (
-                <FontAwesomeIcon
-                  data-testid="delete-account-spinner"
-                  icon={faSpinner}
-                  spin
-                />
-              ) : (
+              <Spinner spin={isSubmitting}>
                 <FontAwesomeIcon icon={faTrashCan} />
-              )}{" "}
+              </Spinner>{" "}
               Delete my account
             </button>
 

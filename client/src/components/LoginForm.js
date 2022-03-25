@@ -1,6 +1,7 @@
 import Alert from "./Alert";
+import Spinner from "./Spinner";
 import useAuthn from "../hooks/useAuthn";
-import { faSignInAlt, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { post } from "../lib/api";
@@ -98,16 +99,9 @@ function LoginForm() {
 
         <div className="login-form-actions">
           <button className="button-primary" type="submit">
-            {isSubmitting ? (
-              <FontAwesomeIcon
-                data-testid="submit-spinner"
-                icon={faSpinner}
-                spin
-              />
-            ) : (
+            <Spinner spin={isSubmitting}>
               <FontAwesomeIcon icon={faSignInAlt} />
-            )}{" "}
-            Log in
+            </Spinner> Log in
           </button>
         </div>
       </form>

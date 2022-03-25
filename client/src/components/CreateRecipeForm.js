@@ -1,5 +1,6 @@
 import Alert from "./Alert";
-import { faCirclePlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "./Spinner";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { post } from "../lib/api";
@@ -68,15 +69,9 @@ function CreateRecipeForm() {
 
         <div className="create-recipe-form-actions">
           <button className="button-primary" type="submit">
-            {isSubmitting ? (
-              <FontAwesomeIcon
-                data-testid="create-recipe-form-submit-spinner"
-                icon={faSpinner}
-                spin
-              />
-            ) : (
+            <Spinner spin={isSubmitting}>
               <FontAwesomeIcon icon={faCirclePlus} />
-            )}{" "}
+            </Spinner>{" "}
             Create recipe
           </button>
         </div>

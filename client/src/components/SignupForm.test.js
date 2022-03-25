@@ -40,21 +40,6 @@ describe("when the form has been submitted", () => {
     });
   });
 
-  it("renders submit spinner appropriately throughout", async () => {
-    let resolve;
-    post.mockReturnValue(new Promise((res, _) => (resolve = res)));
-    const user = userEvent.setup();
-    const container = render(buildComponent());
-    const { getByLabelText, getByRole, queryByTestId } = container;
-    await act(() => submitForm(user, container));
-    await waitFor(() => expect(queryByTestId("submit-spinner")).toBeTruthy());
-    act(() => resolve({ message: "success" }));
-
-    await waitFor(() =>
-      expect(queryByTestId("submit-spinner")).not.toBeTruthy()
-    );
-  });
-
   it("submits form data to the API", async () => {
     post.mockReturnValue(Promise.resolve({ message: "success" }));
     const user = userEvent.setup();

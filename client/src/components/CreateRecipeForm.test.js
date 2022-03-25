@@ -53,25 +53,6 @@ describe("when the form has been submitted", () => {
     });
   });
 
-  it("renders submit spinner appropriately throughout", async () => {
-    let resolve;
-
-    post.mockReturnValue(
-      new Promise((res) => {
-        resolve = res;
-      })
-    );
-
-    const user = userEvent.setup();
-    const container = render(buildComponent());
-    await act(() => submitForm(user, container));
-    const { getByLabelText, getByRole, queryByTestId } = container;
-    const testid = "create-recipe-form-submit-spinner";
-    await waitFor(() => expect(queryByTestId(testid)).toBeTruthy());
-    act(() => resolve({ data: { id: 777 } }));
-    await waitFor(() => expect(queryByTestId(testid)).not.toBeTruthy());
-  });
-
   it("submits form data to the API", async () => {
     post.mockResolvedValue({ data: { id: 777 } });
     const user = userEvent.setup();

@@ -98,24 +98,6 @@ describe("when the form as been submitted", () => {
     });
   });
 
-  it("renders spinner appropriately throughout", async () => {
-    let resolve;
-    post.mockReturnValue(
-      new Promise((res) => {
-        resolve = res;
-      })
-    );
-    const user = userEvent.setup();
-    const container = render(buildComponent());
-    await act(() => submitForm(user, container));
-    const testid = "recipe-title-form-submit-spinner";
-    await waitFor(() => expect(container.queryByTestId(testid)).toBeTruthy());
-    act(() => resolve({}));
-    await waitFor(() =>
-      expect(container.queryByTestId(testid)).not.toBeTruthy()
-    );
-  });
-
   describe("when the API responds with a general error", () => {
     it("renders that general error as dismissable", async () => {
       const message = "An error occurred.";

@@ -1,10 +1,10 @@
 import Alert from "./Alert";
 import PropTypes from "prop-types";
+import Spinner from "./Spinner";
 import { compact, join } from "lodash";
 import {
   faCheck,
   faPenToSquare,
-  faSpinner,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -107,15 +107,9 @@ function RecipeTitleForm({ recipeDispatch, recipeState }) {
               title="Save"
               type="submit"
             >
-              {isSubmitting ? (
-                <FontAwesomeIcon
-                  data-testid="recipe-title-form-submit-spinner"
-                  icon={faSpinner}
-                  spin
-                />
-              ) : (
+              <Spinner spin={isSubmitting}>
                 <FontAwesomeIcon icon={faCheck} />
-              )}
+              </Spinner>{" "}
               <span className="sr-only">Save</span>
             </button>
 

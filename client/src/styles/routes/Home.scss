@@ -22,7 +22,6 @@
     .home-hero-subheader {
       color: map.get(colors.$colors, "gray");
       font-size: clamp(1rem, 5.5vw, 1.5rem);
-      margin: 2rem 0 0 0;
       max-width: 35rem;
     }
   }
@@ -34,7 +33,6 @@
     color: map.get(colors.$colors, "blue-fg");
     display: inline-block;
     font-size: clamp(1rem, 5vw, 1.2rem);
-    margin-top: 2.5rem;
     max-width: 23rem;
     padding: 0.5rem 1rem;
     text-align: center;

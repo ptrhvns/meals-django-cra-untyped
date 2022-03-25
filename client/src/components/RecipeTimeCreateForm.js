@@ -66,10 +66,13 @@ function RecipeTimesForm({
     ) || "At least one unit is required.";
 
   return (
-    <form className="recipe-times-form" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="recipe-times-create-form"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {recipeTimesState.createFormAlertMessage && (
         <Alert
-          className="recipe-times-form-alert"
+          className="recipe-times-create-form-alert"
           onDismiss={() =>
             recipeTimesDispatch({ type: "dismissCreateFormAlert" })
           }
@@ -79,22 +82,22 @@ function RecipeTimesForm({
         </Alert>
       )}
 
-      <div className="recipe-times-form-fields">
-        <div className="recipe-times-form-field-group">
+      <div className="recipe-times-create-form-fields">
+        <div className="recipe-times-create-form-field-group">
           <div>
-            <label htmlFor="recipe-times-form-input-type">Type</label>
+            <label htmlFor="recipe-times-create-form-input-type">Type</label>
           </div>
 
-          <div className="recipe-times-form-input-wrapper">
+          <div className="recipe-times-create-form-input-wrapper">
             <select
               className={join(
                 compact([
                   errors.time_type && "error",
-                  "recipe-times-form-input",
+                  "recipe-times-create-form-input",
                 ]),
                 " "
               )}
-              id="recipe-times-form-input-type"
+              id="recipe-times-create-form-input-type"
               {...register("time_type", { required: "Type is required." })}
             >
               <option value="">Select a type...</option>
@@ -109,19 +112,22 @@ function RecipeTimesForm({
           </div>
         </div>
 
-        <div className="recipe-times-form-field-group recipe-times-form-field-units">
-          <div className="recipe-times-form-field-unit">
+        <div className="recipe-times-create-form-field-group recipe-times-create-form-field-units">
+          <div className="recipe-times-create-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-form-input-days">Days</label>
+              <label htmlFor="recipe-times-create-form-input-days">Days</label>
             </div>
 
-            <div className="recipe-times-form-input-wrapper">
+            <div className="recipe-times-create-form-input-wrapper">
               <input
                 className={join(
-                  compact([errors.days && "error", "recipe-times-form-input"]),
+                  compact([
+                    errors.days && "error",
+                    "recipe-times-create-form-input",
+                  ]),
                   " "
                 )}
-                id="recipe-times-form-input-days"
+                id="recipe-times-create-form-input-days"
                 type="number"
                 {...register("days", {
                   validate: validateUnitsOfTime,
@@ -130,24 +136,29 @@ function RecipeTimesForm({
             </div>
 
             {errors.days && (
-              <div className="field-error-text recipe-times-form-unit-error">
+              <div className="field-error-text recipe-times-create-form-unit-error">
                 {errors.days.message}
               </div>
             )}
           </div>
 
-          <div className="recipe-times-form-field-unit">
+          <div className="recipe-times-create-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-form-input-hours">Hours</label>
+              <label htmlFor="recipe-times-create-form-input-hours">
+                Hours
+              </label>
             </div>
 
-            <div className="recipe-times-form-input-wrapper">
+            <div className="recipe-times-create-form-input-wrapper">
               <input
                 className={join(
-                  compact([errors.hours && "error", "recipe-times-form-input"]),
+                  compact([
+                    errors.hours && "error",
+                    "recipe-times-create-form-input",
+                  ]),
                   " "
                 )}
-                id="recipe-times-form-input-hours"
+                id="recipe-times-create-form-input-hours"
                 type="number"
                 {...register("hours", {
                   validate: validateUnitsOfTime,
@@ -156,34 +167,36 @@ function RecipeTimesForm({
             </div>
 
             {errors.hours && (
-              <div className="field-error-text recipe-times-form-unit-error">
+              <div className="field-error-text recipe-times-create-form-unit-error">
                 {errors.hours.message}
               </div>
             )}
           </div>
 
-          <div className="recipe-times-form-field-unit">
+          <div className="recipe-times-create-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-form-input-minutes">Minutes</label>
+              <label htmlFor="recipe-times-create-form-input-minutes">
+                Minutes
+              </label>
             </div>
 
-            <div className="recipe-times-form-input-wrapper">
+            <div className="recipe-times-create-form-input-wrapper">
               <input
                 className={join(
                   compact([
                     errors.minutes && "error",
-                    "recipe-times-form-input",
+                    "recipe-times-create-form-input",
                   ]),
                   " "
                 )}
-                id="recipe-times-form-input-minutes"
+                id="recipe-times-create-form-input-minutes"
                 type="number"
                 {...register("minutes", { validate: validateUnitsOfTime })}
               />
             </div>
 
             {errors.minutes && (
-              <div className="field-error-text recipe-times-form-unit-error">
+              <div className="field-error-text recipe-times-create-form-unit-error">
                 {errors.minutes.message}
               </div>
             )}
@@ -191,9 +204,9 @@ function RecipeTimesForm({
         </div>
       </div>
 
-      <div className="recipe-times-form-actions">
+      <div className="recipe-times-create-form-actions">
         <button
-          className="button-primary recipe-times-form-action"
+          className="button-primary recipe-times-create-form-action"
           disabled={isSubmitting}
           type="submit"
         >
@@ -204,7 +217,7 @@ function RecipeTimesForm({
         </button>
 
         <button
-          className="recipe-times-form-action"
+          className="recipe-times-create-form-action"
           onClick={handleDismissCreateForm}
           type="button"
         >

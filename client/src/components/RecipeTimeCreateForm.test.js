@@ -155,11 +155,21 @@ describe("when the form has been submitted", () => {
 
 describe("when the form has been dismissed", () => {
   it("dispatches 'dismissCreateForm' to recipe times reducer", async () => {
-    const props = { recipeTimesDispatch: jest.fn() };
+    const props = {
+      createFormMethods: {
+        formState: { errors: jest.fn() },
+        getValues: jest.fn(),
+        handleSubmit: jest.fn((f) => jest.fn((e) => e.preventDefault())),
+        register: jest.fn(),
+        setError: jest.fn(),
+      },
+      recipeTimesDispatch: jest.fn(),
+    };
     const user = userEvent.setup();
     render(<TestWrapper {...props} />);
     await user.click(screen.getByRole("button", { name: "Dismiss" }));
     expect(props.recipeTimesDispatch).toHaveBeenCalledWith({
+      createFormMethods: props.createFormMethods,
       type: "dismissCreateForm",
     });
   });

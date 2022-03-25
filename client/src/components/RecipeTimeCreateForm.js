@@ -56,7 +56,7 @@ function RecipeTimesForm({
   };
 
   const handleDismissCreateForm = () => {
-    recipeTimesDispatch({ type: "dismissCreateForm" });
+    recipeTimesDispatch({ type: "dismissCreateForm", createFormMethods });
   };
 
   const validateUnitsOfTime = () =>

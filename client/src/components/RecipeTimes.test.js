@@ -25,8 +25,15 @@ describe("recipeTimesReducer()", () => {
         createFormAlertMessage: "This is a test alert.",
         showCreateForm: true,
       };
-      const newState = recipeTimesReducer(oldState, {
+      const action = {
         type: "dismissCreateForm",
+        createFormMethods: {
+          reset: jest.fn(),
+        },
+      };
+      const newState = recipeTimesReducer(oldState, action);
+      expect(action.createFormMethods.reset).toHaveBeenCalledWith({
+        keepErrors: false,
       });
       expect(newState).toEqual({
         foo: true,
@@ -65,7 +72,9 @@ describe("recipeTimesReducer()", () => {
         },
       };
       const newState = recipeTimesReducer(oldState, action);
-      expect(action.createFormMethods.reset).toHaveBeenCalled();
+      expect(action.createFormMethods.reset).toHaveBeenCalledWith({
+        keepErrors: false,
+      });
       expect(newState).toEqual({
         foo: true,
         createFormAlertMessage: null,
@@ -102,7 +111,9 @@ describe("recipeTimesReducer()", () => {
         },
       };
       const newState = recipeTimesReducer(oldState, action);
-      expect(action.createFormMethods.reset).toHaveBeenCalled();
+      expect(action.createFormMethods.reset).toHaveBeenCalledWith({
+        keepErrors: false,
+      });
       expect(newState).toEqual({
         foo: true,
         createFormAlertMessage: null,

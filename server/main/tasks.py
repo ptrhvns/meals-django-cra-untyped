@@ -16,6 +16,7 @@ def send_signup_confirmation(user_id, site_uri, confirmation_uri):
     _send_signup_confirmation(user_id, site_uri, confirmation_uri)
 
 
+# Split this function out from celery to make testing easier.
 def _send_signup_confirmation(user_id, site_uri, confirmation_uri):
     logger.info(
         "attempting to send signup confirmation email to user ID %(user_id)s",

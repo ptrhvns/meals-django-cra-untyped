@@ -149,9 +149,8 @@ input {
   padding: 0.5rem;
 
   &:focus {
-    border: 2px solid map.get(colors.$colors, "gray-border");
     box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
-    outline: none;
+    outline: 2px solid map.get(colors.$colors, "gray-border");
   }
 
   &.error {
@@ -160,9 +159,9 @@ input {
     color: map.get(colors.$colors, "red-d25");
 
     &:focus {
-      border: 2px solid map.get(colors.$colors, "red-border");
       box-shadow: decorations.$box-shadow-inset-error-light,
         decorations.$box-shadow-error;
+      outline: 2px solid map.get(colors.$colors, "red-border");
     }
   }
 }
@@ -183,9 +182,8 @@ select {
   padding: 0.452rem;
 
   &:focus {
-    border: 2px solid map.get(colors.$colors, "gray-border");
+    outline: 2px solid map.get(colors.$colors, "gray-border");
     box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
-    outline: none;
   }
 
   &.error {
@@ -194,9 +192,9 @@ select {
     color: map.get(colors.$colors, "red-d25");
 
     &:focus {
-      border: 2px solid map.get(colors.$colors, "red-border");
       box-shadow: decorations.$box-shadow-inset-error-light,
         decorations.$box-shadow-error;
+      outline: 2px solid map.get(colors.$colors, "red-border");
     }
   }
 }

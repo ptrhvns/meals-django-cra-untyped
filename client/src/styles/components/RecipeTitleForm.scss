@@ -34,7 +34,11 @@
   }
 
   .recipe-title-form-title {
-    font-size: clamp(typography.$font-size-h3, 3vw, typography.$font-size-h2);
+    font-size: clamp(
+      typography.$font-size-h3,
+      2.5vw + 0.75rem,
+      typography.$font-size-h2
+    );
     margin: 0;
   }
 

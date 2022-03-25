@@ -12,7 +12,11 @@
   }
 
   .recipe-times-title {
-    font-size: clamp(typography.$font-size-h4, 2.5vw, typography.$font-size-h3);
+    font-size: clamp(
+      typography.$font-size-h4,
+      2vw + 0.75rem,
+      typography.$font-size-h3
+    );
   }
 
   .recipe-times-header-actions {

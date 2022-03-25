@@ -4,6 +4,7 @@ import useAuthn from "../hooks/useAuthn";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
+import { pick } from "lodash";
 import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +33,10 @@ function DeleteAccountForm() {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
-    const response = await post({ data, route: "deleteAccount" });
+    const response = await post({
+      data: pick(data, ["password"]),
+      route: "deleteAccount",
+    });
     setIsSubmitting(false);
 
     if (response.isError) {

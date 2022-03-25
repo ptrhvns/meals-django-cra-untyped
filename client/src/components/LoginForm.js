@@ -4,6 +4,7 @@ import useAuthn from "../hooks/useAuthn";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
+import { pick } from "lodash";
 import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -25,7 +26,10 @@ function LoginForm() {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
-    const response = await post({ data, route: "login" });
+    const response = await post({
+      data: pick(data, ["password", "username"]),
+      route: "login",
+    });
     setIsSubmitting(false);
 
     if (response.isError) {
@@ -101,7 +105,8 @@ function LoginForm() {
           <button className="button-primary" type="submit">
             <Spinner spin={isSubmitting}>
               <FontAwesomeIcon icon={faSignInAlt} />
-            </Spinner> Log in
+            </Spinner>{" "}
+            Log in
           </button>
         </div>
       </form>

@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Link } from "react-router-dom";
+import { pick } from "lodash";
 import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -25,7 +26,10 @@ function SignupForm() {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
-    const response = await post({ data, route: "signup" });
+    const response = await post({
+      data: pick(data, ["email", "password", "username"]),
+      route: "signup",
+    });
     setIsSubmitting(false);
 
     if (response.isError) {

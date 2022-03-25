@@ -35,7 +35,7 @@ function RecipeTimesForm({
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     const response = await post({
-      data: pick(data, ["time_type", "days", "hours", "minutes"]),
+      data: pick(data, ["days", "hours", "minutes", "time_type"]),
       route: "createRecipeTime",
       routeData: { recipeId: recipeState.id },
     });

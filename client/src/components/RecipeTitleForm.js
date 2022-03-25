@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
+import { pick } from "lodash";
 import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -41,7 +42,7 @@ function RecipeTitleForm({ recipeDispatch, recipeState }) {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     const response = await post({
-      data,
+      data: pick(data, ["title"]),
       route: "updateRecipeTitle",
       routeData: { recipeId: recipeState.id },
     });

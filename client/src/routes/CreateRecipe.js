@@ -1,6 +1,6 @@
 import Container from "../components/Container";
-import CreateRecipeForm from "../components/CreateRecipeForm";
 import Navbar from "../components/Navbar";
+import RecipeCreateForm from "../components/RecipeCreateForm";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 
@@ -22,7 +22,7 @@ function CreateRecipe() {
               Start with the recipe title.
             </p>
 
-            <CreateRecipeForm />
+            <RecipeCreateForm />
           </div>
         </Container>
       </Container>

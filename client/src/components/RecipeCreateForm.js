@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function CreateRecipeForm() {
+function RecipeCreateForm() {
   const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -38,11 +38,11 @@ function CreateRecipeForm() {
   };
 
   return (
-    <div className="create-recipe-form">
+    <div className="recipe-create-form">
       <form onSubmit={handleSubmit(onSubmit)}>
         {alertMessage && (
           <Alert
-            className="create-recipe-form-alert"
+            className="recipe-create-form-alert"
             onDismiss={() => setAlertMessage(null)}
             variant="error"
           >
@@ -50,12 +50,12 @@ function CreateRecipeForm() {
           </Alert>
         )}
 
-        <div className="create-recipe-form-field">
+        <div className="recipe-create-form-field">
           <div>
             <label htmlFor="title">Title</label>
           </div>
 
-          <div className="create-recipe-form-input-wrapper">
+          <div className="recipe-create-form-input-wrapper">
             <input
               className={`${errors.title ? "error" : ""}`}
               id="title"
@@ -71,7 +71,7 @@ function CreateRecipeForm() {
           )}
         </div>
 
-        <div className="create-recipe-form-actions">
+        <div className="recipe-create-form-actions">
           <button className="button-primary" type="submit">
             <Spinner spin={isSubmitting}>
               <FontAwesomeIcon icon={faCirclePlus} />
@@ -84,4 +84,4 @@ function CreateRecipeForm() {
   );
 }
 
-export default CreateRecipeForm;
+export default RecipeCreateForm;

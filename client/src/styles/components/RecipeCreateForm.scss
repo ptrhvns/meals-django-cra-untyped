@@ -1,11 +1,11 @@
-.create-recipe-form {
+.recipe-create-form {
   margin-top: 2rem;
 
-  .create-recipe-form-alert + .create-recipe-form-field {
+  .recipe-create-form-alert + .recipe-create-form-field {
     margin-top: 1rem;
   }
 
-  .create-recipe-form-input-wrapper {
+  .recipe-create-form-input-wrapper {
     margin-top: 0.5rem;
 
     input {
@@ -17,7 +17,7 @@
     margin-top: 0.5rem;
   }
 
-  .create-recipe-form-actions {
+  .recipe-create-form-actions {
     margin-top: 2rem;
 
     button {

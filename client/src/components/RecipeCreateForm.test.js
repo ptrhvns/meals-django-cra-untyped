@@ -5,7 +5,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-import CreateRecipeForm from "./CreateRecipeForm";
+import RecipeCreateForm from "./RecipeCreateForm";
 import ReactDOM from "react-dom";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 function buildComponent() {
   return (
     <MemoryRouter>
-      <CreateRecipeForm />
+      <RecipeCreateForm />
     </MemoryRouter>
   );
 }

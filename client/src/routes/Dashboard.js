@@ -17,7 +17,7 @@ function Dashboard() {
 
       <Container variant="viewport">
         <Container variant="content">
-          <Link to="/create-recipe">
+          <Link to="/recipe-create">
             <FontAwesomeIcon icon={faCirclePlus} /> Create a recipe
           </Link>
         </Container>

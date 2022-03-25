@@ -4,22 +4,22 @@
 @use "sass:map";
 @use "sass:math";
 
-.create-recipe {
-  $create-recipe-height: calc(100vh - widgets.$navbar-height);
+.recipe-create {
+  $recipe-create-height: calc(100vh - widgets.$navbar-height);
 
   background-color: map.get(colors.$colors, "gray-l95");
 
-  .create-recipe-viewport {
-    height: $create-recipe-height;
+  .recipe-create-viewport {
+    height: $recipe-create-height;
   }
 
-  .create-recipe-content {
+  .recipe-create-content {
     display: grid;
     justify-content: center;
-    padding-top: calc($create-recipe-height / 8);
+    padding-top: calc($recipe-create-height / 8);
   }
 
-  .create-recipe-card {
+  .recipe-create-card {
     background-color: map.get(colors.$colors, "white");
     border-radius: decorations.$border-radius-lg;
     border: 1px solid map.get(colors.$colors, "gray-l80");
@@ -29,7 +29,7 @@
     width: clamp(1rem, 90vw, 30rem);
   }
 
-  .create-recipe-instructions {
+  .recipe-create-instructions {
     color: map.get(colors.$colors, "gray");
   }
 }

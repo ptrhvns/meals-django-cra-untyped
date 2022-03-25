@@ -4,21 +4,21 @@ import RecipeCreateForm from "../components/RecipeCreateForm";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 
-function CreateRecipe() {
+function RecipeCreate() {
   return (
-    <div className="create-recipe">
+    <div className="recipe-create">
       <Helmet>
         <title>{buildTitle("Create Recipe")}</title>
       </Helmet>
 
       <Navbar />
 
-      <Container className="create-recipe-viewport" variant="viewport">
-        <Container className="create-recipe-content" variant="content">
-          <div className="create-recipe-card">
+      <Container className="recipe-create-viewport" variant="viewport">
+        <Container className="recipe-create-content" variant="content">
+          <div className="recipe-create-card">
             <h1>Create Recipe</h1>
 
-            <p className="create-recipe-instructions">
+            <p className="recipe-create-instructions">
               Start with the recipe title.
             </p>
 
@@ -30,4 +30,4 @@ function CreateRecipe() {
   );
 }
 
-export default CreateRecipe;
+export default RecipeCreate;

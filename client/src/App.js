@@ -1,10 +1,10 @@
-import CreateRecipe from "./routes/CreateRecipe";
 import Dashboard from "./routes/Dashboard";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
+import RecipeCreate from "./routes/RecipeCreate";
 import RequireAuthn from "./components/RequireAuthn";
 import RequireGuest from "./components/RequireGuest";
 import Settings from "./routes/Settings";
@@ -33,14 +33,6 @@ function App() {
           }
         />
         <Route
-          path="/create-recipe"
-          element={
-            <RequireAuthn>
-              <CreateRecipe />
-            </RequireAuthn>
-          }
-        />
-        <Route
           path="/dashboard"
           element={
             <RequireAuthn>
@@ -62,6 +54,14 @@ function App() {
           element={
             <RequireAuthn>
               <Recipe />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe-create"
+          element={
+            <RequireAuthn>
+              <RecipeCreate />
             </RequireAuthn>
           }
         />

@@ -18,11 +18,11 @@
 @use "styles/components/RecipeTitleForm";
 @use "styles/components/SignupForm";
 
-@use "styles/routes/CreateRecipe";
 @use "styles/routes/Dashboard";
 @use "styles/routes/Home";
 @use "styles/routes/Login";
 @use "styles/routes/Recipe";
+@use "styles/routes/RecipeCreate";
 @use "styles/routes/Settings";
 @use "styles/routes/Signup";
 @use "styles/routes/SignupConfirmation";

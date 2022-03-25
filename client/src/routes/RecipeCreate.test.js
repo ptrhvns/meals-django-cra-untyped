@@ -1,6 +1,6 @@
 import AuthnProvider from "../providers/AuthnProvider";
-import CreateRecipe from "./CreateRecipe";
 import ReactDOM from "react-dom";
+import RecipeCreate from "./RecipeCreate";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { render, waitFor } from "@testing-library/react";
@@ -10,7 +10,7 @@ function buildComponent() {
     <MemoryRouter>
       <HelmetProvider>
         <AuthnProvider>
-          <CreateRecipe />
+          <RecipeCreate />
         </AuthnProvider>
       </HelmetProvider>
     </MemoryRouter>

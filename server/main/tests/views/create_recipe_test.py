@@ -28,7 +28,9 @@ def test_invalid_request_data(api_rf):
 def test_creating_recipe_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
-    crs_class = mocker.patch("main.serializers.CreateRecipeSerializer", autospec=True)
+    crs_class = mocker.patch(
+        "main.views.serializers.CreateRecipeSerializer", autospec=True
+    )
     crs_instance = crs_class.return_value
     crs_instance.is_valid.return_value = True
     crs_instance.save.return_value = recipe

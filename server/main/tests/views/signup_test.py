@@ -33,7 +33,7 @@ def test_signing_up(client, freezer, mocker):
 
     assert models.User.objects.filter(username=data["username"]).count() == 0
 
-    delay_mock = mocker.patch("main.tasks.send_signup_confirmation.delay")
+    delay_mock = mocker.patch("main.views.tasks.send_signup_confirmation.delay")
     response = client.post(urls.reverse("signup"), data)
     data.pop("password")
     assert response.status_code == status.HTTP_201_CREATED

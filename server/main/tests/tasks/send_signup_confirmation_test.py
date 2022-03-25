@@ -19,7 +19,7 @@ def test_task_dispatches_logic(mocker):
 
 @pytest.mark.django_db
 def test_emailing_user(mocker):
-    mock = mocker.patch("main.models.User.email_user")
+    mock = mocker.patch("main.tasks.models.User.email_user")
     user = factories.UserFactory.create()
     tasks._send_signup_confirmation(user.id, site_uri, confirmation_uri)
     assert mock.called
@@ -35,7 +35,7 @@ def test_emailing_user(mocker):
 
 @pytest.mark.django_db
 def test_user_does_not_exist(mocker):
-    get_mock = mocker.patch("main.models.User.objects.get")
+    get_mock = mocker.patch("main.tasks.models.User.objects.get")
     get_mock.side_effect = models.User.DoesNotExist()
     error_mock = mocker.patch("main.tasks.logger.error")
     tasks._send_signup_confirmation(user_id, site_uri, confirmation_uri)
@@ -46,7 +46,7 @@ def test_user_does_not_exist(mocker):
 
 @pytest.mark.django_db
 def test_email_delivery_fails(mocker):
-    email_user_mock = mocker.patch("main.models.User.email_user")
+    email_user_mock = mocker.patch("main.tasks.models.User.email_user")
     email_user_mock.side_effect = smtplib.SMTPException()
     error_mock = mocker.patch("main.tasks.logger.error")
     user = factories.UserFactory.create()

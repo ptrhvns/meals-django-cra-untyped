@@ -43,7 +43,7 @@ def test_deleting_account_successfully(api_rf, mocker):
     test.force_authenticate(request, user=user)
     request.user = user
     request.session = {}
-    logout_mock = mocker.patch("django.contrib.auth.logout")
+    logout_mock = mocker.patch("main.views.auth.logout")
 
     response = views.delete_account(request)
 

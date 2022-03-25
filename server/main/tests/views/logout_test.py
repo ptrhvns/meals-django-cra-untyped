@@ -26,7 +26,7 @@ def test_logging_out_successfully(client, mocker):
         username="smith",
     )
 
-    logout_mock = mocker.patch("django.contrib.auth.logout")
+    logout_mock = mocker.patch("main.views.auth.logout")
     client.login(username=user.username, password=password)
     response = client.post(urls.reverse("logout"))
     assert response.status_code == status.HTTP_204_NO_CONTENT

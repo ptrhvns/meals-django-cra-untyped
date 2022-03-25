@@ -24,7 +24,9 @@ def test_updating_with_missing_recipe(api_rf, mocker):
     test.force_authenticate(request, user=user)
     request.user = user
     mocker.patch(
-        "django.shortcuts.get_object_or_404", autospec=True, side_effect=http.Http404
+        "main.views.shortcuts.get_object_or_404",
+        autospec=True,
+        side_effect=http.Http404,
     )
     response = views.update_recipe_title(request, 777)
     assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -34,7 +36,7 @@ def test_updating_with_invalid_data(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
     mocker.patch(
-        "django.shortcuts.get_object_or_404", autospec=True, return_value=recipe
+        "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe
     )
     request = api_rf.post(
         urls.reverse("update_recipe_title", kwargs={"recipe_id": recipe.id}), {}
@@ -51,10 +53,10 @@ def test_updating_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
     mocker.patch(
-        "django.shortcuts.get_object_or_404", autospec=True, return_value=recipe
+        "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe
     )
     urts_class = mocker.patch(
-        "main.serializers.UpdateRecipeTitleSerializer", autospec=True
+        "main.views.serializers.UpdateRecipeTitleSerializer", autospec=True
     )
     urts_instance = urts_class.return_value
     urts_instance.is_valid.return_value = True

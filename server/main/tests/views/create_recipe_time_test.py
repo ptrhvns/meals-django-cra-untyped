@@ -21,7 +21,7 @@ def test_recipe_not_found(api_rf, mocker):
     user = factories.UserFactory.build()
     test.force_authenticate(request, user=user)
     request.user = user
-    goo4 = mocker.patch("django.shortcuts.get_object_or_404", autospec=True)
+    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
     goo4.side_effect = http.Http404
     response = views.create_recipe_time(request, 1)
     assert response.status_code == status.HTTP_404_NOT_FOUND
@@ -34,7 +34,7 @@ def test_invalid_request_data(api_rf, mocker):
     request = api_rf.post(path, {})
     test.force_authenticate(request, user=user)
     request.user = user
-    goo4 = mocker.patch("django.shortcuts.get_object_or_404", autospec=True)
+    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
     goo4.return_value = recipe
     response = views.create_recipe_time(request, recipe.id)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
@@ -50,10 +50,10 @@ def test_creating_recipe_time_successfully(api_rf, mocker):
     path = urls.reverse("create_recipe_time", kwargs={"recipe_id": recipe.id})
     request = api_rf.post(path, data)
     test.force_authenticate(request, user=user)
-    goo4 = mocker.patch("django.shortcuts.get_object_or_404", autospec=True)
+    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
     goo4.return_value = recipe
     crts = mocker.patch(
-        "main.serializers.CreateRecipeTimeSerializer", autospec=True
+        "main.views.serializers.CreateRecipeTimeSerializer", autospec=True
     ).return_value
     crts.is_valid.return_value = True
     crts.save.return_value = recipe_time

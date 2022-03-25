@@ -23,7 +23,7 @@ def test_getting_recipe_successfully(api_rf, mocker):
     request = api_rf.get(urls.reverse("recipe", kwargs={"recipe_id": recipe.id}))
     test.force_authenticate(request, user=user)
     request.user = user
-    goo4 = mocker.patch("django.shortcuts.get_object_or_404", autospec=True)
+    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
     goo4.return_value = recipe
     response = views.recipe(request, recipe.id)
     assert response.status_code == status.HTTP_200_OK
@@ -37,7 +37,7 @@ def test_getting_missing_recipe(api_rf, mocker):
     request = api_rf.get(urls.reverse("recipe", kwargs={"recipe_id": 777}))
     test.force_authenticate(request, user=user)
     request.user = user
-    goo4 = mocker.patch("django.shortcuts.get_object_or_404", autospec=True)
+    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
     goo4.side_effect = http.Http404
     response = views.recipe(request, 777)
     assert response.status_code == status.HTTP_404_NOT_FOUND

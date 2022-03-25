@@ -40,9 +40,13 @@ def create_recipe(request):
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def create_recipe_time(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+
+    # Eliminate fields with an empty string (e.g. unset <select> field).
     pruned_data = {k: v for k, v in request.data.items() if v}
 
     serializer = serializers.CreateRecipeTimeSerializer(data=pruned_data)
+
+    # If "time_type" is invalid (field), units won't be validated (object).
     if not serializer.is_valid():
         return response.Response(
             {

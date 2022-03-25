@@ -31,5 +31,5 @@ def test_clean_success():
     recipe_time = factories.RecipeTimeFactory.build(recipe=recipe)
     try:
         recipe_time.clean()
-    except exceptions.ValidationError as exc:
+    except exceptions.ValidationError:
         pytest.fail("Unexpected exception: ValidationError")

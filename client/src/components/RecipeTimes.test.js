@@ -32,9 +32,17 @@ describe("recipeTimesReducer()", () => {
         },
       };
       const newState = recipeTimesReducer(oldState, action);
-      expect(action.createFormMethods.reset).toHaveBeenCalledWith({
-        keepErrors: false,
-      });
+      expect(action.createFormMethods.reset).toHaveBeenCalledWith(
+        {
+          time_type: null,
+          days: null,
+          hours: null,
+          minutes: null,
+        },
+        {
+          keepErrors: false,
+        }
+      );
       expect(newState).toEqual({
         foo: true,
         createFormAlertMessage: null,
@@ -72,9 +80,17 @@ describe("recipeTimesReducer()", () => {
         },
       };
       const newState = recipeTimesReducer(oldState, action);
-      expect(action.createFormMethods.reset).toHaveBeenCalledWith({
-        keepErrors: false,
-      });
+      expect(action.createFormMethods.reset).toHaveBeenCalledWith(
+        {
+          time_type: null,
+          days: null,
+          hours: null,
+          minutes: null,
+        },
+        {
+          keepErrors: false,
+        }
+      );
       expect(newState).toEqual({
         foo: true,
         createFormAlertMessage: null,
@@ -111,9 +127,17 @@ describe("recipeTimesReducer()", () => {
         },
       };
       const newState = recipeTimesReducer(oldState, action);
-      expect(action.createFormMethods.reset).toHaveBeenCalledWith({
-        keepErrors: false,
-      });
+      expect(action.createFormMethods.reset).toHaveBeenCalledWith(
+        {
+          time_type: null,
+          days: null,
+          hours: null,
+          minutes: null,
+        },
+        {
+          keepErrors: false,
+        }
+      );
       expect(newState).toEqual({
         foo: true,
         createFormAlertMessage: null,

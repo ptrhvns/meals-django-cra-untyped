@@ -12,9 +12,19 @@ const propTypes = {
 };
 
 export function recipeTimesReducer(state, action) {
+  const formResetArgs = [
+    {
+      time_type: null,
+      days: null,
+      hours: null,
+      minutes: null,
+    },
+    { keepErrors: false },
+  ];
+
   switch (action.type) {
     case "dismissCreateForm":
-      action.createFormMethods.reset({ keepErrors: false });
+      action.createFormMethods.reset(...formResetArgs);
       return {
         ...state,
         createFormAlertMessage: null,
@@ -23,13 +33,13 @@ export function recipeTimesReducer(state, action) {
     case "dismissCreateFormAlert":
       return { ...state, createFormAlertMessage: null };
     case "resetCreateForm":
-      action.createFormMethods.reset({ keepErrors: false });
+      action.createFormMethods.reset(...formResetArgs);
       return { ...state, createFormAlertMessage: null };
     case "setCreateFormAlertMessage":
       return { ...state, createFormAlertMessage: action.message };
     case "toggleCreateForm":
       if (state.showCreateForm) {
-        action.createFormMethods.reset({ keepErrors: false });
+        action.createFormMethods.reset(...formResetArgs);
       }
 
       return {

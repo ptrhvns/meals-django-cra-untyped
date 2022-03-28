@@ -147,6 +147,20 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
 ## Running tests
 
+- Run client tests (one-time run only):
+
+  ```sh
+  cd client
+  CI=true npm test
+  ```
+
+- Run client tests (in watch mode):
+
+  ```sh
+  cd client
+  npm test
+  ```
+
 - Run server tests:
 
   ```sh

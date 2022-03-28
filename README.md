@@ -145,9 +145,9 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   npm start
   ```
 
-## Running tests
+## Running Tests
 
-### Running client tests
+### Running Client Tests
 
 - Run tests (one-time run):
 
@@ -170,7 +170,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   CI=true npm test -- --coverage
   ```
 
-### Running server tests
+### Running Server Tests
 
 - Run tests:
 

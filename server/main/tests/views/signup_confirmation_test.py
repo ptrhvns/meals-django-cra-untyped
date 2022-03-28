@@ -28,8 +28,8 @@ def test_confirming_signup(client):
     user = factories.UserFactory.create()
 
     token = factories.TokenFactory.create(
-        category=models.Token.EMAIL_CONFIRMATION,
         expiration=timezone.now() + datetime.timedelta(hours=24),
+        token_type=models.Token.EMAIL_CONFIRMATION,
         user=user,
     )
 
@@ -56,8 +56,8 @@ def test_confirming_signup_with_expired_token(client):
     expiration_in_the_past = timezone.now() - datetime.timedelta(hours=1)
 
     token = factories.TokenFactory.create(
-        category=models.Token.EMAIL_CONFIRMATION,
         expiration=expiration_in_the_past,
+        token_type=models.Token.EMAIL_CONFIRMATION,
         user=user,
     )
 

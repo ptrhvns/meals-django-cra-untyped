@@ -10,7 +10,7 @@ def test_email_confirmations():
     size = 10
 
     factories.TokenFactory.create_batch(
-        size, category=models.Token.EMAIL_CONFIRMATION, expiration=timezone.now()
+        size, token_type=models.Token.EMAIL_CONFIRMATION, expiration=timezone.now()
     )
 
     assert models.Token.objects.email_confirmations().count() == size

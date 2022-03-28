@@ -45,7 +45,7 @@ def test_signing_up(client, freezer, mocker):
     data["id"] = user.id
     assert json["data"] == data
 
-    token = user.tokens.get(category=models.Token.EMAIL_CONFIRMATION)
+    token = user.tokens.get(token_type=models.Token.EMAIL_CONFIRMATION)
     assert token.expiration == timezone.now() + datetime.timedelta(hours=24)
 
     site_uri = main_client.urls["home"]

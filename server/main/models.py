@@ -77,16 +77,16 @@ class User(auth_models.AbstractUser):
 
 class TokenManager(db_models.Manager):
     def email_confirmations(self):
-        return self.filter(category=self.model.EMAIL_CONFIRMATION)
+        return self.filter(token_type=self.model.EMAIL_CONFIRMATION)
 
 
 class Token(db_models.Model):
     EMAIL_CONFIRMATION = "email_confirmation"
-    CATEGORY_CHOICES = [(EMAIL_CONFIRMATION, "Email Confirmation")]
+    TOKEN_TYPE_CHOICES = [(EMAIL_CONFIRMATION, "Email Confirmation")]
 
-    category = db_models.CharField(choices=CATEGORY_CHOICES, max_length=32)
     expiration = db_models.DateTimeField()
     token = db_models.CharField(max_length=256, default=utils.build_token, unique=True)
+    token_type = db_models.CharField(choices=TOKEN_TYPE_CHOICES, max_length=32)
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="tokens"
     )

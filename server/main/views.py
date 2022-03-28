@@ -190,8 +190,8 @@ def signup(request):
     user = serializer.save()
 
     token = models.Token.objects.create(
-        category=models.Token.EMAIL_CONFIRMATION,
         expiration=timezone.now() + datetime.timedelta(hours=24),
+        token_type=models.Token.EMAIL_CONFIRMATION,
         user=user,
     )
 

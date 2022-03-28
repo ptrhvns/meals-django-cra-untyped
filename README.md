@@ -147,28 +147,39 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
 ## Running tests
 
-- Run client tests (one-time run):
+### Running client tests
+
+- Run tests (one-time run):
 
   ```sh
   cd client
   CI=true npm test
   ```
 
-- Run client tests (in watch mode):
+- Run tests (in watch mode):
 
   ```sh
   cd client
   npm test
   ```
 
-- Run server tests:
+- Run tests, and report on test coverage:
+
+  ```sh
+  cd client
+  CI=true npm test -- --coverage
+  ```
+
+### Running server tests
+
+- Run tests:
 
   ```sh
   cd server
   pytest
   ```
 
-- Run server tests, and report on test coverage:
+- Run tests, and report on test coverage:
 
   ```sh
   cd server

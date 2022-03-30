@@ -1,10 +1,9 @@
 @use "../shared/settings";
-@use "../shared/widgets";
 @use "sass:map";
 @use "sass:math";
 
 .recipe-create {
-  $recipe-create-height: calc(100vh - widgets.$navbar-height);
+  $recipe-create-height: calc(100vh - settings.$navbar-height);
 
   background-color: map.get(settings.$colors, "gray-l95");
 

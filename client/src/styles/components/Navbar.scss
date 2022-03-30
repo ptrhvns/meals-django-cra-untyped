@@ -3,7 +3,7 @@
 @use "sass:map";
 
 .navbar {
-  height: widgets.$navbar-height;
+  height: settings.$navbar-height;
 
   .navbar-content {
     align-items: center;

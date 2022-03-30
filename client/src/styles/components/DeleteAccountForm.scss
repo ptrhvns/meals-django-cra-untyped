@@ -1,3 +1,5 @@
+@use "../shared/settings";
+
 .delete-account-form {
   $max-form-width: 25rem;
 
@@ -32,11 +34,11 @@
     }
   }
 
-  .field-error-text {
-    margin-top: 0.5rem;
-  }
-
   .delete-account-form-button + .delete-account-form-button {
     margin-left: 0.5rem;
   }
+}
+
+.delete-account-form__field-error {
+  margin-top: settings.$margin-top-field-error;
 }

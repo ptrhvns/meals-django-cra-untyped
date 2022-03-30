@@ -1,7 +1,7 @@
+@use "../shared/settings";
 @use "sass:map";
-@use "settings";
 
-.field-error-text {
+.field-error {
   color: map.get(settings.$colors, "red-d25");
   font-size: settings.$font-size-s1;
 }

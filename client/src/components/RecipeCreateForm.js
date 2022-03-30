@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import FieldError from "./FieldError";
 import Spinner from "./Spinner";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -66,9 +67,10 @@ function RecipeCreateForm() {
             />
           </div>
 
-          {errors.title && (
-            <div className="field-error-text">{errors.title.message}</div>
-          )}
+          <FieldError
+            className="recipe-create-form__field-error"
+            error={errors?.title?.message}
+          />
         </div>
 
         <div className="recipe-create-form-actions">

@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import FieldError from "./FieldError";
 import Spinner from "./Spinner";
 import useAuthn from "../hooks/useAuthn";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
@@ -73,9 +74,10 @@ function LoginForm() {
             />
           </div>
 
-          {errors.username && (
-            <div className="field-error-text">{errors.username.message}</div>
-          )}
+          <FieldError
+            className="login-form__field-error"
+            error={errors?.username?.message}
+          />
         </div>
 
         <div className="login-form-field">
@@ -95,9 +97,10 @@ function LoginForm() {
               />
             </div>
 
-            {errors.password && (
-              <div className="field-error-text">{errors.password.message}</div>
-            )}
+            <FieldError
+              className="login-form__field-error"
+              error={errors?.password?.message}
+            />
           </div>
         </div>
 

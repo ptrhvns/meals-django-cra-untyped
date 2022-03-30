@@ -24,16 +24,16 @@
     }
   }
 
-  .field-error-text {
-    margin-top: 0.5rem;
-  }
-
   .signup-form-alert + .signup-form-field {
     margin-top: 1.25rem;
   }
+}
 
-  .signup-agreements {
-    color: map.get(settings.$colors, "gray");
-    margin-top: 2rem;
-  }
+.signup-form__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.signup-form__agreements {
+  color: map.get(settings.$colors, "gray");
+  margin-top: 2rem;
 }

@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import FieldError from "./FieldError";
 import PropTypes from "prop-types";
 import Spinner from "./Spinner";
 import { compact, isEmpty, join, pick, some } from "lodash";
@@ -66,13 +67,10 @@ function RecipeTimesForm({
     ) || "At least one unit is required.";
 
   return (
-    <form
-      className="recipe-times-create-form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form className="recipe-time-create-form" onSubmit={handleSubmit(onSubmit)}>
       {recipeTimesState.createFormAlertMessage && (
         <Alert
-          className="recipe-times-create-form-alert"
+          className="recipe-time-create-form-alert"
           onDismiss={() =>
             recipeTimesDispatch({ type: "dismissCreateFormAlert" })
           }
@@ -82,22 +80,22 @@ function RecipeTimesForm({
         </Alert>
       )}
 
-      <div className="recipe-times-create-form-fields">
-        <div className="recipe-times-create-form-field-group">
+      <div className="recipe-time-create-form-fields">
+        <div className="recipe-time-create-form-field-group">
           <div>
-            <label htmlFor="recipe-times-create-form-input-type">Type</label>
+            <label htmlFor="recipe-time-create-form-input-type">Type</label>
           </div>
 
-          <div className="recipe-times-create-form-input-wrapper">
+          <div className="recipe-time-create-form-input-wrapper">
             <select
               className={join(
                 compact([
                   errors.time_type && "error",
-                  "recipe-times-create-form-input",
+                  "recipe-time-create-form-input",
                 ]),
                 " "
               )}
-              id="recipe-times-create-form-input-type"
+              id="recipe-time-create-form-input-type"
               {...register("time_type", { required: "Type is required." })}
             >
               <option value="">Select a type...</option>
@@ -106,28 +104,29 @@ function RecipeTimesForm({
               <option value="Preparation">Preparation</option>
             </select>
 
-            {errors.time_type && (
-              <div className="field-error-text">{errors.time_type.message}</div>
-            )}
+            <FieldError
+              className="recipe-time-create-form__field-error"
+              error={errors?.time_type?.message}
+            />
           </div>
         </div>
 
-        <div className="recipe-times-create-form-field-group recipe-times-create-form-field-units">
-          <div className="recipe-times-create-form-field-unit">
+        <div className="recipe-time-create-form-field-group recipe-time-create-form-field-units">
+          <div className="recipe-time-create-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-create-form-input-days">Days</label>
+              <label htmlFor="recipe-time-create-form-input-days">Days</label>
             </div>
 
-            <div className="recipe-times-create-form-input-wrapper">
+            <div className="recipe-time-create-form-input-wrapper">
               <input
                 className={join(
                   compact([
                     errors.days && "error",
-                    "recipe-times-create-form-input",
+                    "recipe-time-create-form-input",
                   ]),
                   " "
                 )}
-                id="recipe-times-create-form-input-days"
+                id="recipe-time-create-form-input-days"
                 type="number"
                 {...register("days", {
                   validate: validateUnitsOfTime,
@@ -135,30 +134,27 @@ function RecipeTimesForm({
               />
             </div>
 
-            {errors.days && (
-              <div className="field-error-text recipe-times-create-form-unit-error">
-                {errors.days.message}
-              </div>
-            )}
+            <FieldError
+              className="recipe-time-create-form__field-error"
+              error={errors?.days?.message}
+            />
           </div>
 
-          <div className="recipe-times-create-form-field-unit">
+          <div className="recipe-time-create-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-create-form-input-hours">
-                Hours
-              </label>
+              <label htmlFor="recipe-time-create-form-input-hours">Hours</label>
             </div>
 
-            <div className="recipe-times-create-form-input-wrapper">
+            <div className="recipe-time-create-form-input-wrapper">
               <input
                 className={join(
                   compact([
                     errors.hours && "error",
-                    "recipe-times-create-form-input",
+                    "recipe-time-create-form-input",
                   ]),
                   " "
                 )}
-                id="recipe-times-create-form-input-hours"
+                id="recipe-time-create-form-input-hours"
                 type="number"
                 {...register("hours", {
                   validate: validateUnitsOfTime,
@@ -166,47 +162,45 @@ function RecipeTimesForm({
               />
             </div>
 
-            {errors.hours && (
-              <div className="field-error-text recipe-times-create-form-unit-error">
-                {errors.hours.message}
-              </div>
-            )}
+            <FieldError
+              className="recipe-time-create-form__field-error"
+              error={errors?.hours?.message}
+            />
           </div>
 
-          <div className="recipe-times-create-form-field-unit">
+          <div className="recipe-time-create-form-field-unit">
             <div>
-              <label htmlFor="recipe-times-create-form-input-minutes">
+              <label htmlFor="recipe-time-create-form-input-minutes">
                 Minutes
               </label>
             </div>
 
-            <div className="recipe-times-create-form-input-wrapper">
+            <div className="recipe-time-create-form-input-wrapper">
               <input
                 className={join(
                   compact([
                     errors.minutes && "error",
-                    "recipe-times-create-form-input",
+                    "recipe-time-create-form-input",
                   ]),
                   " "
                 )}
-                id="recipe-times-create-form-input-minutes"
+                id="recipe-time-create-form-input-minutes"
                 type="number"
                 {...register("minutes", { validate: validateUnitsOfTime })}
               />
             </div>
 
-            {errors.minutes && (
-              <div className="field-error-text recipe-times-create-form-unit-error">
-                {errors.minutes.message}
-              </div>
-            )}
+            <FieldError
+              className="recipe-time-create-form__field-error"
+              error={errors?.minutes?.message}
+            />
           </div>
         </div>
       </div>
 
-      <div className="recipe-times-create-form-actions">
+      <div className="recipe-time-create-form-actions">
         <button
-          className="button-primary recipe-times-create-form-action"
+          className="button-primary recipe-time-create-form-action"
           disabled={isSubmitting}
           type="submit"
         >
@@ -217,7 +211,7 @@ function RecipeTimesForm({
         </button>
 
         <button
-          className="recipe-times-create-form-action"
+          className="recipe-time-create-form-action"
           onClick={handleDismissCreateForm}
           type="button"
         >

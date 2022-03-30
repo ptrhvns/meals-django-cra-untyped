@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import FieldError from "./FieldError";
 import Spinner from "./Spinner";
 import {
   faExclamationCircle,
@@ -79,11 +80,10 @@ function SignupForm() {
                 />
               </div>
 
-              {errors.username && (
-                <div className="field-error-text">
-                  {errors.username.message}
-                </div>
-              )}
+              <FieldError
+                className="signup-form__field-error"
+                error={errors?.username?.message}
+              />
             </div>
 
             <div className="signup-form-field">
@@ -100,9 +100,10 @@ function SignupForm() {
                 />
               </div>
 
-              {errors.email && (
-                <div className="field-error-text">{errors.email.message}</div>
-              )}
+              <FieldError
+                className="signup-form__field-error"
+                error={errors?.email?.message}
+              />
             </div>
 
             <div className="signup-form-field">
@@ -121,11 +122,10 @@ function SignupForm() {
                 />
               </div>
 
-              {errors.password && (
-                <div className="field-error-text">
-                  {errors.password.message}
-                </div>
-              )}
+              <FieldError
+                className="signup-form__field-error"
+                error={errors?.password?.message}
+              />
             </div>
 
             <div className="signup-form-actions">
@@ -138,7 +138,7 @@ function SignupForm() {
             </div>
           </form>
 
-          <p className="signup-agreements">
+          <p className="signup-form__agreements">
             By creating an account with us, you agree to our{" "}
             <Link to="/terms-and-conditions">Terms and Conditions</Link>, and to
             our <Link to="/privacy-policy">Privacy Policy</Link>.

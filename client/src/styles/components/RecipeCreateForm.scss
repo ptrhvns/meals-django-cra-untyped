@@ -1,3 +1,5 @@
+@use "../shared/settings";
+
 .recipe-create-form {
   margin-top: 2rem;
 
@@ -13,10 +15,6 @@
     }
   }
 
-  .field-error-text {
-    margin-top: 0.5rem;
-  }
-
   .recipe-create-form-actions {
     margin-top: 2rem;
 
@@ -24,4 +22,8 @@
       width: 100%;
     }
   }
+}
+
+.recipe-create-form__field-error {
+  margin-top: settings.$margin-top-field-error;
 }

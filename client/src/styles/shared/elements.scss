@@ -27,8 +27,10 @@ button {
   text-align: center;
   vertical-align: middle;
 
-  &:active {
+  &:active,
+  &:focus {
     box-shadow: inset 0 2px 8px map.get(settings.$colors, "gray-l75");
+    outline: 2px solid map.get(settings.$colors, "gray-border");
   }
 
   &:disabled {
@@ -56,8 +58,10 @@ button.button-plain {
   padding: 0;
   text-decoration: none;
 
-  &:active {
+  &:active,
+  &:focus {
     box-shadow: none;
+    border: 1px dotted map.get(settings.$colors, "black");
   }
 
   &:hover {
@@ -74,6 +78,11 @@ button.button-link {
   padding: 0;
   text-decoration: none;
 
+  &:active,
+  &:focus {
+    outline: 1px dotted map.get(settings.$colors, "black");
+  }
+
   &:hover {
     text-decoration: underline;
   }
@@ -84,8 +93,10 @@ button.button-danger {
   border: 1px solid map.get(settings.$colors, "red-border");
   color: map.get(settings.$colors, "red-fg");
 
-  &:active {
+  &:active,
+  &:focus {
     box-shadow: inset 0 2px 8px map.get(settings.$colors, "red-l80");
+    outline: 2px solid map.get(settings.$colors, "red-border");
   }
 
   &:disabled {
@@ -108,8 +119,10 @@ button.button-primary {
   border: 1px solid map.get(settings.$colors, "blue-border");
   color: map.get(settings.$colors, "blue-fg");
 
-  &:active {
+  &:active,
+  &:focus {
     box-shadow: inset 0 2px 8px map.get(settings.$colors, "blue-l80");
+    outline: 2px solid map.get(settings.$colors, "blue-border");
   }
 
   &:disabled {

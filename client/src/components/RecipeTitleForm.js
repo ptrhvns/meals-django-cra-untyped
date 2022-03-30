@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import FieldError from "./FieldError";
 import PropTypes from "prop-types";
 import Spinner from "./Spinner";
 import { compact, join } from "lodash";
@@ -125,9 +126,7 @@ function RecipeTitleForm({ recipeDispatch, recipeState }) {
             </button>
           </div>
 
-          {errors.title && (
-            <div className="field-error-text">{errors.title.message}</div>
-          )}
+          <FieldError error={errors?.title?.message} />
         </form>
       ) : (
         <div className="recipe-title-form-static">

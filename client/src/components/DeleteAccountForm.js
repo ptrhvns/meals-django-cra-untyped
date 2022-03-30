@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import FieldError from "./FieldError";
 import Spinner from "./Spinner";
 import useAuthn from "../hooks/useAuthn";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -80,9 +81,10 @@ function DeleteAccountForm() {
               />
             </div>
 
-            {errors.password && (
-              <div className="field-error-text">{errors.password.message}</div>
-            )}
+            <FieldError
+              className="delete-account-form__field-error"
+              error={errors?.password?.message}
+            />
           </div>
 
           <div className="delete-account-form-actions">

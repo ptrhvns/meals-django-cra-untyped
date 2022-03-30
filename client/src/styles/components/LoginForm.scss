@@ -1,3 +1,5 @@
+@use "../shared/settings";
+
 .login-form {
   margin-top: 1.5rem;
 
@@ -21,11 +23,11 @@
     }
   }
 
-  .field-error-text {
-    margin-top: 0.5rem;
-  }
-
   .login-form-alert + .login-form-field {
     margin-top: 1.25rem;
   }
+}
+
+.login-form__field-error {
+  margin-top: settings.$margin-top-field-error;
 }

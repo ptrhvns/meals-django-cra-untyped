@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a demonstration website using Django and React to manage recipes.
+This is a website for managing meals.
 
 ## Setting Up a Development Environment
 

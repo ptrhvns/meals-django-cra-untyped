@@ -1,10 +1,10 @@
-@use "../shared/colors";
+@use "../shared/settings";
 @use "sass:map";
 
 .settings {
   .settings-delete-account-header {
-    border-bottom: 1px solid map.get(colors.$colors, "red");
-    color: map.get(colors.$colors, "red");
+    border-bottom: 1px solid map.get(settings.$colors, "red");
+    color: map.get(settings.$colors, "red");
     padding-bottom: 0.75rem;
   }
 }

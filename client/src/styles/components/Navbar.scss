@@ -1,5 +1,4 @@
-@use "../shared/colors";
-@use "../shared/decorations";
+@use "../shared/settings";
 @use "../shared/widgets";
 @use "sass:map";
 
@@ -16,25 +15,25 @@
 
   .navbar-logo-wrapper {
     a {
-      border-radius: decorations.$border-radius;
-      color: map.get(colors.$colors, "blue-d65");
+      border-radius: settings.$border-radius;
+      color: map.get(settings.$colors, "blue-d65");
       font-size: 1.8rem;
       font-weight: bold;
 
       &:hover,
       &:hover:visited {
-        color: map.get(colors.$colors, "blue-d45");
+        color: map.get(settings.$colors, "blue-d45");
         text-decoration: none;
       }
 
       &:visited {
-        color: map.get(colors.$colors, "blue-d65");
+        color: map.get(settings.$colors, "blue-d65");
       }
     }
   }
 
   .navbar-menu-button {
-    color: map.get(colors.$colors, "blue-d65");
+    color: map.get(settings.$colors, "blue-d65");
 
     &:active {
       box-shadow: none;
@@ -51,10 +50,10 @@
   }
 
   .navbar-menu-list-wrapper {
-    background-color: map.get(colors.$colors, "white");
-    border-radius: decorations.$border-radius;
-    border: 1px solid map.get(colors.$colors, "gray-l75");
-    color: map.get(colors.$colors, "blue-d65");
+    background-color: map.get(settings.$colors, "white");
+    border-radius: settings.$border-radius;
+    border: 1px solid map.get(settings.$colors, "gray-l75");
+    color: map.get(settings.$colors, "blue-d65");
     position: absolute;
     right: 0;
     top: 1.75rem;
@@ -68,13 +67,13 @@
 
     li {
       &:hover {
-        background-color: map.get(colors.$colors, "gray-l95");
+        background-color: map.get(settings.$colors, "gray-l95");
       }
     }
 
     a,
     button {
-      color: map.get(colors.$colors, "blue-d65");
+      color: map.get(settings.$colors, "blue-d65");
       display: inline-block;
       padding: 0.5rem 1rem;
       text-align: left;
@@ -94,6 +93,6 @@
   }
 
   .navbar-menu-group-first {
-    border-top: 1px solid map.get(colors.$colors, "gray-l75");
+    border-top: 1px solid map.get(settings.$colors, "gray-l75");
   }
 }

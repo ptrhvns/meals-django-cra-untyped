@@ -1,5 +1,4 @@
-@use "../shared/colors";
-@use "../shared/decorations";
+@use "../shared/settings";
 @use "../shared/widgets";
 @use "sass:map";
 @use "sass:math";
@@ -7,7 +6,7 @@
 .recipe-create {
   $recipe-create-height: calc(100vh - widgets.$navbar-height);
 
-  background-color: map.get(colors.$colors, "gray-l95");
+  background-color: map.get(settings.$colors, "gray-l95");
 
   .recipe-create-viewport {
     height: $recipe-create-height;
@@ -20,16 +19,16 @@
   }
 
   .recipe-create-card {
-    background-color: map.get(colors.$colors, "white");
-    border-radius: decorations.$border-radius-lg;
-    border: 1px solid map.get(colors.$colors, "gray-l80");
-    box-shadow: decorations.$box-shadow;
+    background-color: map.get(settings.$colors, "white");
+    border-radius: settings.$border-radius-lg;
+    border: 1px solid map.get(settings.$colors, "gray-l80");
+    box-shadow: settings.$box-shadow;
     height: fit-content;
     padding: 1rem 1rem 2rem 1rem;
     width: clamp(1rem, 90vw, 30rem);
   }
 
   .recipe-create-instructions {
-    color: map.get(colors.$colors, "gray");
+    color: map.get(settings.$colors, "gray");
   }
 }

@@ -1,11 +1,11 @@
-@use "../shared/colors";
+@use "../shared/settings";
 @use "sass:map";
 
 .recipe-times-list {
   margin-top: 2rem;
 
   .recipe-times-list-empty-notice {
-    color: map.get(colors.$colors, "gray");
+    color: map.get(settings.$colors, "gray");
   }
 
   .recipe-times-list-list {

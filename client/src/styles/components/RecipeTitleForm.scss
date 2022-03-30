@@ -1,6 +1,4 @@
-@use "../shared/colors";
-@use "../shared/decorations";
-@use "../shared/typography";
+@use "../shared/settings";
 @use "sass:map";
 
 .recipe-title-form {
@@ -23,7 +21,7 @@
     border-radius: 0;
 
     &:last-of-type {
-      border-radius: decorations.$border-radius;
+      border-radius: settings.$border-radius;
       border-bottom-left-radius: 0;
       border-top-left-radius: 0;
     }
@@ -35,9 +33,9 @@
 
   .recipe-title-form-title {
     font-size: clamp(
-      typography.$font-size-h3,
+      settings.$font-size-h3,
       2.5vw + 0.75rem,
-      typography.$font-size-h2
+      settings.$font-size-h2
     );
     margin: 0;
   }
@@ -49,7 +47,7 @@
   }
 
   .recipe-title-form-edit-button {
-    color: map.get(colors.$colors, "blue-d65");
+    color: map.get(settings.$colors, "blue-d65");
 
     &:hover {
       transform: scale(120%);

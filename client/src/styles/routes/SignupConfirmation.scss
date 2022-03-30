@@ -1,10 +1,9 @@
-@use "../shared/colors";
-@use "../shared/decorations";
+@use "../shared/settings";
 @use "sass:map";
 
 .signup-confirmation {
   .signup-confirmation-viewport {
-    background-color: map.get(colors.$colors, "gray-l95");
+    background-color: map.get(settings.$colors, "gray-l95");
   }
 
   .signup-confirmation-content-wrapper {
@@ -19,27 +18,27 @@
   }
 
   .signup-confirmation-home-link {
-    border-radius: decorations.$border-radius-lg;
-    color: map.get(colors.$colors, "blue-d65");
+    border-radius: settings.$border-radius-lg;
+    color: map.get(settings.$colors, "blue-d65");
     font-size: 2rem;
     padding: 0.3rem 0.8rem;
 
     &:hover {
-      background-color: map.get(colors.$colors, "white");
-      color: map.get(colors.$colors, "blue-d65");
+      background-color: map.get(settings.$colors, "white");
+      color: map.get(settings.$colors, "blue-d65");
       text-decoration: none;
     }
 
     &:visited {
-      color: map.get(colors.$colors, "blue-d65");
+      color: map.get(settings.$colors, "blue-d65");
     }
   }
 
   .signup-confirmation-message-wrapper {
-    background-color: map.get(colors.$colors, "white");
-    border-radius: decorations.$border-radius-lg;
-    border: 1px solid map.get(colors.$colors, "gray-l80");
-    box-shadow: decorations.$box-shadow;
+    background-color: map.get(settings.$colors, "white");
+    border-radius: settings.$border-radius-lg;
+    border: 1px solid map.get(settings.$colors, "gray-l80");
+    box-shadow: settings.$box-shadow;
     margin-top: 2rem;
     padding: 2rem 1rem 2.5rem 1rem;
     text-align: left;

@@ -1,11 +1,9 @@
-@use "colors";
-@use "decorations";
 @use "sass:color";
 @use "sass:map";
-@use "typography";
+@use "settings";
 
 a {
-  color: map.get(colors.$colors, "blue-d25");
+  color: map.get(settings.$colors, "blue-d25");
   text-decoration: none;
 
   &:hover,
@@ -14,38 +12,38 @@ a {
   }
 
   &:visited {
-    color: map.get(colors.$colors, "blue-d25");
+    color: map.get(settings.$colors, "blue-d25");
   }
 }
 
 button {
-  background-color: map.get(colors.$colors, "gray-bg");
-  border-radius: decorations.$border-radius;
-  border: 1px solid map.get(colors.$colors, "gray-border");
-  color: map.get(colors.$colors, "gray-fg");
+  background-color: map.get(settings.$colors, "gray-bg");
+  border-radius: settings.$border-radius;
+  border: 1px solid map.get(settings.$colors, "gray-border");
+  color: map.get(settings.$colors, "gray-fg");
   display: inline-block;
-  font-size: typography.$font-size-base;
+  font-size: settings.$font-size-base;
   padding: 0.5rem 1rem;
   text-align: center;
   vertical-align: middle;
 
   &:active {
-    box-shadow: inset 0 2px 8px map.get(colors.$colors, "gray-l75");
+    box-shadow: inset 0 2px 8px map.get(settings.$colors, "gray-l75");
   }
 
   &:disabled {
     background-color: color.scale(
-      map.get(colors.$colors, "gray-bg"),
+      map.get(settings.$colors, "gray-bg"),
       $saturation: -30%
     );
     border: 1px solid
-      color.scale(map.get(colors.$colors, "gray-border"), $saturation: -30%);
-    color: color.scale(map.get(colors.$colors, "gray-fg"), $saturation: -30%);
+      color.scale(map.get(settings.$colors, "gray-border"), $saturation: -30%);
+    color: color.scale(map.get(settings.$colors, "gray-fg"), $saturation: -30%);
     cursor: not-allowed;
   }
 
   &:hover {
-    background-color: map.get(colors.$colors, "gray-bg-hover");
+    background-color: map.get(settings.$colors, "gray-bg-hover");
   }
 }
 
@@ -70,7 +68,7 @@ button.button-plain {
 button.button-link {
   background: transparent;
   border: none;
-  color: map.get(colors.$colors, "blue-d25");
+  color: map.get(settings.$colors, "blue-d25");
   cursor: pointer;
   display: inline;
   padding: 0;
@@ -82,50 +80,50 @@ button.button-link {
 }
 
 button.button-danger {
-  background-color: map.get(colors.$colors, "red-bg");
-  border: 1px solid map.get(colors.$colors, "red-border");
-  color: map.get(colors.$colors, "red-fg");
+  background-color: map.get(settings.$colors, "red-bg");
+  border: 1px solid map.get(settings.$colors, "red-border");
+  color: map.get(settings.$colors, "red-fg");
 
   &:active {
-    box-shadow: inset 0 2px 8px map.get(colors.$colors, "red-l80");
+    box-shadow: inset 0 2px 8px map.get(settings.$colors, "red-l80");
   }
 
   &:disabled {
     background-color: color.scale(
-      map.get(colors.$colors, "red-bg"),
+      map.get(settings.$colors, "red-bg"),
       $saturation: -30%
     );
     border: 1px solid
-      color.scale(map.get(colors.$colors, "red-border"), $saturation: -30%);
-    color: color.scale(map.get(colors.$colors, "red-fg"), $saturation: -30%);
+      color.scale(map.get(settings.$colors, "red-border"), $saturation: -30%);
+    color: color.scale(map.get(settings.$colors, "red-fg"), $saturation: -30%);
   }
 
   &:hover {
-    background-color: map.get(colors.$colors, "red-bg-hover");
+    background-color: map.get(settings.$colors, "red-bg-hover");
   }
 }
 
 button.button-primary {
-  background-color: map.get(colors.$colors, "blue-bg");
-  border: 1px solid map.get(colors.$colors, "blue-border");
-  color: map.get(colors.$colors, "blue-fg");
+  background-color: map.get(settings.$colors, "blue-bg");
+  border: 1px solid map.get(settings.$colors, "blue-border");
+  color: map.get(settings.$colors, "blue-fg");
 
   &:active {
-    box-shadow: inset 0 2px 8px map.get(colors.$colors, "blue-l80");
+    box-shadow: inset 0 2px 8px map.get(settings.$colors, "blue-l80");
   }
 
   &:disabled {
     background-color: color.scale(
-      map.get(colors.$colors, "blue-bg"),
+      map.get(settings.$colors, "blue-bg"),
       $saturation: -30%
     );
     border: 1px solid
-      color.scale(map.get(colors.$colors, "blue-border"), $saturation: -30%);
-    color: color.scale(map.get(colors.$colors, "blue-fg"), $saturation: -30%);
+      color.scale(map.get(settings.$colors, "blue-border"), $saturation: -30%);
+    color: color.scale(map.get(settings.$colors, "blue-fg"), $saturation: -30%);
   }
 
   &:hover {
-    background-color: map.get(colors.$colors, "blue-bg-hover");
+    background-color: map.get(settings.$colors, "blue-bg-hover");
   }
 }
 
@@ -135,40 +133,40 @@ h3,
 h4,
 h5,
 h6 {
-  color: map.get(colors.$colors, "blue-d65");
+  color: map.get(settings.$colors, "blue-d65");
   line-height: 1.2;
   margin: 0;
 }
 
 html {
-  font-family: typography.$font-family-sans-serif;
-  font-size: typography.$font-size-base;
+  font-family: settings.$font-family-sans-serif;
+  font-size: settings.$font-size-base;
   line-height: 1.5;
 }
 
 input {
-  background: map.get(colors.$colors, "white");
-  border-radius: decorations.$border-radius;
-  border: 1px solid map.get(colors.$colors, "gray-border");
-  box-shadow: decorations.$box-shadow-inset;
-  color: map.get(colors.$colors, "black");
-  font-size: typography.$font-size-base;
+  background: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius;
+  border: 1px solid map.get(settings.$colors, "gray-border");
+  box-shadow: settings.$box-shadow-inset;
+  color: map.get(settings.$colors, "black");
+  font-size: settings.$font-size-base;
   padding: 0.5rem;
 
   &:focus {
-    box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
-    outline: 2px solid map.get(colors.$colors, "gray-border");
+    box-shadow: settings.$box-shadow-inset-light, settings.$box-shadow;
+    outline: 2px solid map.get(settings.$colors, "gray-border");
   }
 
   &.error {
-    border: 1px solid map.get(colors.$colors, "red-border");
-    box-shadow: decorations.$box-shadow-inset-error;
-    color: map.get(colors.$colors, "red-d25");
+    border: 1px solid map.get(settings.$colors, "red-border");
+    box-shadow: settings.$box-shadow-inset-error;
+    color: map.get(settings.$colors, "red-d25");
 
     &:focus {
-      box-shadow: decorations.$box-shadow-inset-error-light,
-        decorations.$box-shadow-error;
-      outline: 2px solid map.get(colors.$colors, "red-border");
+      box-shadow: settings.$box-shadow-inset-error-light,
+        settings.$box-shadow-error;
+      outline: 2px solid map.get(settings.$colors, "red-border");
     }
   }
 }
@@ -179,29 +177,29 @@ label {
 }
 
 select {
-  background: map.get(colors.$colors, "white");
-  border-radius: decorations.$border-radius;
-  border: 1px solid map.get(colors.$colors, "gray-border");
-  box-shadow: decorations.$box-shadow-inset;
-  color: map.get(colors.$colors, "black");
+  background: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius;
+  border: 1px solid map.get(settings.$colors, "gray-border");
+  box-shadow: settings.$box-shadow-inset;
+  color: map.get(settings.$colors, "black");
   font-family: inherit;
-  font-size: typography.$font-size-base;
+  font-size: settings.$font-size-base;
   padding: 0.452rem;
 
   &:focus {
-    outline: 2px solid map.get(colors.$colors, "gray-border");
-    box-shadow: decorations.$box-shadow-inset-light, decorations.$box-shadow;
+    outline: 2px solid map.get(settings.$colors, "gray-border");
+    box-shadow: settings.$box-shadow-inset-light, settings.$box-shadow;
   }
 
   &.error {
-    border: 1px solid map.get(colors.$colors, "red-border");
-    box-shadow: decorations.$box-shadow-inset-error;
-    color: map.get(colors.$colors, "red-d25");
+    border: 1px solid map.get(settings.$colors, "red-border");
+    box-shadow: settings.$box-shadow-inset-error;
+    color: map.get(settings.$colors, "red-d25");
 
     &:focus {
-      box-shadow: decorations.$box-shadow-inset-error-light,
-        decorations.$box-shadow-error;
-      outline: 2px solid map.get(colors.$colors, "red-border");
+      box-shadow: settings.$box-shadow-inset-error-light,
+        settings.$box-shadow-error;
+      outline: 2px solid map.get(settings.$colors, "red-border");
     }
   }
 }

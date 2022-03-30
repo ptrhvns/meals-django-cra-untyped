@@ -1,4 +1,4 @@
-@use "../shared/colors";
+@use "../shared/settings";
 @use "sass:map";
 
 .login {
@@ -8,7 +8,7 @@
   }
 
   .login-signup-link {
-    color: map.get(colors.$colors, "gray");
+    color: map.get(settings.$colors, "gray");
     margin-top: 2rem;
   }
 }

@@ -1,10 +1,9 @@
-@use "colors";
 @use "sass:map";
-@use "typography";
+@use "settings";
 
 $navbar-height: 4.125rem;
 
 .field-error-text {
-  color: map.get(colors.$colors, "red-d25");
-  font-size: typography.$font-size-s1;
+  color: map.get(settings.$colors, "red-d25");
+  font-size: settings.$font-size-s1;
 }

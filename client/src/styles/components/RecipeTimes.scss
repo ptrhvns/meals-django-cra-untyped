@@ -1,5 +1,4 @@
-@use "../shared/colors";
-@use "../shared/typography";
+@use "../shared/settings";
 @use "sass:map";
 
 .recipe-times {
@@ -13,22 +12,22 @@
 
   .recipe-times-title {
     font-size: clamp(
-      typography.$font-size-h4,
+      settings.$font-size-h4,
       2vw + 0.75rem,
-      typography.$font-size-h3
+      settings.$font-size-h3
     );
   }
 
   .recipe-times-header-actions {
-    color: map.get(colors.$colors, "blue-d65");
+    color: map.get(settings.$colors, "blue-d65");
   }
 
   .recipe-times-header-action {
-    color: map.get(colors.$colors, "blue-d65");
+    color: map.get(settings.$colors, "blue-d65");
     margin-left: 0.75rem;
 
     &:active {
-      color: map.get(colors.$colors, "blue-d35");
+      color: map.get(settings.$colors, "blue-d35");
     }
 
     &:hover {

@@ -1,4 +1,4 @@
-@use "../shared/colors";
+@use "../shared/settings";
 @use "sass:map";
 
 .signup-form {
@@ -33,7 +33,7 @@
   }
 
   .signup-agreements {
-    color: map.get(colors.$colors, "gray");
+    color: map.get(settings.$colors, "gray");
     margin-top: 2rem;
   }
 }

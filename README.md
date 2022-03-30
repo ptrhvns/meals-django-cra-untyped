@@ -25,8 +25,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   ```
 
 - Install [Poetry](https://python-poetry.org) for Python dependency management
-  (use `pyenv-virtualenv` to manage the virtualenv as it seems to handle shell
-  issues better).
+  (we use `pyenv-virtualenv` to manage virtualenv).
 
 - Install Node.js:
 

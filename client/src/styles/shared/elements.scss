@@ -51,17 +51,19 @@ button {
 
 button.button-plain {
   background-color: transparent;
+  border-radius: unset;
   border: none;
   color: inherit;
   cursor: pointer;
   display: inline;
+  font-size: inherit;
   padding: 0;
   text-decoration: none;
 
   &:active,
   &:focus {
     box-shadow: none;
-    border: 1px dotted map.get(settings.$colors, "black");
+    outline: 1px dotted map.get(settings.$colors, "black");
   }
 
   &:hover {
@@ -70,20 +72,24 @@ button.button-plain {
 }
 
 button.button-link {
-  background: transparent;
+  background-color: transparent;
+  border-radius: unset;
   border: none;
   color: map.get(settings.$colors, "blue-d25");
   cursor: pointer;
   display: inline;
+  font-size: inherit;
   padding: 0;
   text-decoration: none;
 
   &:active,
   &:focus {
+    box-shadow: none;
     outline: 1px dotted map.get(settings.$colors, "black");
   }
 
   &:hover {
+    background-color: transparent;
     text-decoration: underline;
   }
 }

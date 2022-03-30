@@ -24,7 +24,6 @@
 
   .recipe-times-header-action {
     color: map.get(settings.$colors, "blue-d65");
-    margin-left: 0.75rem;
 
     &:active {
       color: map.get(settings.$colors, "blue-d35");

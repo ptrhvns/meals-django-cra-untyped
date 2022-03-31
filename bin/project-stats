@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+echo "### Counting lines of source code"
+echo
+cloc --exclude-dir=coverage,htmlcov,node_modules,prof --exclude-ext=ini,json,md,toml .

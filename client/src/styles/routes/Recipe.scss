@@ -2,7 +2,7 @@
 @use "sass:map";
 
 .recipe {
-  $recipe-height: calc(100vh - settings.$navbar-height);
+  $recipe-height: calc(100vh - settings.$height-navbar);
 
   background-color: map.get(settings.$colors, "gray-l95");
 

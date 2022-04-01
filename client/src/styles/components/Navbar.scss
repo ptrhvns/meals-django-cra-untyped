@@ -2,7 +2,7 @@
 @use "sass:map";
 
 .navbar {
-  height: settings.$navbar-height;
+  height: settings.$height-navbar;
 
   .navbar-content {
     align-items: center;

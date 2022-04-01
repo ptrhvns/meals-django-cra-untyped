@@ -3,7 +3,7 @@
 @use "sass:math";
 
 .recipe-create {
-  $recipe-create-height: calc(100vh - settings.$navbar-height);
+  $recipe-create-height: calc(100vh - settings.$height-navbar);
 
   background-color: map.get(settings.$colors, "gray-l95");
 

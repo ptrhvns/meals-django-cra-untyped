@@ -67,6 +67,12 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = ("id", "recipe_times", "title")
 
 
+class RecipesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("id", "title")
+
+
 class UpdateRecipeTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe

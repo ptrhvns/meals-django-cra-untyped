@@ -1,0 +1,24 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-list {
+  margin-top: 2rem;
+}
+
+.recipe-list__notice {
+  color: map.get(settings.$colors, "gray");
+}
+
+.recipe-list__list-wrapper {
+  margin-top: 2rem;
+}
+
+.recipe-list__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recipe-list__actions {
+  margin-top: 2rem;
+}

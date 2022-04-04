@@ -16,6 +16,29 @@ a {
   }
 }
 
+.link-button {
+  background-color: map.get(settings.$colors, "blue-bg");
+  border-radius: settings.$border-radius;
+  border: 1px solid map.get(settings.$colors, "blue-border");
+  color: map.get(settings.$colors, "blue-fg");
+  display: inline-block;
+  font-size: settings.$font-size-base;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+
+  &:active,
+  &:focus {
+    box-shadow: inset 0 2px 8px map.get(settings.$colors, "blue-l80");
+    outline: 2px solid map.get(settings.$colors, "blue-border");
+  }
+
+  &:hover {
+    background-color: map.get(settings.$colors, "blue-bg-hover");
+    text-decoration: none;
+  }
+}
+
 button {
   background-color: map.get(settings.$colors, "gray-bg");
   border-radius: settings.$border-radius;
@@ -49,7 +72,7 @@ button {
   }
 }
 
-button.button-plain {
+.button-plain {
   background-color: transparent;
   border-radius: unset;
   border: none;
@@ -71,7 +94,7 @@ button.button-plain {
   }
 }
 
-button.button-link {
+.button-link {
   background-color: transparent;
   border-radius: unset;
   border: none;
@@ -94,7 +117,7 @@ button.button-link {
   }
 }
 
-button.button-danger {
+.button-danger {
   background-color: map.get(settings.$colors, "red-bg");
   border: 1px solid map.get(settings.$colors, "red-border");
   color: map.get(settings.$colors, "red-fg");
@@ -120,7 +143,7 @@ button.button-danger {
   }
 }
 
-button.button-primary {
+.button-primary {
   background-color: map.get(settings.$colors, "blue-bg");
   border: 1px solid map.get(settings.$colors, "blue-border");
   color: map.get(settings.$colors, "blue-fg");

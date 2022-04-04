@@ -9,10 +9,10 @@
 
 // Base colors.
 $colors: (
+  "black": #060606,
   "blue": #0795ed,
   "gray": #71716f,
   "green": #9bc53d,
-  "purple": #af2bbf,
   "red": #f93943,
   "white": #ffffff,
   "yellow": #ffa62b,
@@ -20,33 +20,34 @@ $colors: (
 
 // Generate variations of $colors.
 @each $key in map.keys($colors) {
-  @for $i from 5 through 95 {
-    @if $i % 5 == 0 {
-      // Lighter variations: <color>-l<increment>
-      $colors: map.set(
-        $colors,
-        #{$key}-l#{$i},
-        color.scale(
-          map.get($colors, $key),
-          $lightness: math.div(math.percentage($i), 100)
-        )
-      );
+  @if $key != "black" and $key != "white" {
+    @for $i from 5 through 95 {
+      @if $i % 5 == 0 {
+        // Lighter variations: <color>-l<increment>
+        $colors: map.set(
+          $colors,
+          #{$key}-l#{$i},
+          color.scale(
+            map.get($colors, $key),
+            $lightness: math.div(math.percentage($i), 100)
+          )
+        );
 
-      // Darker variations: <color>-d<increment>
-      $colors: map.set(
-        $colors,
-        #{$key}-d#{$i},
-        color.scale(
-          map.get($colors, $key),
-          $lightness: math.div(math.percentage($i), 100) * -1
-        )
-      );
+        // Darker variations: <color>-d<increment>
+        $colors: map.set(
+          $colors,
+          #{$key}-d#{$i},
+          color.scale(
+            map.get($colors, $key),
+            $lightness: math.div(math.percentage($i), 100) * -1
+          )
+        );
+      }
     }
   }
 }
 
 // Colors by usage.
-$colors: map.set($colors, "black", map.get($colors, "gray-d95"));
 $colors: map.set($colors, "blue-bg", map.get($colors, "blue-l90"));
 $colors: map.set($colors, "blue-bg-hover", map.get($colors, "blue-l95"));
 $colors: map.set($colors, "blue-border", map.get($colors, "blue-l70"));
@@ -87,12 +88,17 @@ $font-size-s1: $font-size-base * 0.875;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Decorations
+// Borders
 //
 
 $border-radius-lg: 7px;
 $border-radius-sm: 3px;
 $border-radius: 5px;
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Shadows
+//
 
 $box-shadow-error: 2px 4px 8px rgba(map.get($colors, "red"), 0.15);
 $box-shadow-inset-error-light: inset 0 2px 8px

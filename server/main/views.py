@@ -174,6 +174,15 @@ def recipe(request, recipe_id):
     return response.Response({"data": serializer.data})
 
 
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipes(request):
+    # TODO paginate recipes
+    recipes = models.Recipe.objects.filter(user=request.user).all()
+    serializer = serializers.RecipesSerializer(recipes, many=True)
+    return response.Response({"data": serializer.data})
+
+
 @rf_decorators.api_view(http_method_names=["POST"])
 def signup(request):
     serializer = serializers.UserSerializer(data=request.data)

@@ -33,6 +33,12 @@
         color: map.get(settings.$colors, "red-fg");
       }
     }
+
+    h1,
+    h2,
+    h3 {
+      color: map.get(settings.$colors, "red-fg");
+    }
   }
 
   &.alert-error .alert-button {

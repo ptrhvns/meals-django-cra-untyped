@@ -10,6 +10,7 @@ export const routes = {
   login: () => "/api/login/",
   logout: () => "/api/logout/",
   recipe: ({ recipeId }) => `/api/recipe/${recipeId}/`,
+  recipes: () => "/api/recipes/",
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
   updateRecipeTitle: ({ recipeId }) => `/api/update_recipe_title/${recipeId}/`,

@@ -1,10 +1,8 @@
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
+import RecipeList from "../components/RecipeList";
 import { buildTitle } from "../lib/utils";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
 
 function Dashboard() {
   return (
@@ -17,9 +15,7 @@ function Dashboard() {
 
       <Container variant="viewport">
         <Container variant="content">
-          <Link to="/recipe-create">
-            <FontAwesomeIcon icon={faCirclePlus} /> Create a recipe
-          </Link>
+          <RecipeList />
         </Container>
       </Container>
     </div>

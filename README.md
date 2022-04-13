@@ -17,7 +17,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Install Python a virtual environment:
 
   ```sh
-  cd server
+  cd api
   PYTHON_VERSON=$(awk -F/ '{print $1}' .python-version)
   pyenv install $PYTHON_VERSION
   pyenv virtualenv $PYTHON_VERSON meals
@@ -94,10 +94,10 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   sudo systemctl restart redis.service
   ```
 
-- Setup environment variables for server application:
+- Setup environment variables for api application:
 
   ```sh
-  cd server
+  cd api
   cp config/.env.example config/.env
 
   # Generate a SECRET_KEY for use below.
@@ -110,14 +110,14 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Run database migrations:
 
   ```sh
-  cd server
+  cd api
   python manage.py migrate
   ```
 
 - Create Django superuser for access to the admin site:
 
   ```sh
-  cd server
+  cd api
   python manage.py createsuperuser
   ```
 
@@ -126,14 +126,14 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Start the Django server (serves the API):
 
   ```sh
-  cd server
+  cd api
   python manage.py runserver
   ```
 
 - Start Celery (runs background jobs):
 
   ```sh
-  cd server
+  cd api
   watchmedo auto-restart --directory=./ -p '*tasks*.py' -R -- celery -A config worker -l INFO
   ```
 
@@ -169,19 +169,19 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   CI=true npm test -- --coverage
   ```
 
-### Running Server Tests
+### Running API Tests
 
 - Run tests:
 
   ```sh
-  cd server
+  cd api
   pytest
   ```
 
 - Run tests, and report on test coverage:
 
   ```sh
-  cd server
+  cd api
 
   # Pick one of:
   pytest --cov --cov-report html # HTML report

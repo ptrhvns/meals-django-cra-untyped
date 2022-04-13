@@ -30,7 +30,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Install Node.js:
 
   ```sh
-  cd client
+  cd web
   NODE_VERSION=$(cat .node-version)
   nodenv install $NODE_VERSION
   ```
@@ -39,7 +39,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
   ```sh
   poetry install
-  (cd client; npm install)
+  (cd web; npm install)
   ```
 
 - Install [PostgreSQL](https://www.postgresql.org/) (tested on version 12.8):
@@ -137,35 +137,35 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   watchmedo auto-restart --directory=./ -p '*tasks*.py' -R -- celery -A config worker -l INFO
   ```
 
-- Start the React server (serves the client app):
+- Start the React server (serves the web app):
 
   ```sh
-  cd client
+  cd web
   npm start
   ```
 
 ## Running Tests
 
-### Running Client Tests
+### Running Web Tests
 
 - Run tests (one-time run):
 
   ```sh
-  cd client
+  cd web
   CI=true npm test
   ```
 
 - Run tests (in watch mode):
 
   ```sh
-  cd client
+  cd web
   npm test
   ```
 
 - Run tests, and report on test coverage:
 
   ```sh
-  cd client
+  cd web
   CI=true npm test -- --coverage
   ```
 

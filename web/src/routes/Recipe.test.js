@@ -2,22 +2,21 @@ jest.mock("../lib/api", () => ({ get: jest.fn() }));
 
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
-import Recipe, { recipeReducer } from "./Recipe";
-import userEvent from "@testing-library/user-event";
-import { act, render, waitFor } from "@testing-library/react";
+import Recipe from "./Recipe";
 import { get } from "../lib/api";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
+import { render, screen, waitFor } from "@testing-library/react";
 
-function buildComponent() {
+function buildComponent(props = {}) {
   return (
-    <MemoryRouter>
-      <HelmetProvider>
+    <HelmetProvider>
+      <MemoryRouter>
         <AuthnProvider>
-          <Recipe />
+          <Recipe {...props} />
         </AuthnProvider>
-      </HelmetProvider>
-    </MemoryRouter>
+      </MemoryRouter>
+    </HelmetProvider>
   );
 }
 
@@ -26,80 +25,20 @@ it("renders successfully", () => {
   ReactDOM.render(buildComponent(), div);
 });
 
-it("renders the correct <title> throughout lifecycle", async () => {
-  let resolve;
-  get.mockReturnValue(new Promise((res, _) => (resolve = res)));
-  render(buildComponent());
-  await waitFor(() => expect(document.title).toContain("Recipe"));
-  const title = "Test Title";
-  act(() => resolve({ data: { title } }));
-  await waitFor(() => expect(document.title).toContain(title));
-});
-
-describe("recipeReducer()", () => {
-  describe("when action.type is 'addRecipeTime'", () => {
-    it("returns old state updated with added recipe time", () => {
-      const cookTime = {
-        days: "1",
-        hours: "1",
-        minutes: "1",
-        time_type: "Cook",
-      };
-      const prepTime = {
-        days: "2",
-        hours: "2",
-        id: 2,
-        minutes: "2",
-        time_type: "Preparation",
-      };
-      const oldState = { recipe_times: [cookTime] };
-      const newState = recipeReducer(oldState, {
-        type: "addRecipeTime",
-        data: prepTime,
-      });
-      expect(newState).toEqual({ recipe_times: [cookTime, prepTime] });
-    });
-  });
-
-  describe("when action.type is 'setData'", () => {
-    it("returns action.data", () => {
-      const action = { type: "setData", data: { title: "Test Title" } };
-      const newState = recipeReducer({}, action);
-      expect(newState).toEqual(action.data);
-    });
-  });
-
-  describe("when action.type is 'updateTitle'", () => {
-    it("returns old state updated with new title", () => {
-      const title = "New Test Title";
-      const oldState = { foo: "bar", title: "Old Test Title" };
-      const newState = recipeReducer(oldState, { type: "updateTitle", title });
-      expect(newState).toEqual({ ...oldState, title });
-    });
-  });
-
-  describe("when action.type is not known", () => {
-    it("returns previous state", () => {
-      const oldState = { title: "Old Test Title" };
-      const newState = recipeReducer(oldState, { type: "invalid" });
-      expect(newState).toEqual(oldState);
-    });
-  });
-});
-
-describe("when recipe is still loading", () => {
-  it("renders a loading message", () => {
+describe("when recipe data is undefined", () => {
+  it("renders a generic <title>", async () => {
     get.mockReturnValue(new Promise(() => {}));
-    const { queryByText } = render(buildComponent());
-    expect(queryByText("Loading")).toBeTruthy();
+    render(buildComponent());
+    await waitFor(() => expect(document.title).toContain("Recipe"));
   });
 });
 
-describe("when loading recipe generates an error", () => {
-  it("renders that error", async () => {
-    const message = "test error";
-    get.mockResolvedValue({ isError: true, message });
-    const { queryByText } = render(buildComponent());
-    await waitFor(() => expect(queryByText(message)).toBeTruthy());
+describe("when recipe data has been retrieved", () => {
+  it("renders recipe data", async () => {
+    get.mockResolvedValue({ data: { id: 1, title: "Test Title" } });
+    render(buildComponent());
+    await waitFor(() =>
+      expect(screen.queryByTestId("recipe-loaded-content")).toBeTruthy()
+    );
   });
 });

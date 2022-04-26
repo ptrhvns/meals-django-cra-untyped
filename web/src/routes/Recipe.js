@@ -1,98 +1,55 @@
-import Alert from "../components/Alert";
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
-import RecipeTimes from "../components/RecipeTimes";
-import RecipeTitleForm from "../components/RecipeTitleForm";
+import RecipeLoading from "../components/RecipeLoading";
+import RecipeTitle from "../components/RecipeTitle";
 import { buildTitle } from "../lib/utils";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get } from "../lib/api";
 import { Helmet } from "react-helmet-async";
-import { truncate } from "lodash";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export function recipeReducer(state, action) {
-  switch (action.type) {
-    case "addRecipeTime":
-      return { ...state, recipe_times: [...state.recipe_times, action.data] };
-    case "setData":
-      return action.data;
-    case "updateTitle":
-      return { ...state, title: action.title };
-    default:
-      return state;
-  }
-}
-
 function Recipe() {
-  const [isRouteLoading, setIsRouteLoading] = useState(true);
-  const [recipeState, recipeDispatch] = useReducer(recipeReducer, {});
-  const [routeLoadingError, setRouteLoadingError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingError, setLoadingError] = useState(null);
+  const [recipeData, setRecipeData] = useState(null);
   const { recipeId } = useParams();
 
-  useEffect(
-    () =>
-      (async () => {
-        const response = await get({
-          route: "recipe",
-          routeData: { recipeId },
-        });
-        setIsRouteLoading(false);
+  // TODO remove istanbul directive when this is more testable.
+  /* istanbul ignore next */
+  useEffect(() => {
+    get({
+      route: "recipe",
+      routeData: { recipeId },
+    }).then((response) => {
+      if (response.isError) {
+        setLoadingError(response.message);
+      } else {
+        setRecipeData(response.data);
+      }
 
-        if (response.isError) {
-          setRouteLoadingError(response.message);
-          return;
-        }
-
-        recipeDispatch({ type: "setData", data: response.data });
-      })(),
-    [recipeId]
-  );
+      setIsLoading(false);
+    });
+  }, [recipeId]);
 
   return (
     <div className="recipe">
       <Helmet>
-        <title>
-          {buildTitle(
-            recipeState?.title ? truncate(recipeState.title) : "Recipe"
-          )}
-        </title>
+        <title>{buildTitle(recipeData?.title || "Recipe")}</title>
       </Helmet>
 
       <Navbar />
 
-      <Container className="recipe-viewport" variant="viewport">
-        <Container variant="content">
-          {isRouteLoading ? (
-            <div>
-              <FontAwesomeIcon icon={faSpinner} spin /> Loading
-            </div>
-          ) : (
-            <div>
-              {routeLoadingError ? (
-                <Alert className="recipe-loading-alert" variant="error">
-                  {routeLoadingError}
-                </Alert>
-              ) : (
-                <>
-                  <div className="recipe-card">
-                    <RecipeTitleForm
-                      recipeDispatch={recipeDispatch}
-                      recipeState={recipeState}
-                    />
-                  </div>
-
-                  <div className="recipe-card">
-                    <RecipeTimes
-                      recipeDispatch={recipeDispatch}
-                      recipeState={recipeState}
-                    />
-                  </div>
-                </>
+      <Container className="recipe__viewport" variant="viewport">
+        <Container className="recipe__content" variant="content">
+          <div className="recipe__content-card">
+            <RecipeLoading error={loadingError} isLoading={isLoading}>
+              {() => (
+                <div data-testid="recipe-loaded-content">
+                  <RecipeTitle data={recipeData} />
+                </div>
               )}
-            </div>
-          )}
+            </RecipeLoading>
+          </div>
         </Container>
       </Container>
     </div>

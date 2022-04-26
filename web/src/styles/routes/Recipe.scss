@@ -2,35 +2,25 @@
 @use "sass:map";
 
 .recipe {
-  $recipe-height: calc(100vh - settings.$height-navbar);
-
   background-color: map.get(settings.$colors, "gray-l95");
+}
 
-  .recipe-viewport {
-    min-height: $recipe-height;
-  }
+.recipe__viewport {
+  height: calc(100vh - settings.$height-navbar);
+}
 
-  .recipe-loading-alert {
-    margin-top: calc($recipe-height / 15);
-  }
+.recipe__content {
+  display: flex;
+  justify-content: center;
+}
 
-  .recipe-card {
-    background-color: map.get(settings.$colors, "white");
-    border-radius: settings.$border-radius;
-    border: 1px solid map.get(settings.$colors, "gray-l80");
-    box-shadow: settings.$box-shadow;
-    padding: 1rem;
-
-    &:first-of-type {
-      margin-top: 1.5rem;
-    }
-
-    &:last-of-type {
-      margin-bottom: 3rem;
-    }
-  }
-
-  .recipe-card + .recipe-card {
-    margin-top: 1.5rem;
-  }
+.recipe__content-card {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius-lg;
+  border: 1px solid map.get(settings.$colors, "gray-l80");
+  box-shadow: settings.$box-shadow;
+  height: fit-content;
+  margin-top: 1rem;
+  padding: 1rem 1rem 2rem 1rem;
+  width: 100%;
 }

@@ -9,19 +9,15 @@
 @use "styles/components/FullPageCard";
 @use "styles/components/LoginForm";
 @use "styles/components/Navbar";
-@use "styles/components/RecipeCreateForm";
-@use "styles/components/RecipeList";
-@use "styles/components/RecipeTimeCreateForm";
-@use "styles/components/RecipeTimes";
-@use "styles/components/RecipeTimesList";
-@use "styles/components/RecipeTitleForm";
+@use "styles/components/RecipeLoading";
+@use "styles/components/RecipeTitle";
 @use "styles/components/SignupForm";
 
 @use "styles/routes/Dashboard";
 @use "styles/routes/Home";
 @use "styles/routes/Login";
 @use "styles/routes/Recipe";
-@use "styles/routes/RecipeCreate";
+@use "styles/routes/RecipeTitleForm";
 @use "styles/routes/Settings";
 @use "styles/routes/Signup";
 @use "styles/routes/SignupConfirmation";

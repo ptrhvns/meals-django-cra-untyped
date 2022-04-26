@@ -1,0 +1,21 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-title {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.recipe-title__title {
+  font-size: clamp(
+    settings.$font-size-h3,
+    2.5vw + 0.75rem,
+    settings.$font-size-h2
+  );
+}
+
+a.recipe-title__action {
+  color: map.get(settings.$colors, "gray");
+}

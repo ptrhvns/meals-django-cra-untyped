@@ -1,0 +1,60 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-tag-form {
+  background-color: map.get(settings.$colors, "gray-l95");
+}
+
+.recipe-tag-form__viewport {
+  height: calc(100vh - settings.$height-navbar);
+}
+
+.recipe-tag-form__content {
+  display: flex;
+  justify-content: center;
+}
+
+.recipe-tag-form__content-card {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius-lg;
+  border: 1px solid map.get(settings.$colors, "gray-l80");
+  box-shadow: settings.$box-shadow;
+  height: fit-content;
+  margin-top: 1rem;
+  max-width: 25rem;
+  padding: 1rem 1rem 2rem 1rem;
+  width: 100%;
+}
+
+.recipe-tag-form__form {
+  margin-top: 1.5rem;
+}
+
+.recipe-tag-form__alert + .recipe-tag-form__field {
+  margin-top: 1rem;
+}
+
+.recipe-tag-form__input-wrapper {
+  margin-top: 0.5rem;
+}
+
+.recipe-tag-form__input {
+  width: 100%;
+}
+
+.recipe-tag-form__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.recipe-tag-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  max-width: 25rem;
+
+  button {
+    flex-grow: 1;
+  }
+}

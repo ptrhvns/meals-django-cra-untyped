@@ -28,7 +28,12 @@ def test_getting_recipe_successfully(api_rf, mocker):
     response = views.recipe(request, recipe.id)
     assert response.status_code == status.HTTP_200_OK
     assert response.data == {
-        "data": {"id": recipe.id, "recipe_times": [], "title": recipe.title}
+        "data": {
+            "id": recipe.id,
+            "recipe_tags": [],
+            "recipe_times": [],
+            "title": recipe.title,
+        }
     }
 
 

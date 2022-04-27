@@ -25,6 +25,13 @@ class RecipeFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
 
 
+class RecipeTagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.RecipeTag
+
+    name = factory.Sequence(lambda n: f"Tag#{n + 1}")
+
+
 class RecipeTimeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.RecipeTime

@@ -18,6 +18,16 @@ class Recipe(db_models.Model):
         return self.title
 
 
+class RecipeTag(db_models.Model):
+    name = db_models.CharField(max_length=256)
+    recipe = db_models.ForeignKey(
+        Recipe, on_delete=db_models.CASCADE, related_name="recipe_tags"
+    )
+
+    def __str__(self):
+        return self.name
+
+
 class RecipeTime(db_models.Model):
     ADDITIONAL = "Additional"
     COOK = "Cook"

@@ -9,11 +9,7 @@
 }
 
 .recipe-title__title {
-  font-size: clamp(
-    settings.$font-size-h3,
-    2.5vw + 0.75rem,
-    settings.$font-size-h2
-  );
+  font-size: settings.$font-size-h2;
 }
 
 a.recipe-title__action {

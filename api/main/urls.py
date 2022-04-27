@@ -3,6 +3,9 @@ from django import urls
 from main import views
 
 urlpatterns = [
+    urls.path(
+        "add_recipe_tag/<int:recipe_id>/", views.add_recipe_tag, name="add_recipe_tag"
+    ),
     urls.path("create_recipe/", views.create_recipe, name="create_recipe"),
     urls.path(
         "create_recipe_time/<int:recipe_id>/",

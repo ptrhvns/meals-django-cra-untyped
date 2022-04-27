@@ -10,6 +10,12 @@ logger = logging.getLogger(__name__)
 User = auth.get_user_model()
 
 
+class AddRecipeTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTag
+        fields = ("id", "name")
+
+
 class CreateRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
@@ -53,6 +59,12 @@ class SignupConfirmationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=256, required=True)
 
 
+class RecipeTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTag
+        fields = ("id", "name")
+
+
 class RecipeTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTime
@@ -60,11 +72,12 @@ class RecipeTimeSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
+    recipe_tags = RecipeTagSerializer(many=True, required=False)
     recipe_times = RecipeTimeSerializer(many=True, required=False)
 
     class Meta:
         model = models.Recipe
-        fields = ("id", "recipe_times", "title")
+        fields = ("id", "recipe_tags", "recipe_times", "title")
 
 
 class RecipesSerializer(serializers.ModelSerializer):

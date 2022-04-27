@@ -30,7 +30,7 @@ function RecipeLoading({ children, className, error, isLoading }) {
   if (error) {
     return (
       <div className={cn}>
-        <Alert variant="error">{error}</Alert>);
+        <Alert variant="error">{error}</Alert>
       </div>
     );
   }

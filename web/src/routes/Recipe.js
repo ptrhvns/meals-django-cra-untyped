@@ -1,6 +1,8 @@
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 import RecipeLoading from "../components/RecipeLoading";
+import RecipeTags from "../components/RecipeTags";
+import RecipeTimes from "../components/RecipeTimes";
 import RecipeTitle from "../components/RecipeTitle";
 import { buildTitle } from "../lib/utils";
 import { get } from "../lib/api";
@@ -46,6 +48,8 @@ function Recipe() {
               {() => (
                 <div data-testid="recipe-loaded-content">
                   <RecipeTitle data={recipeData} />
+                  <RecipeTags data={recipeData} />
+                  <RecipeTimes data={recipeData} />
                 </div>
               )}
             </RecipeLoading>

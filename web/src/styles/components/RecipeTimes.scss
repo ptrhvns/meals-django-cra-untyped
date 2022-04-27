@@ -1,0 +1,17 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-times {
+  border-top: 1px solid map.get(settings.$colors, "gray-l85");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.recipe-times__heading {
+  color: map.get(settings.$colors, "yellow-d45");
+  font-size: settings.$font-size-h4;
+}
+
+.recipe-times__empty-notice {
+  color: map.get(settings.$colors, "gray-fg");
+}

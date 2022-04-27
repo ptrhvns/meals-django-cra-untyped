@@ -1,4 +1,3 @@
-// import Recipe from "./routes/Recipe";
 import Dashboard from "./routes/Dashboard";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
@@ -6,6 +5,7 @@ import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
 import RecipeCreate from "./routes/RecipeCreate";
+import RecipeTagForm from "./routes/RecipeTagForm";
 import RecipeTitleForm from "./routes/RecipeTitleForm";
 import RequireAuthn from "./components/RequireAuthn";
 import RequireGuest from "./components/RequireGuest";
@@ -56,6 +56,14 @@ function App() {
           element={
             <RequireAuthn>
               <Recipe />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/tag/add"
+          element={
+            <RequireAuthn>
+              <RecipeTagForm />
             </RequireAuthn>
           }
         />

@@ -1,0 +1,71 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-tags {
+  border-top: 1px solid map.get(settings.$colors, "gray-l85");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.recipe-tags__heading-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.recipe-tags__heading {
+  color: map.get(settings.$colors, "yellow-d45");
+  font-size: settings.$font-size-h4;
+}
+
+a.recipe-tags__heading-action {
+  color: map.get(settings.$colors, "gray");
+}
+
+.recipe-tags__empty-notice {
+  color: map.get(settings.$colors, "gray-fg");
+}
+
+.recipe-tags__list-wrapper {
+  margin-top: 1rem;
+}
+
+.recipe-tags__list {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: settings.$font-size-s1;
+  gap: 0.3rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recipe-tags__list-item {
+  background-color: map.get(settings.$colors, "blue-bg");
+  border-radius: settings.$border-radius-2xl;
+  color: map.get(settings.$colors, "blue-fg");
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+
+  &:hover {
+    background-color: map.get(settings.$colors, "blue-bg-hover");
+  }
+}
+
+.recipe-tags__list-item-action {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius-xl;
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.125rem 0.4rem;
+}
+
+.recipe-tags__list-item-add {
+  background-color: map.get(settings.$colors, "gray-bg");
+  color: map.get(settings.$colors, "gray-fg");
+
+  &:hover {
+    background-color: map.get(settings.$colors, "gray-bg-hover");
+  }
+}

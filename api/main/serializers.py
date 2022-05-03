@@ -16,19 +16,6 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
         fields = ("title",)
 
 
-class CreateRecipeTimeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.RecipeTime
-        fields = ("days", "hours", "id", "minutes", "time_type")
-
-    def validate(self, data):
-        units = ["days", "hours", "minutes"]
-        error = _("At least one unit is required.")
-        if not any([data.get(u) for u in units]):
-            raise serializers.ValidationError({u: error for u in units})
-        return data
-
-
 class DeleteAccountSerializer(serializers.Serializer):
     password = serializers.CharField(
         max_length=User._meta.get_field("password").max_length, required=True
@@ -69,6 +56,19 @@ class RecipeTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTime
         fields = ("days", "hours", "id", "minutes", "time_type")
+
+
+class RecipeTimeCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTime
+        fields = ("days", "hours", "id", "minutes", "time_type")
+
+    def validate(self, data):
+        units = ["days", "hours", "minutes"]
+        error = _("At least one unit is required.")
+        if not any([data.get(u) for u in units]):
+            raise serializers.ValidationError({u: error for u in units})
+        return data
 
 
 class RecipeSerializer(serializers.ModelSerializer):

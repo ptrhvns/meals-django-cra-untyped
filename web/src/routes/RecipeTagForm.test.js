@@ -78,7 +78,7 @@ describe("when the form has been submitted", () => {
     await act(() => submitForm(user, { name }));
     expect(post).toHaveBeenCalledWith({
       data: { name },
-      route: "createRecipeTag",
+      route: "recipeTagCreate",
       routeData: { recipeId },
     });
   });

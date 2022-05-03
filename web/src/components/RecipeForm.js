@@ -26,7 +26,7 @@ function RecipeForm() {
     setIsSubmitting(true);
     const response = await post({
       data: pick(data, ["title"]),
-      route: "createRecipe",
+      route: "recipeCreate",
     });
     setIsSubmitting(false);
 

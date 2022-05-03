@@ -62,7 +62,7 @@ describe("when the form has been submitted", () => {
 
     expect(post).toHaveBeenCalledWith({
       data: { title },
-      route: "createRecipe",
+      route: "recipeCreate",
     });
   });
 

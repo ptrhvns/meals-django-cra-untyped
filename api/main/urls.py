@@ -3,8 +3,8 @@ from django import urls
 from main import views
 
 urlpatterns = [
+    urls.path("account/destroy/", views.account_destroy, name="account_destroy"),
     urls.path("csrf_token/", views.csrf_token, name="csrf_token"),
-    urls.path("delete_account/", views.delete_account, name="delete_account"),
     urls.path("delete_recipe_tag/<int:tag_id>", views.delete_recipe_tag, name="delete_recipe_tag"),
     urls.path("login/", views.login, name="login"),
     urls.path("logout/", views.logout, name="logout"),

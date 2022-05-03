@@ -10,8 +10,8 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
+import AccountDeleteForm from "./AccountDeleteForm";
 import AuthnProvider from "../providers/AuthnProvider";
-import DeleteAccountForm from "./DeleteAccountForm";
 import ReactDOM from "react-dom";
 import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
@@ -26,7 +26,7 @@ function buildComponent() {
   return (
     <MemoryRouter>
       <AuthnProvider>
-        <DeleteAccountForm />
+        <AccountDeleteForm />
       </AuthnProvider>
     </MemoryRouter>
   );
@@ -64,7 +64,7 @@ describe("when user clicks 'Delete my account' button", () => {
     const user = userEvent.setup();
     const { getByRole, queryByTestId } = render(buildComponent());
     await user.click(getByRole("button", { name: "Delete my account" }));
-    expect(queryByTestId("delete-account-form-form")).toBeTruthy();
+    expect(queryByTestId("account-delete-form-form")).toBeTruthy();
   });
 
   describe("when user clicks 'Dismiss' button", () => {
@@ -100,7 +100,7 @@ describe("when form has been sumbitted", () => {
 
     expect(post).toHaveBeenCalledWith({
       data: { password },
-      route: "deleteAccount",
+      route: "accountDestroy",
     });
   });
 

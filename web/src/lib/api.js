@@ -3,8 +3,8 @@ import { omit } from "lodash";
 
 // istanbul ignore next
 export const routes = {
+  accountDestroy: () => "/api/account_destroy/",
   csrfToken: () => "/api/csrf_token/",
-  deleteAccount: () => "/api/delete_account/",
   deleteRecipeTag: ({ tagId }) => `/api/delete_recipe_tag/${tagId}`,
   login: () => "/api/login/",
   logout: () => "/api/logout/",
@@ -12,10 +12,8 @@ export const routes = {
   recipeCreate: () => "/api/recipe_create/",
   recipes: () => "/api/recipes/",
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
-  recipeTagCreate: ({ recipeId }) =>
-    `/api/recipe/${recipeId}/recipe_tag/create/`,
-  recipeTimeCreate: ({ recipeId }) =>
-    `/api/recipe/${recipeId}/recipe_time/create/`,
+  recipeTagCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_tag/create/`,
+  recipeTimeCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_time/create/`,
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
   updateRecipeTag: ({ tagId }) => `/api/update_recipe_tag/${tagId}`,

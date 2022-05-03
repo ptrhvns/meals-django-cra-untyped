@@ -1,5 +1,5 @@
+import AccountDeleteForm from "../components/AccountDeleteForm";
 import Container from "../components/Container";
-import DeleteAccountForm from "../components/DeleteAccountForm";
 import Navbar from "../components/Navbar";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
@@ -27,7 +27,7 @@ function Settings() {
             This will permanently delete your account and all associated data.
           </p>
 
-          <DeleteAccountForm />
+          <AccountDeleteForm />
         </Container>
       </Container>
     </div>

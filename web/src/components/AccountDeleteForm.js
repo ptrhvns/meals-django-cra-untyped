@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function DeleteAccountForm() {
+function AccountDeleteForm() {
   const [alertMessage, setAlertMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -36,7 +36,7 @@ function DeleteAccountForm() {
     setIsSubmitting(true);
     const response = await post({
       data: pick(data, ["password"]),
-      route: "deleteAccount",
+      route: "accountDestroy",
     });
     setIsSubmitting(false);
 
@@ -49,15 +49,15 @@ function DeleteAccountForm() {
   };
 
   return (
-    <div className="delete-account-form">
+    <div className="account-delete-form">
       {showForm ? (
         <form
-          data-testid="delete-account-form-form"
+          data-testid="account-delete-form-form"
           onSubmit={handleSubmit(onSubmit)}
         >
           {alertMessage && (
             <Alert
-              className="delete-account-form-alert"
+              className="account-delete-form-alert"
               onDismiss={() => setAlertMessage(null)}
               variant="error"
             >
@@ -65,12 +65,12 @@ function DeleteAccountForm() {
             </Alert>
           )}
 
-          <div className="delete-account-form-field">
+          <div className="account-delete-form-field">
             <div>
               <label htmlFor="password">Password</label>
             </div>
 
-            <div className="delete-account-form-input-wrapper">
+            <div className="account-delete-form-input-wrapper">
               <input
                 className={`${errors.password ? "error" : ""}`}
                 id="password"
@@ -82,12 +82,12 @@ function DeleteAccountForm() {
             </div>
 
             <FieldError
-              className="delete-account-form__field-error"
+              className="account-delete-form__field-error"
               error={errors?.password?.message}
             />
           </div>
 
-          <div className="delete-account-form-actions">
+          <div className="account-delete-form-actions">
             <button className="button-danger" type="submit">
               <Spinner spin={isSubmitting}>
                 <FontAwesomeIcon icon={faTrashCan} />
@@ -115,4 +115,4 @@ function DeleteAccountForm() {
   );
 }
 
-export default DeleteAccountForm;
+export default AccountDeleteForm;

@@ -10,16 +10,16 @@ logger = logging.getLogger(__name__)
 User = auth.get_user_model()
 
 
+class AccountDestroySerializer(serializers.Serializer):
+    password = serializers.CharField(
+        max_length=User._meta.get_field("password").max_length, required=True
+    )
+
+
 class CreateRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
         fields = ("title",)
-
-
-class DeleteAccountSerializer(serializers.Serializer):
-    password = serializers.CharField(
-        max_length=User._meta.get_field("password").max_length, required=True
-    )
 
 
 class LoginSerializer(serializers.Serializer):

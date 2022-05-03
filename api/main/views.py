@@ -16,16 +16,10 @@ from main import client, models, serializers, tasks
 logger = logging.getLogger(__name__)
 
 
-@csrf.ensure_csrf_cookie
-@rf_decorators.api_view(http_method_names=["GET"])
-def csrf_token(request):
-    return response.Response(status=status.HTTP_204_NO_CONTENT)
-
-
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
-def delete_account(request):
-    serializer = serializers.DeleteAccountSerializer(data=request.data)
+def account_destroy(request):
+    serializer = serializers.AccountDestroySerializer(data=request.data)
 
     if not serializer.is_valid():
         logger.warning(
@@ -63,6 +57,12 @@ def delete_account(request):
     )
     request.user.delete()
     auth.logout(request)
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@csrf.ensure_csrf_cookie
+@rf_decorators.api_view(http_method_names=["GET"])
+def csrf_token(request):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 

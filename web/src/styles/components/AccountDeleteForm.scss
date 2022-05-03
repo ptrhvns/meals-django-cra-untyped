@@ -1,19 +1,19 @@
 @use "../shared/settings";
 
-.delete-account-form {
+.account-delete-form {
   $max-form-width: 25rem;
 
   margin-top: 1.25rem;
 
-  .delete-account-form-alert {
+  .account-delete-form-alert {
     max-width: $max-form-width;
   }
 
-  .delete-account-form-alert + .delete-account-form-field {
+  .account-delete-form-alert + .account-delete-form-field {
     margin-top: 1.25rem;
   }
 
-  .delete-account-form-input-wrapper {
+  .account-delete-form-input-wrapper {
     margin-top: 0.5rem;
 
     input {
@@ -21,7 +21,7 @@
     }
   }
 
-  .delete-account-form-actions {
+  .account-delete-form-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -34,11 +34,11 @@
     }
   }
 
-  .delete-account-form-button + .delete-account-form-button {
+  .account-delete-form-button + .account-delete-form-button {
     margin-left: 0.5rem;
   }
 }
 
-.delete-account-form__field-error {
+.account-delete-form__field-error {
   margin-top: settings.$margin-top-field-error;
 }

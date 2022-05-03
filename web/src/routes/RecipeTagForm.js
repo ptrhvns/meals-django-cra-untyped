@@ -106,7 +106,7 @@ function RecipeTagForm() {
   return (
     <div className="recipe-tag-form">
       <Helmet>
-        <title>{buildTitle(`${tagId ? "Edit" : "Create"} Recipe Tag`)}</title>
+        <title>{buildTitle(`${tagId ? "Edit" : "New"} Recipe Tag`)}</title>
       </Helmet>
 
       <Navbar />
@@ -114,7 +114,7 @@ function RecipeTagForm() {
       <Container className="recipe-tag-form__viewport" variant="viewport">
         <Container className="recipe-tag-form__content" variant="content">
           <div className="recipe-tag-form__content-card">
-            <h2>{tagId ? "Edit " : "Create"} Recipe Tag</h2>
+            <h2>{tagId ? "Edit " : "New"} Recipe Tag</h2>
 
             <RecipeLoading
               className="recipe-tag-form__alert"

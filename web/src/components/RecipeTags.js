@@ -20,7 +20,7 @@ function RecipeTags({ data }) {
 
         <Link
           className="recipe-tags__heading-action"
-          to={`/recipe/${data.id}/tag/create`}
+          to={`/recipe/${data.id}/tag/new`}
         >
           Create
         </Link>

@@ -45,7 +45,7 @@ it("renders successfully", () => {
 
 it("renders the correct <title>", async () => {
   const component = render(buildComponent());
-  await waitFor(() => expect(document.title).toContain("Create Recipe Tag"));
+  await waitFor(() => expect(document.title).toContain("New Recipe Tag"));
 });
 
 async function submitForm(user, { name = "TestTag" } = {}) {

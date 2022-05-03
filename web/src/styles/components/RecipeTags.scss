@@ -52,20 +52,3 @@ a.recipe-tags__heading-action {
     background-color: map.get(settings.$colors, "blue-bg-hover");
   }
 }
-
-.recipe-tags__list-item-action {
-  background-color: map.get(settings.$colors, "white");
-  border-radius: settings.$border-radius-xl;
-  display: inline-block;
-  margin-left: 0.25rem;
-  padding: 0.125rem 0.4rem;
-}
-
-.recipe-tags__list-item-add {
-  background-color: map.get(settings.$colors, "gray-bg");
-  color: map.get(settings.$colors, "gray-fg");
-
-  &:hover {
-    background-color: map.get(settings.$colors, "gray-bg-hover");
-  }
-}

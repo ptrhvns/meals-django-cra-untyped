@@ -30,6 +30,10 @@
   margin-top: 1.5rem;
 }
 
+.recipe-tag-form__alert {
+  margin-top: 1rem;
+}
+
 .recipe-tag-form__alert + .recipe-tag-form__field {
   margin-top: 1rem;
 }
@@ -49,12 +53,23 @@
 .recipe-tag-form__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1.5rem;
   justify-content: space-between;
   margin-top: 1.5rem;
-  max-width: 25rem;
+}
 
-  button {
-    flex-grow: 1;
-  }
+.recipe-tag-form__actions-left {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  gap: 0.5rem;
+}
+
+.recipe-tag-form__actions-right {
+  display: flex;
+  flex-grow: 1;
+}
+
+.recipe-tag-form__action {
+  flex-grow: 1;
 }

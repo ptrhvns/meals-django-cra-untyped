@@ -18,25 +18,6 @@ logger = logging.getLogger(__name__)
 
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
-def add_recipe_tag(request, recipe_id):
-    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
-    serializer = serializers.AddRecipeTagSerializer(data=request.data)
-
-    if not serializer.is_valid():
-        return response.Response(
-            {
-                "errors": serializer.errors,
-                "message": _("The information you provided was invalid."),
-            },
-            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        )
-
-    serializer.save(recipe=recipe)
-    return response.Response({"data": serializer.data}, status=status.HTTP_201_CREATED)
-
-
-@rf_decorators.api_view(http_method_names=["POST"])
-@rf_decorators.permission_classes([permissions.IsAuthenticated])
 def create_recipe(request):
     serializer = serializers.CreateRecipeSerializer(data=request.data)
 
@@ -53,6 +34,25 @@ def create_recipe(request):
     return response.Response(
         {"data": {"id": recipe.id}}, status=status.HTTP_201_CREATED
     )
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def create_recipe_tag(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.CreateRecipeTagSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    serializer.save(recipe=recipe)
+    return response.Response({"data": serializer.data}, status=status.HTTP_201_CREATED)
 
 
 @rf_decorators.api_view(http_method_names=["POST"])
@@ -130,6 +130,16 @@ def delete_account(request):
 
 
 @rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def delete_recipe_tag(request, tag_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipe__user=request.user
+    )
+    recipe_tag.delete()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
 def login(request):
     username = request.data.get("username")
     logger.info("attempting login for username %(username)s", {"username": username})
@@ -190,6 +200,16 @@ def logout(request):
 def recipe(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
     serializer = serializers.RecipeSerializer(recipe)
+    return response.Response({"data": serializer.data})
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag(request, tag_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipe__user=request.user
+    )
+    serializer = serializers.RecipeTagSerializer(recipe_tag)
     return response.Response({"data": serializer.data})
 
 
@@ -284,6 +304,29 @@ def signup_confirmation(request):
         {"message": _("Your signup was successfully confirmed.")},
         status=status.HTTP_200_OK,
     )
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def update_recipe_tag(request, tag_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipe__user=request.user
+    )
+    serializer = serializers.UpdateRecipeTagSerializer(
+        data=request.data, instance=recipe_tag
+    )
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    recipe_tag = serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @rf_decorators.api_view(http_method_names=["POST"])

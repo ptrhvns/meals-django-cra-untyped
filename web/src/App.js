@@ -60,7 +60,15 @@ function App() {
           }
         />
         <Route
-          path="/recipe/:recipeId/tag/add"
+          path="/recipe/:recipeId/tag/create"
+          element={
+            <RequireAuthn>
+              <RecipeTagForm />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/tag/:tagId/edit"
           element={
             <RequireAuthn>
               <RecipeTagForm />

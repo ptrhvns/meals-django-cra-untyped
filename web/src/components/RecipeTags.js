@@ -20,9 +20,9 @@ function RecipeTags({ data }) {
 
         <Link
           className="recipe-tags__heading-action"
-          to={`/recipe/${data.id}/tag/add`}
+          to={`/recipe/${data.id}/tag/create`}
         >
-          Add
+          Create
         </Link>
       </div>
 
@@ -35,7 +35,9 @@ function RecipeTags({ data }) {
           <ul className="recipe-tags__list">
             {sortBy(data.recipe_tags, "name").map((recipeTag) => (
               <li className="recipe-tags__list-item" key={recipeTag.id}>
-                {recipeTag.name}
+                <Link to={`/recipe/${data.id}/tag/${recipeTag.id}/edit`}>
+                  {recipeTag.name}
+                </Link>
               </li>
             ))}
           </ul>

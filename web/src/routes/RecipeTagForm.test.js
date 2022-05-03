@@ -1,4 +1,4 @@
-jest.mock("../lib/api", () => ({ post: jest.fn() }));
+jest.mock("../lib/api", () => ({ get: jest.fn(), post: jest.fn() }));
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -14,7 +14,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { head } from "lodash";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
-import { post } from "../lib/api";
+import { get, post } from "../lib/api";
 import { within } from "@testing-library/dom";
 
 function buildComponent(props = {}) {
@@ -45,14 +45,14 @@ it("renders successfully", () => {
 
 it("renders the correct <title>", async () => {
   const component = render(buildComponent());
-  await waitFor(() => expect(document.title).toContain("Add Recipe Tag"));
+  await waitFor(() => expect(document.title).toContain("Create Recipe Tag"));
 });
 
 async function submitForm(user, { name = "TestTag" } = {}) {
   const input = screen.getByLabelText("Name");
   await user.clear(input);
   await user.type(input, name);
-  await user.click(screen.getByRole("button", { name: "Add" }));
+  await user.click(screen.getByRole("button", { name: "Save" }));
 }
 
 describe("when the form has been submitted", () => {
@@ -62,7 +62,7 @@ describe("when the form has been submitted", () => {
       render(buildComponent());
       const input = screen.getByLabelText("Name");
       await user.clear(input);
-      await user.click(screen.getByRole("button", { name: "Add" }));
+      await user.click(screen.getByRole("button", { name: "Save" }));
       await waitFor(() =>
         expect(screen.queryByText("Name is required.")).toBeTruthy()
       );
@@ -78,7 +78,7 @@ describe("when the form has been submitted", () => {
     await act(() => submitForm(user, { name }));
     expect(post).toHaveBeenCalledWith({
       data: { name },
-      route: "addRecipeTag",
+      route: "createRecipeTag",
       routeData: { recipeId },
     });
   });
@@ -123,6 +123,25 @@ describe("when the form has been submitted", () => {
       expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
     });
   });
+
+  describe("when tag ID is defined", () => {
+    it("uses tag update route to send to API", async () => {
+      const recipeId = 7;
+      const tagId = 7;
+      const name = "TestTag";
+      useParams.mockReturnValue({ recipeId, tagId });
+      const user = userEvent.setup();
+      post.mockResolvedValue({});
+      get.mockResolvedValue({ data: { name } });
+      await act(async () => render(buildComponent()));
+      await act(() => submitForm(user));
+      expect(post).toHaveBeenCalledWith({
+        data: { name },
+        route: "updateRecipeTag",
+        routeData: { recipeId, tagId },
+      });
+    });
+  });
 });
 
 describe("when form is dismissed", () => {
@@ -133,5 +152,74 @@ describe("when form is dismissed", () => {
     render(buildComponent());
     await user.click(screen.getByRole("button", { name: "Dismiss" }));
     expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+  });
+});
+
+describe("when the component is loading", () => {
+  describe("when the API returns recipe tag data", () => {
+    it("renders the tag name in the form input for name", async () => {
+      const name = "TestTag";
+      useParams.mockReturnValue({ recipeId: 1, tagId: 1 });
+      get.mockResolvedValue({ data: { name } });
+      await act(async () => render(buildComponent()));
+      expect(screen.getByLabelText("Name").value).toEqual(name);
+    });
+  });
+});
+
+describe("when delete button is clicked", () => {
+  describe("when user does not confirm deletion of tag", () => {
+    it("does not delete tag", async () => {
+      const user = userEvent.setup();
+      useParams.mockReturnValue({ recipeId: 7, tagId: 7 });
+      get.mockResolvedValue({ data: { name: "TestTag" } });
+      window.confirm = jest.fn(() => false);
+      await act(async () => render(buildComponent()));
+      await user.click(screen.getByRole("button", { name: "Delete" }));
+      expect(navigate).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("when user confirms deletion of tag", () => {
+    it("sends tag deletion request to API", async () => {
+      const user = userEvent.setup();
+      const tagId = 7;
+      useParams.mockReturnValue({ recipeId: 7, tagId });
+      get.mockResolvedValue({ data: { name: "TestTag" } });
+      window.confirm = jest.fn(() => true);
+      await act(async () => render(buildComponent()));
+      await user.click(screen.getByRole("button", { name: "Delete" }));
+      expect(post).toHaveBeenCalledWith({
+        route: "deleteRecipeTag",
+        routeData: { tagId },
+      });
+    });
+
+    describe("when API responds an error", () => {
+      it("renders alert with API error", async () => {
+        const user = userEvent.setup();
+        useParams.mockReturnValue({ recipeId: 7, tagId: 7 });
+        get.mockResolvedValue({ data: { name: "TestTag" } });
+        const message = "Test error.";
+        post.mockResolvedValue({ isError: true, message });
+        window.confirm = jest.fn(() => true);
+        await act(async () => render(buildComponent()));
+        await user.click(screen.getByRole("button", { name: "Delete" }));
+        expect(screen.queryByText(message)).toBeTruthy();
+      });
+    });
+
+    describe("when API responds with success", () => {
+      it("navigates user to '/recipe/${recipeId}'", async () => {
+        const user = userEvent.setup();
+        const recipeId = 7;
+        useParams.mockReturnValue({ recipeId, tagId: 7 });
+        get.mockResolvedValue({ data: { name: "TestTag" } });
+        window.confirm = jest.fn(() => true);
+        await act(async () => render(buildComponent()));
+        await user.click(screen.getByRole("button", { name: "Delete" }));
+        expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      });
+    });
   });
 });

@@ -67,16 +67,6 @@ def csrf_token(request):
 
 
 @rf_decorators.api_view(http_method_names=["POST"])
-@rf_decorators.permission_classes([permissions.IsAuthenticated])
-def delete_recipe_tag(request, tag_id):
-    recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, recipe__user=request.user
-    )
-    recipe_tag.delete()
-    return response.Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@rf_decorators.api_view(http_method_names=["POST"])
 def login(request):
     username = request.data.get("username")
     logger.info("attempting login for username %(username)s", {"username": username})
@@ -168,6 +158,16 @@ def recipe_tag(request, tag_id):
     )
     serializer = serializers.RecipeTagSerializer(recipe_tag)
     return response.Response({"data": serializer.data})
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag_destroy(request, tag_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipe__user=request.user
+    )
+    recipe_tag.delete()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @rf_decorators.api_view(http_method_names=["POST"])

@@ -5,7 +5,6 @@ import { omit } from "lodash";
 export const routes = {
   accountDestroy: () => "/api/account_destroy/",
   csrfToken: () => "/api/csrf_token/",
-  deleteRecipeTag: ({ tagId }) => `/api/delete_recipe_tag/${tagId}`,
   login: () => "/api/login/",
   logout: () => "/api/logout/",
   recipe: ({ recipeId }) => `/api/recipe/${recipeId}/`,
@@ -13,6 +12,7 @@ export const routes = {
   recipes: () => "/api/recipes/",
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
   recipeTagCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_tag/create/`,
+  recipeTagDestroy: ({ tagId }) => `/api/recipe_tag/${tagId}/destroy/`,
   recipeTimeCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_time/create/`,
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",

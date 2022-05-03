@@ -190,7 +190,7 @@ describe("when delete button is clicked", () => {
       await act(async () => render(buildComponent()));
       await user.click(screen.getByRole("button", { name: "Delete" }));
       expect(post).toHaveBeenCalledWith({
-        route: "deleteRecipeTag",
+        route: "recipeTagDestroy",
         routeData: { tagId },
       });
     });

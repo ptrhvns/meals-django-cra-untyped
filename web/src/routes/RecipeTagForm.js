@@ -89,7 +89,7 @@ function RecipeTagForm() {
     setIsDeleting(true);
 
     const response = await post({
-      route: "deleteRecipeTag",
+      route: "recipeTagDestroy",
       routeData: { tagId },
     });
 

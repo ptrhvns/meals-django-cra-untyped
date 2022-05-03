@@ -96,7 +96,7 @@ describe("when the form has been submitted", () => {
     await act(() => submitForm(user, { title }));
     expect(post).toHaveBeenCalledWith({
       data: { title },
-      route: "updateRecipeTitle",
+      route: "recipeTitleUpdate",
       routeData: { recipeId },
     });
   });

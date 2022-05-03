@@ -13,11 +13,11 @@ export const routes = {
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
   recipeTagCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_tag/create/`,
   recipeTagDestroy: ({ tagId }) => `/api/recipe_tag/${tagId}/destroy/`,
-  recipeTagUpdate: ({ tagId }) => `/api/recipe_tag/${tagId}/update`,
+  recipeTagUpdate: ({ tagId }) => `/api/recipe_tag/${tagId}/update/`,
   recipeTimeCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_time/create/`,
+  recipeTitleUpdate: ({ recipeId }) => `/api/recipe_title/${recipeId}/update/`,
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",
-  updateRecipeTitle: ({ recipeId }) => `/api/update_recipe_title/${recipeId}/`,
 };
 
 export async function send({ data, headers, method, route, routeData }) {

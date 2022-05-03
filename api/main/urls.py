@@ -14,8 +14,8 @@ urlpatterns = [
     urls.path("recipe_tag/<int:tag_id>/", views.recipe_tag, name="recipe_tag"),
     urls.path("recipe_tag/<int:tag_id>/destroy/", views.recipe_tag_destroy, name="recipe_tag_destroy"),
     urls.path("recipe_tag/<int:tag_id>/update/", views.recipe_tag_update, name="recipe_tag_update"),
+    urls.path("recipe_title/<int:recipe_id>/update/", views.recipe_title_update, name="recipe_title_update"),
     urls.path("recipes/", views.recipes, name="recipes"),
     urls.path("signup/", views.signup, name="signup"),
     urls.path("signup_confirmation/", views.signup_confirmation, name="signup_confirmation"),
-    urls.path("update_recipe_title/<int:recipe_id>/", views.update_recipe_title, name="update_recipe_title"),
 ]

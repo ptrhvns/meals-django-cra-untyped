@@ -53,7 +53,7 @@ function RecipeTitleForm() {
 
     const response = await post({
       data: pick(data, ["title"]),
-      route: "updateRecipeTitle",
+      route: "recipeTitleUpdate",
       routeData: { recipeId },
     });
 

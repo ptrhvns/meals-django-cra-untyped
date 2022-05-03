@@ -14,7 +14,7 @@ function Settings() {
       <Navbar />
 
       <Container variant="viewport">
-        <Container variant="content settings__content">
+        <Container className="settings__content" variant="content">
           <h1>Settings</h1>
 
           <h2 className="settings__subheader">Account</h2>

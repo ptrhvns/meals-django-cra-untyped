@@ -59,7 +59,7 @@ function RecipeTagForm() {
 
     const response = await post({
       data: pick(data, ["name"]),
-      route: tagId ? "updateRecipeTag" : "recipeTagCreate",
+      route: tagId ? "recipeTagUpdate" : "recipeTagCreate",
       routeData: { recipeId, tagId },
     });
 

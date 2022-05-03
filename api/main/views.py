@@ -162,16 +162,6 @@ def recipe_tag(request, tag_id):
 
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
-def recipe_tag_destroy(request, tag_id):
-    recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, recipe__user=request.user
-    )
-    recipe_tag.delete()
-    return response.Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@rf_decorators.api_view(http_method_names=["POST"])
-@rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_create(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
     serializer = serializers.RecipeTagCreateSerializer(data=request.data)
@@ -187,6 +177,39 @@ def recipe_tag_create(request, recipe_id):
 
     serializer.save(recipe=recipe)
     return response.Response({"data": serializer.data}, status=status.HTTP_201_CREATED)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag_destroy(request, tag_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipe__user=request.user
+    )
+    recipe_tag.delete()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag_update(request, tag_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipe__user=request.user
+    )
+    serializer = serializers.RecipeTagUpdateSerializer(
+        data=request.data, instance=recipe_tag
+    )
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    recipe_tag = serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @rf_decorators.api_view(http_method_names=["POST"])
@@ -304,29 +327,6 @@ def signup_confirmation(request):
         {"message": _("Your signup was successfully confirmed.")},
         status=status.HTTP_200_OK,
     )
-
-
-@rf_decorators.api_view(http_method_names=["POST"])
-@rf_decorators.permission_classes([permissions.IsAuthenticated])
-def update_recipe_tag(request, tag_id):
-    recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, recipe__user=request.user
-    )
-    serializer = serializers.UpdateRecipeTagSerializer(
-        data=request.data, instance=recipe_tag
-    )
-
-    if not serializer.is_valid():
-        return response.Response(
-            {
-                "errors": serializer.errors,
-                "message": _("The information you provided was invalid."),
-            },
-            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        )
-
-    recipe_tag = serializer.save()
-    return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @rf_decorators.api_view(http_method_names=["POST"])

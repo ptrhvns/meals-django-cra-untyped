@@ -14,15 +14,19 @@ function Settings() {
       <Navbar />
 
       <Container variant="viewport">
-        <Container variant="content">
+        <Container variant="content settings__content">
           <h1>Settings</h1>
 
-          <h2>Account</h2>
+          <h2 className="settings__subheader">Account</h2>
 
-          <h3 className="settings-delete-account-header">Delete my account</h3>
+          <h3 className="settings__subheader settings__delete-account-header">
+            Delete my account
+          </h3>
+
           <p>
             This will permanently delete your account and all associated data.
           </p>
+
           <DeleteAccountForm />
         </Container>
       </Container>

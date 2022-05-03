@@ -4,7 +4,7 @@ import Login from "./routes/Login";
 import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
-import RecipeCreate from "./routes/RecipeCreate";
+import RecipeNew from "./routes/RecipeNew";
 import RecipeTagForm from "./routes/RecipeTagForm";
 import RecipeTitleForm from "./routes/RecipeTitleForm";
 import RequireAuthn from "./components/RequireAuthn";
@@ -84,10 +84,10 @@ function App() {
           }
         />
         <Route
-          path="/recipe-create"
+          path="/recipe/new"
           element={
             <RequireAuthn>
-              <RecipeCreate />
+              <RecipeNew />
             </RequireAuthn>
           }
         />

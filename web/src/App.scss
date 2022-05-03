@@ -9,6 +9,7 @@
 @use "styles/components/FullPageCard";
 @use "styles/components/LoginForm";
 @use "styles/components/Navbar";
+@use "styles/components/RecipeForm";
 @use "styles/components/RecipeLoading";
 @use "styles/components/RecipeTags";
 @use "styles/components/RecipeTimes";
@@ -19,6 +20,7 @@
 @use "styles/routes/Home";
 @use "styles/routes/Login";
 @use "styles/routes/Recipe";
+@use "styles/routes/RecipeNew";
 @use "styles/routes/RecipeTagForm";
 @use "styles/routes/RecipeTitleForm";
 @use "styles/routes/Settings";

@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function RecipeCreateForm() {
+function RecipeForm() {
   const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -39,11 +39,11 @@ function RecipeCreateForm() {
   };
 
   return (
-    <div className="recipe-create-form">
+    <div className="recipe-form">
       <form onSubmit={handleSubmit(onSubmit)}>
         {alertMessage && (
           <Alert
-            className="recipe-create-form-alert"
+            className="recipe-form-alert"
             onDismiss={() => setAlertMessage(null)}
             variant="error"
           >
@@ -51,12 +51,12 @@ function RecipeCreateForm() {
           </Alert>
         )}
 
-        <div className="recipe-create-form-field">
+        <div className="recipe-form-field">
           <div>
             <label htmlFor="title">Title</label>
           </div>
 
-          <div className="recipe-create-form-input-wrapper">
+          <div className="recipe-form-input-wrapper">
             <input
               className={`${errors.title ? "error" : ""}`}
               id="title"
@@ -68,17 +68,17 @@ function RecipeCreateForm() {
           </div>
 
           <FieldError
-            className="recipe-create-form__field-error"
+            className="recipe-form__field-error"
             error={errors?.title?.message}
           />
         </div>
 
-        <div className="recipe-create-form-actions">
+        <div className="recipe-form-actions">
           <button className="button-primary" type="submit">
             <Spinner spin={isSubmitting}>
               <FontAwesomeIcon icon={faCirclePlus} />
             </Spinner>{" "}
-            Create recipe
+            Save and continue
           </button>
         </div>
       </form>
@@ -86,4 +86,4 @@ function RecipeCreateForm() {
   );
 }
 
-export default RecipeCreateForm;
+export default RecipeForm;

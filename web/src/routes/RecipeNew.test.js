@@ -1,6 +1,6 @@
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
-import RecipeCreate from "./RecipeCreate";
+import RecipeNew from "./RecipeNew";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { render, waitFor } from "@testing-library/react";
@@ -10,7 +10,7 @@ function buildComponent() {
     <MemoryRouter>
       <HelmetProvider>
         <AuthnProvider>
-          <RecipeCreate />
+          <RecipeNew />
         </AuthnProvider>
       </HelmetProvider>
     </MemoryRouter>
@@ -24,5 +24,5 @@ it("renders successfully", () => {
 
 it("renders the correct <title>", async () => {
   const component = render(buildComponent());
-  await waitFor(() => expect(document.title).toContain("Create Recipe"));
+  await waitFor(() => expect(document.title).toContain("New Recipe"));
 });

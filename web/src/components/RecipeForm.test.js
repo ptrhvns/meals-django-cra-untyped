@@ -5,8 +5,8 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-import RecipeCreateForm from "./RecipeCreateForm";
 import ReactDOM from "react-dom";
+import RecipeForm from "./RecipeForm";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
 import { head } from "lodash";
@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 function buildComponent() {
   return (
     <MemoryRouter>
-      <RecipeCreateForm />
+      <RecipeForm />
     </MemoryRouter>
   );
 }
@@ -28,7 +28,7 @@ async function submitForm(
   { title = "Delicious Cookies" } = {}
 ) {
   await user.type(getByLabelText("Title"), title);
-  await user.click(getByRole("button", { name: "Create recipe" }));
+  await user.click(getByRole("button", { name: "Save and continue" }));
 }
 
 it("renders successfully", () => {
@@ -48,7 +48,7 @@ describe("when the form has been submitted", () => {
     it("renders field errors", async () => {
       const user = userEvent.setup();
       const { getByRole, getByText } = render(buildComponent());
-      await user.click(getByRole("button", { name: "Create recipe" }));
+      await user.click(getByRole("button", { name: "Save and continue" }));
       getByText("Title is required.");
     });
   });

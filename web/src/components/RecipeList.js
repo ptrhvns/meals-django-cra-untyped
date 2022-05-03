@@ -64,7 +64,7 @@ function RecipeList() {
       {content}
 
       <div className="recipe-list__actions">
-        <Link className="link-button" to="/recipe-create">
+        <Link className="link-button" to="/recipe/new">
           <FontAwesomeIcon icon={faCirclePlus} /> Create a recipe
         </Link>
       </div>

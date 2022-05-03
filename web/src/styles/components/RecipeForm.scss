@@ -1,13 +1,13 @@
 @use "../shared/settings";
 
-.recipe-create-form {
+.recipe-form {
   margin-top: 2rem;
 
-  .recipe-create-form-alert + .recipe-create-form-field {
+  .recipe-form-alert + .recipe-form-field {
     margin-top: 1rem;
   }
 
-  .recipe-create-form-input-wrapper {
+  .recipe-form-input-wrapper {
     margin-top: 0.5rem;
 
     input {
@@ -15,7 +15,7 @@
     }
   }
 
-  .recipe-create-form-actions {
+  .recipe-form-actions {
     margin-top: 2rem;
 
     button {
@@ -24,6 +24,6 @@
   }
 }
 
-.recipe-create-form__field-error {
+.recipe-form__field-error {
   margin-top: settings.$margin-top-field-error;
 }

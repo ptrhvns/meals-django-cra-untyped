@@ -61,15 +61,21 @@
 .recipe-tag-form__actions-left {
   display: flex;
   flex-wrap: wrap;
-  flex-grow: 1;
+  // flex-grow: 1;
   gap: 0.5rem;
 }
 
 .recipe-tag-form__actions-right {
   display: flex;
   flex-grow: 1;
+
+  @media (min-width: 372px) {
+    justify-content: end;
+  }
 }
 
 .recipe-tag-form__action {
-  flex-grow: 1;
+  @media (max-width: 371px) {
+    width: 6.5rem;
+  }
 }

@@ -11,10 +11,12 @@ export const routes = {
   recipeCreate: () => "/api/recipe/create/",
   recipes: () => "/api/recipes/",
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
-  recipeTagCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_tag/create/`,
+  recipeTagCreate: ({ recipeId }) =>
+    `/api/recipe/${recipeId}/recipe_tag/create/`,
   recipeTagDestroy: ({ tagId }) => `/api/recipe_tag/${tagId}/destroy/`,
   recipeTagUpdate: ({ tagId }) => `/api/recipe_tag/${tagId}/update/`,
-  recipeTimeCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_time/create/`,
+  recipeTimeCreate: ({ recipeId }) =>
+    `/api/recipe/${recipeId}/recipe_time/create/`,
   recipeTitleUpdate: ({ recipeId }) => `/api/recipe_title/${recipeId}/update/`,
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",

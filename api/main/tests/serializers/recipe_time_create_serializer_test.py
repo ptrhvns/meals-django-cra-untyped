@@ -11,6 +11,5 @@ def test_validate_success():
 def test_validate_requires_one_unit():
     serializer = serializers.RecipeTimeCreateSerializer(data={"time_type": "Cook"})
     assert not serializer.is_valid()
-    assert "days" in serializer.errors
-    assert "hours" in serializer.errors
-    assert "minutes" in serializer.errors
+    for unit in ["days", "hours", "minutes"]:
+        assert unit in serializer.errors

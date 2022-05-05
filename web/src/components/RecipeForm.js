@@ -43,7 +43,7 @@ function RecipeForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         {alertMessage && (
           <Alert
-            className="recipe-form-alert"
+            className="recipe-form__alert"
             onDismiss={() => setAlertMessage(null)}
             variant="error"
           >
@@ -51,12 +51,12 @@ function RecipeForm() {
           </Alert>
         )}
 
-        <div className="recipe-form-field">
+        <div className="recipe-form__field">
           <div>
             <label htmlFor="title">Title</label>
           </div>
 
-          <div className="recipe-form-input-wrapper">
+          <div className="recipe-form__input-wrapper">
             <input
               className={`${errors.title ? "error" : ""}`}
               id="title"
@@ -73,7 +73,7 @@ function RecipeForm() {
           />
         </div>
 
-        <div className="recipe-form-actions">
+        <div className="recipe-form__actions">
           <button className="button-primary" type="submit">
             <Spinner spin={isSubmitting}>
               <FontAwesomeIcon icon={faCirclePlus} />

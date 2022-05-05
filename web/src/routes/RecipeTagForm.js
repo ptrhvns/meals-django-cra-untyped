@@ -114,7 +114,7 @@ function RecipeTagForm() {
       <Container className="recipe-tag-form__viewport" variant="viewport">
         <Container className="recipe-tag-form__content" variant="content">
           <div className="recipe-tag-form__content-card">
-            <h2>{tagId ? "Edit " : "New"} Recipe Tag</h2>
+            <h1>{tagId ? "Edit " : "New"} Recipe Tag</h1>
 
             <RecipeLoading
               className="recipe-tag-form__alert"

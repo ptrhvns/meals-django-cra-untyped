@@ -13,12 +13,12 @@ function RecipeNew() {
 
       <Navbar />
 
-      <Container className="recipe-new-viewport" variant="viewport">
-        <Container className="recipe-new-content" variant="content">
-          <div className="recipe-new-card">
+      <Container className="recipe-new__viewport" variant="viewport">
+        <Container className="recipe-new__content" variant="content">
+          <div className="recipe-new__card">
             <h1>New Recipe</h1>
 
-            <p className="recipe-new-instructions">
+            <p className="recipe-new__instructions">
               Start with the recipe title.
             </p>
 

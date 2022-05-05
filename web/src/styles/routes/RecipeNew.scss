@@ -3,31 +3,30 @@
 @use "sass:math";
 
 .recipe-new {
-  $recipe-new-height: calc(100vh - settings.$height-navbar);
-
   background-color: map.get(settings.$colors, "gray-l95");
+}
 
-  .recipe-new-viewport {
-    height: $recipe-new-height;
-  }
+.recipe-new__viewport {
+  height: calc(100vh - settings.$height-navbar);
+}
 
-  .recipe-new-content {
-    display: grid;
-    justify-content: center;
-    padding-top: calc($recipe-new-height / 8);
-  }
+.recipe-new__content {
+  display: flex;
+  justify-content: center;
+}
 
-  .recipe-new-card {
-    background-color: map.get(settings.$colors, "white");
-    border-radius: settings.$border-radius-lg;
-    border: 1px solid map.get(settings.$colors, "gray-l80");
-    box-shadow: settings.$box-shadow;
-    height: fit-content;
-    padding: 1rem 1rem 2rem 1rem;
-    width: clamp(1rem, 90vw, 30rem);
-  }
+.recipe-new__card {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius-lg;
+  border: 1px solid map.get(settings.$colors, "gray-l80");
+  box-shadow: settings.$box-shadow;
+  height: fit-content;
+  margin-top: 1rem;
+  max-width: 35rem;
+  padding: 1rem 1rem 2rem 1rem;
+  width: 100%;
+}
 
-  .recipe-new-instructions {
-    color: map.get(settings.$colors, "gray");
-  }
+.recipe-new__instructions {
+  color: map.get(settings.$colors, "gray");
 }

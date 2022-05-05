@@ -1,27 +1,23 @@
 @use "../shared/settings";
 
 .recipe-form {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
+}
 
-  .recipe-form-alert + .recipe-form-field {
-    margin-top: 1rem;
+.recipe-form__alert + .recipe-form__field {
+  margin-top: 1rem;
+}
+
+.recipe-form__input-wrapper {
+  margin-top: 0.5rem;
+
+  input {
+    width: 100%;
   }
+}
 
-  .recipe-form-input-wrapper {
-    margin-top: 0.5rem;
-
-    input {
-      width: 100%;
-    }
-  }
-
-  .recipe-form-actions {
-    margin-top: 2rem;
-
-    button {
-      width: 100%;
-    }
-  }
+.recipe-form__actions {
+  margin-top: 1.5rem;
 }
 
 .recipe-form__field-error {

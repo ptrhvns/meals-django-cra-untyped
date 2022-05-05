@@ -44,14 +44,9 @@ beforeEach(() => {
   useParams.mockReturnValue({ recipeId: 1 });
 });
 
-it("renders correct <title> throughout lifecycle", async () => {
-  let resolve;
-  get.mockReturnValue(new Promise((res, _) => (resolve = res)));
+it("renders correct <title>", async () => {
   render(buildComponent());
-  await waitFor(() => expect(document.title).toContain("Recipe Title"));
-  const title = "Test Title";
-  act(() => resolve({ data: { title } }));
-  await waitFor(() => expect(document.title).toContain(title));
+  await waitFor(() => expect(document.title).toContain("Edit Recipe Title"));
 });
 
 it("renders loading message correctly throughout lifecycle", async () => {

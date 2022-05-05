@@ -20,7 +20,6 @@ function RecipeTitleForm() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingError, setLoadingError] = useState(null);
-  const [title, setTitle] = useState(null);
   const navigate = useNavigate();
   const {
     formState: { errors },
@@ -40,7 +39,6 @@ function RecipeTitleForm() {
       if (response.isError) {
         setLoadingError(response.message);
       } else {
-        setTitle(response.data.title);
         setValue("title", response.data.title);
       }
 
@@ -78,7 +76,7 @@ function RecipeTitleForm() {
   return (
     <div className="recipe-title-form">
       <Helmet>
-        <title>{buildTitle(title || "Recipe Title")}</title>
+        <title>{buildTitle("Edit Recipe Title")}</title>
       </Helmet>
 
       <Navbar />
@@ -89,7 +87,7 @@ function RecipeTitleForm() {
             <RecipeLoading error={loadingError} isLoading={isLoading}>
               {() => (
                 <>
-                  <h1>Recipe Title</h1>
+                  <h1>Edit Recipe Title</h1>
 
                   <form
                     className="recipe-title-form__form"

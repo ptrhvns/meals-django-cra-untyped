@@ -35,13 +35,6 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   nodenv install $NODE_VERSION
   ```
 
-- Install application packages:
-
-  ```sh
-  poetry install
-  (cd web; npm install)
-  ```
-
 - Install [PostgreSQL](https://www.postgresql.org/) (tested on version 12.8):
 
   ```sh
@@ -92,6 +85,13 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
     # ...
 
   sudo systemctl restart redis.service
+  ```
+
+- Install application packages:
+
+  ```sh
+  poetry install
+  (cd web; npm install)
   ```
 
 - Setup environment variables for api application:

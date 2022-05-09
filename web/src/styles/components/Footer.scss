@@ -1,0 +1,14 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.footer {
+  background-color: map.get(settings.$colors, "blue-d65");
+  color: map.get(settings.$colors, "white");
+  height: settings.$height-footer;
+}
+
+.footer__content-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}

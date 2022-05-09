@@ -1,5 +1,4 @@
-import Container from "../components/Container";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 import RecipeForm from "../components/RecipeForm";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
@@ -11,21 +10,15 @@ function RecipeNew() {
         <title>{buildTitle("New Recipe")}</title>
       </Helmet>
 
-      <Navbar />
+      <PageLayout contentClassName="recipe-new__content">
+        <h1>New Recipe</h1>
 
-      <Container className="recipe-new__viewport" variant="viewport">
-        <Container className="recipe-new__content" variant="content">
-          <div className="recipe-new__card">
-            <h1>New Recipe</h1>
+        <p className="recipe-new__instructions">
+          Start with a recipe title.
+        </p>
 
-            <p className="recipe-new__instructions">
-              Start with the recipe title.
-            </p>
-
-            <RecipeForm />
-          </div>
-        </Container>
-      </Container>
+        <RecipeForm />
+      </PageLayout>
     </div>
   );
 }

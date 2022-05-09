@@ -1,26 +1,2 @@
-@use "../shared/settings";
-@use "sass:map";
-
 .recipe {
-  background-color: map.get(settings.$colors, "gray-l95");
-}
-
-.recipe__viewport {
-  height: calc(100vh - settings.$height-navbar);
-}
-
-.recipe__content {
-  display: flex;
-  justify-content: center;
-}
-
-.recipe__content-card {
-  background-color: map.get(settings.$colors, "white");
-  border-radius: settings.$border-radius-lg;
-  border: 1px solid map.get(settings.$colors, "gray-l80");
-  box-shadow: settings.$box-shadow;
-  height: fit-content;
-  margin-top: 1rem;
-  padding: 1rem 1rem 2rem 1rem;
-  width: 100%;
 }

@@ -1,22 +1,19 @@
-import Container from "../components/Container";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 
 function PrivacyPolicy() {
   return (
-    <div>
+    <div className="privacy-policy">
       <Helmet>
         <title>{buildTitle("Privacy Policy")}</title>
       </Helmet>
 
-      <Navbar />
+      <PageLayout>
+        <h1>Privacy Policy</h1>
 
-      <Container variant="viewport">
-        <Container variant="content">
-          <div>PrivacyPolicy</div>
-        </Container>
-      </Container>
+        <p className="privacy-policy__message">We're still working on this.</p>
+      </PageLayout>
     </div>
   );
 }

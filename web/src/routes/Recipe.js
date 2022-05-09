@@ -1,5 +1,4 @@
-import Container from "../components/Container";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import RecipeTags from "../components/RecipeTags";
 import RecipeTimes from "../components/RecipeTimes";
@@ -39,23 +38,17 @@ function Recipe() {
         <title>{buildTitle(recipeData?.title || "Recipe")}</title>
       </Helmet>
 
-      <Navbar />
-
-      <Container className="recipe__viewport" variant="viewport">
-        <Container className="recipe__content" variant="content">
-          <div className="recipe__content-card">
-            <RecipeLoading error={loadingError} isLoading={isLoading}>
-              {() => (
-                <div data-testid="recipe-loaded-content">
-                  <RecipeTitle data={recipeData} />
-                  <RecipeTags data={recipeData} />
-                  <RecipeTimes data={recipeData} />
-                </div>
-              )}
-            </RecipeLoading>
-          </div>
-        </Container>
-      </Container>
+      <PageLayout>
+        <RecipeLoading error={loadingError} isLoading={isLoading}>
+          {() => (
+            <div data-testid="recipe-loaded-content">
+              <RecipeTitle data={recipeData} />
+              <RecipeTags data={recipeData} />
+              <RecipeTimes data={recipeData} />
+            </div>
+          )}
+        </RecipeLoading>
+      </PageLayout>
     </div>
   );
 }

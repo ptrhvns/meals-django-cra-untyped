@@ -1,22 +1,26 @@
-import Container from "../components/Container";
-import Navbar from "../components/Navbar";
+import Alert from "../components/Alert";
+import PageLayout from "../components/PageLayout";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
-    <div>
+    <div className="not-found">
       <Helmet>
-        <title>{buildTitle("Not Found")}</title>
+        <title>{buildTitle("Not Found (404)")}</title>
       </Helmet>
 
-      <Navbar />
+      <PageLayout>
+        <div>
+          <h1>Not Found (404)</h1>
 
-      <Container variant="viewport">
-        <Container variant="content">
-          <div>NotFound</div>
-        </Container>
-      </Container>
+          <Alert className="not-found__alert" variant="error">
+            We couldn't find the resource you requested. Maybe you can find what
+            you were looking for by visiting the <Link to="/">home page</Link>.
+          </Alert>
+        </div>
+      </PageLayout>
     </div>
   );
 }

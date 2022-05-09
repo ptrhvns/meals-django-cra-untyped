@@ -5,25 +5,8 @@
   background-color: map.get(settings.$colors, "gray-l95");
 }
 
-.recipe-tag-form__viewport {
-  height: calc(100vh - settings.$height-navbar);
-}
-
 .recipe-tag-form__content {
-  display: flex;
-  justify-content: center;
-}
-
-.recipe-tag-form__content-card {
-  background-color: map.get(settings.$colors, "white");
-  border-radius: settings.$border-radius-lg;
-  border: 1px solid map.get(settings.$colors, "gray-l80");
-  box-shadow: settings.$box-shadow;
-  height: fit-content;
-  margin-top: 1rem;
   max-width: 35rem;
-  padding: 1rem 1rem 2rem 1rem;
-  width: 100%;
 }
 
 .recipe-tag-form__form {

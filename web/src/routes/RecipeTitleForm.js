@@ -1,7 +1,6 @@
 import Alert from "../components/Alert";
-import Container from "../components/Container";
 import FieldError from "../components/FieldError";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import Spinner from "../components/Spinner";
 import { buildTitle } from "../lib/utils";
@@ -79,77 +78,71 @@ function RecipeTitleForm() {
         <title>{buildTitle("Edit Recipe Title")}</title>
       </Helmet>
 
-      <Navbar />
+      <PageLayout className="recipe-title-form__content" variant="content">
+        <RecipeLoading error={loadingError} isLoading={isLoading}>
+          {() => (
+            <>
+              <h1>Edit Recipe Title</h1>
 
-      <Container className="recipe-title-form__viewport" variant="viewport">
-        <Container className="recipe-title-form__content" variant="content">
-          <div className="recipe-title-form__content-card">
-            <RecipeLoading error={loadingError} isLoading={isLoading}>
-              {() => (
-                <>
-                  <h1>Edit Recipe Title</h1>
-
-                  <form
-                    className="recipe-title-form__form"
-                    onSubmit={handleSubmit(onSubmit)}
+              <form
+                className="recipe-title-form__form"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                {alertMessage && (
+                  <Alert
+                    className="recipe-title-form__alert"
+                    onDismiss={handleDismissAlert}
+                    variant="error"
                   >
-                    {alertMessage && (
-                      <Alert
-                        className="recipe-title-form__alert"
-                        onDismiss={handleDismissAlert}
-                        variant="error"
-                      >
-                        {alertMessage}
-                      </Alert>
-                    )}
+                    {alertMessage}
+                  </Alert>
+                )}
 
-                    <div className="recipe-title-form__field">
-                      <div>
-                        <label htmlFor="title">Title</label>
-                      </div>
+                <div className="recipe-title-form__field">
+                  <div>
+                    <label htmlFor="title">Title</label>
+                  </div>
 
-                      <div className="recipe-title-form__input-wrapper">
-                        <input
-                          className={join(
-                            compact([
-                              errors.title && "error",
-                              "recipe-title-form__input",
-                            ]),
-                            " "
-                          )}
-                          id="title"
-                          type="text"
-                          {...register("title", {
-                            required: "Title is required.",
-                          })}
-                        />
-                      </div>
+                  <div className="recipe-title-form__input-wrapper">
+                    <input
+                      className={join(
+                        compact([
+                          errors.title && "error",
+                          "recipe-title-form__input",
+                        ]),
+                        " "
+                      )}
+                      id="title"
+                      type="text"
+                      {...register("title", {
+                        required: "Title is required.",
+                      })}
+                    />
+                  </div>
 
-                      <FieldError
-                        className="recipe-title-form__field-error"
-                        error={errors?.title?.message}
-                      />
-                    </div>
+                  <FieldError
+                    className="recipe-title-form__field-error"
+                    error={errors?.title?.message}
+                  />
+                </div>
 
-                    <div className="recipe-title-form__actions">
-                      <button className="button-primary" type="submit">
-                        <Spinner spin={isSubmitting}>
-                          <FontAwesomeIcon icon={faCirclePlus} />
-                        </Spinner>{" "}
-                        Save
-                      </button>
+                <div className="recipe-title-form__actions">
+                  <button className="button-primary" type="submit">
+                    <Spinner spin={isSubmitting}>
+                      <FontAwesomeIcon icon={faCirclePlus} />
+                    </Spinner>{" "}
+                    Save
+                  </button>
 
-                      <button onClick={handleDismissForm} type="button">
-                        Dismiss
-                      </button>
-                    </div>
-                  </form>
-                </>
-              )}
-            </RecipeLoading>
-          </div>
-        </Container>
-      </Container>
+                  <button onClick={handleDismissForm} type="button">
+                    Dismiss
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
+        </RecipeLoading>
+      </PageLayout>
     </div>
   );
 }

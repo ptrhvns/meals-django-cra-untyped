@@ -1,0 +1,21 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.page-layout {
+  background-color: map.get(settings.$colors, "gray-l95");
+}
+
+.page-layout__viewport {
+  min-height: calc(100vh - settings.$height-navbar - settings.$height-footer);
+  padding: 0.5rem 1rem 2rem 1rem;
+}
+
+.page-layout__content {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius-lg;
+  border: 1px solid map.get(settings.$colors, "gray-l80");
+  box-shadow: settings.$box-shadow;
+  height: fit-content;
+  padding: 1rem 1rem 2rem 1rem;
+  width: 100%;
+}

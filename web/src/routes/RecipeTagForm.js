@@ -1,7 +1,6 @@
 import Alert from "../components/Alert";
-import Container from "../components/Container";
 import FieldError from "../components/FieldError";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import Spinner from "../components/Spinner";
 import { buildTitle } from "../lib/utils";
@@ -109,105 +108,99 @@ function RecipeTagForm() {
         <title>{buildTitle(`${tagId ? "Edit" : "New"} Recipe Tag`)}</title>
       </Helmet>
 
-      <Navbar />
+      <PageLayout contentClassName="recipe-tag-form__content">
+        <h1>{tagId ? "Edit " : "New"} Recipe Tag</h1>
 
-      <Container className="recipe-tag-form__viewport" variant="viewport">
-        <Container className="recipe-tag-form__content" variant="content">
-          <div className="recipe-tag-form__content-card">
-            <h1>{tagId ? "Edit " : "New"} Recipe Tag</h1>
-
-            <RecipeLoading
-              className="recipe-tag-form__alert"
-              error={loadingError}
-              isLoading={isLoading}
+        <RecipeLoading
+          className="recipe-tag-form__alert"
+          error={loadingError}
+          isLoading={isLoading}
+        >
+          {() => (
+            <form
+              className="recipe-tag-form__form"
+              onSubmit={handleSubmit(onSubmit)}
             >
-              {() => (
-                <form
-                  className="recipe-tag-form__form"
-                  onSubmit={handleSubmit(onSubmit)}
+              {alertMessage && (
+                <Alert
+                  className="recipe-tag-form__alert"
+                  onDismiss={handleDismissAlert}
+                  variant="error"
                 >
-                  {alertMessage && (
-                    <Alert
-                      className="recipe-tag-form__alert"
-                      onDismiss={handleDismissAlert}
-                      variant="error"
-                    >
-                      {alertMessage}
-                    </Alert>
-                  )}
-
-                  <div className="recipe-tag-form__field">
-                    <div>
-                      <label htmlFor="recipe-tag-input-name">Name</label>
-                    </div>
-
-                    <div className="recipe-tag-form__input-wrapper">
-                      <input
-                        className={join(
-                          compact([
-                            errors.name && "error",
-                            "recipe-tag-form__input",
-                          ]),
-                          " "
-                        )}
-                        id="recipe-tag-input-name"
-                        type="text"
-                        {...register("name", {
-                          required: "Name is required.",
-                        })}
-                      />
-                    </div>
-
-                    <FieldError
-                      className="recipe-tag-form__field-error"
-                      error={errors?.name?.message}
-                    />
-                  </div>
-
-                  <div className="recipe-tag-form__actions">
-                    <div className="recipe-tag-form__actions-left">
-                      <button
-                        className="button-primary recipe-tag-form__action"
-                        type="submit"
-                      >
-                        <Spinner spin={isSubmitting}>
-                          <FontAwesomeIcon
-                            icon={tagId ? faSquarePen : faCirclePlus}
-                          />
-                        </Spinner>{" "}
-                        Save
-                      </button>
-
-                      <button
-                        className="recipe-tag-form__action"
-                        onClick={handleDismissForm}
-                        type="button"
-                      >
-                        Dismiss
-                      </button>
-                    </div>
-
-                    {tagId && (
-                      <div className="recipe-tag-form__actions-right">
-                        <button
-                          className="button-danger recipe-tag-form__action"
-                          onClick={handleDelete}
-                          type="button"
-                        >
-                          <Spinner spin={isDeleting}>
-                            <FontAwesomeIcon icon={faCircleMinus} />
-                          </Spinner>{" "}
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </form>
+                  {alertMessage}
+                </Alert>
               )}
-            </RecipeLoading>
-          </div>
-        </Container>
-      </Container>
+
+              <div className="recipe-tag-form__field">
+                <div>
+                  <label htmlFor="recipe-tag-input-name">Name</label>
+                </div>
+
+                <div className="recipe-tag-form__input-wrapper">
+                  <input
+                    className={join(
+                      compact([
+                        errors.name && "error",
+                        "recipe-tag-form__input",
+                      ]),
+                      " "
+                    )}
+                    id="recipe-tag-input-name"
+                    type="text"
+                    {...register("name", {
+                      required: "Name is required.",
+                    })}
+                  />
+                </div>
+
+                <FieldError
+                  className="recipe-tag-form__field-error"
+                  error={errors?.name?.message}
+                />
+              </div>
+
+              <div className="recipe-tag-form__actions">
+                <div className="recipe-tag-form__actions-left">
+                  <button
+                    className="button-primary recipe-tag-form__action"
+                    type="submit"
+                  >
+                    <Spinner spin={isSubmitting}>
+                      <FontAwesomeIcon
+                        icon={tagId ? faSquarePen : faCirclePlus}
+                      />
+                    </Spinner>{" "}
+                    Save
+                  </button>
+
+                  <button
+                    className="recipe-tag-form__action"
+                    onClick={handleDismissForm}
+                    type="button"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+
+                {tagId && (
+                  <div className="recipe-tag-form__actions-right">
+                    <button
+                      className="button-danger recipe-tag-form__action"
+                      onClick={handleDelete}
+                      type="button"
+                    >
+                      <Spinner spin={isDeleting}>
+                        <FontAwesomeIcon icon={faCircleMinus} />
+                      </Spinner>{" "}
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </form>
+          )}
+        </RecipeLoading>
+      </PageLayout>
     </div>
   );
 }

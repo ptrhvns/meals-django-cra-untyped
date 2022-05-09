@@ -1,22 +1,21 @@
-import Container from "../components/Container";
-import Navbar from "../components/Navbar";
+import PageLayout from "../components/PageLayout";
 import { buildTitle } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 
 function TermsAndConditions() {
   return (
-    <div>
+    <div className="terms-and-conditions">
       <Helmet>
         <title>{buildTitle("Terms and Conditions")}</title>
       </Helmet>
 
-      <Navbar />
+      <PageLayout variant="content">
+        <h1>Terms and Conditions</h1>
 
-      <Container variant="viewport">
-        <Container variant="content">
-          <div>TermsAndConditions</div>
-        </Container>
-      </Container>
+        <p className="terms-and-conditions__message">
+          We're still working on this.
+        </p>
+      </PageLayout>
     </div>
   );
 }

@@ -8,34 +8,33 @@ from main.tests.support.auth import authenticate
 
 
 def test_http_method_names():
-    assert dvh.has_http_method_names(views.recipe_tag, ["get", "options"])
+    assert dvh.has_http_method_names(views.recipe_rating, ["get", "options"])
 
 
 def test_permission_classes():
     permission_classes = [permissions.IsAuthenticated]
-    assert dvh.has_permission_classes(views.recipe_tag, permission_classes)
+    assert dvh.has_permission_classes(views.recipe_rating, permission_classes)
 
 
-def test_recipe_tag_not_found(api_rf, mocker):
-    path = urls.reverse("recipe_tag", kwargs={"tag_id": 1})
+def test_recipe_not_found(api_rf, mocker):
+    path = urls.reverse("recipe_rating", kwargs={"recipe_id": 1})
     request = api_rf.get(path)
     user = factories.UserFactory.build()
     authenticate(request, user)
     goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
     goo4.side_effect = http.Http404
-    response = views.recipe_tag(request, 1)
+    response = views.recipe_rating(request, 1)
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
-def test_getting_recipe_tag_successfully(api_rf, mocker):
-    user = factories.UserFactory.build()
-    path = urls.reverse("recipe_tag", kwargs={"tag_id": 1})
+def test_getting_recipe_rating_successfully(api_rf, mocker):
+    path = urls.reverse("recipe_rating", kwargs={"recipe_id": 1})
     request = api_rf.get(path)
+    user = factories.UserFactory.build()
     authenticate(request, user)
-    recipe = factories.RecipeFactory.build(user=user, id=1)
-    recipe_tag = factories.RecipeTagFactory.build(recipe=recipe, id=1, name="TestTag")
+    recipe = factories.RecipeFactory.build(id=1, rating=5, user=user)
     goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
-    goo4.return_value = recipe_tag
-    response = views.recipe_tag(request, 1)
+    goo4.return_value = recipe
+    response = views.recipe_rating(request, 1)
     assert response.status_code == status.HTTP_200_OK
-    assert response.data == {"data": {"id": recipe_tag.id, "name": recipe_tag.name}}
+    assert response.data == {"data": {"rating": recipe.rating}}

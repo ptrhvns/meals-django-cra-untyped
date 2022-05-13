@@ -13,6 +13,7 @@
 @use "styles/components/PageLayout";
 @use "styles/components/RecipeForm";
 @use "styles/components/RecipeLoading";
+@use "styles/components/RecipeRating";
 @use "styles/components/RecipeTags";
 @use "styles/components/RecipeTimes";
 @use "styles/components/RecipeTitle";
@@ -25,6 +26,7 @@
 @use "styles/routes/PrivacyPolicy";
 @use "styles/routes/Recipe";
 @use "styles/routes/RecipeNew";
+@use "styles/routes/RecipeRatingEditor";
 @use "styles/routes/RecipeTagForm";
 @use "styles/routes/RecipeTitleForm";
 @use "styles/routes/Settings";

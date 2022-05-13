@@ -1,5 +1,6 @@
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
+import RecipeRating from "../components/RecipeRating";
 import RecipeTags from "../components/RecipeTags";
 import RecipeTimes from "../components/RecipeTimes";
 import RecipeTitle from "../components/RecipeTitle";
@@ -44,6 +45,7 @@ function Recipe() {
             <div data-testid="recipe-loaded-content">
               <RecipeTitle data={recipeData} />
               <RecipeTags data={recipeData} />
+              <RecipeRating data={recipeData} />
               <RecipeTimes data={recipeData} />
             </div>
           )}

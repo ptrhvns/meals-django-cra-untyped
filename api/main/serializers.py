@@ -40,6 +40,26 @@ class SignupConfirmationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=256, required=True)
 
 
+class RecipeRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("rating",)
+
+
+class RecipeRatingUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("rating",)
+
+    rating = serializers.IntegerField(max_value=5, min_value=1, required=True)
+
+
+class RecipesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("id", "title")
+
+
 class RecipeTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTag
@@ -77,25 +97,19 @@ class RecipeTimeCreateSerializer(serializers.ModelSerializer):
         return data
 
 
-class RecipeTitleUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Recipe
-        fields = ("title",)
-
-
 class RecipeSerializer(serializers.ModelSerializer):
     recipe_tags = RecipeTagSerializer(many=True, required=False)
     recipe_times = RecipeTimeSerializer(many=True, required=False)
 
     class Meta:
         model = models.Recipe
-        fields = ("id", "recipe_tags", "recipe_times", "title")
+        fields = ("id", "rating", "recipe_tags", "recipe_times", "title")
 
 
-class RecipesSerializer(serializers.ModelSerializer):
+class RecipeTitleUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
-        fields = ("id", "title")
+        fields = ("title",)
 
 
 class UserSerializer(serializers.ModelSerializer):

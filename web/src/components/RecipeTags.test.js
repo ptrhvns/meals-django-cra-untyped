@@ -1,10 +1,11 @@
 import ReactDOM from "react-dom";
 import RecipeTags from "./RecipeTags";
 import { MemoryRouter } from "react-router-dom";
+import { merge } from "lodash";
 import { render, screen } from "@testing-library/react";
 
 function buildComponent(props = {}) {
-  props = { data: { recipe_times: [] }, ...props };
+  props = merge({ data: { id: 1, recipe_times: [] } }, props);
 
   return (
     <MemoryRouter>

@@ -145,7 +145,7 @@ describe("when the form has been submitted", () => {
   });
 });
 
-describe('when form is dismissed', () => {
+describe("when form is dismissed", () => {
   it("navigates user to '/recipe/${recipeId}", async () => {
     const recipeId = 1;
     useParams.mockReturnValue({ recipeId });
@@ -155,4 +155,4 @@ describe('when form is dismissed', () => {
     await user.click(screen.getByRole("button", { name: "Dismiss" }));
     expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
   });
-})
+});

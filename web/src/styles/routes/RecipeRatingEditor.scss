@@ -1,0 +1,50 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-rating-editor {
+}
+
+.recipe-rating-editor__content {
+  max-width: 35rem;
+}
+
+.recipe-rating-editor__instructions {
+  color: map.get(settings.$colors, "gray");
+}
+
+.recipe-rating-editor__alert {
+  margin-top: 1rem;
+}
+
+.recipe-rating-editor__stars {
+  display: flex;
+  font-size: 1.5rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: fit-content;
+}
+
+.recipe-rating-editor__star-off,
+.recipe-rating-editor__star-on {
+  cursor: pointer;
+}
+
+.recipe-rating-editor__star-off {
+  color: map.get(settings.$colors, "gray-l70");
+}
+
+.recipe-rating-editor__star-on {
+  color: map.get(settings.$colors, "blue-d65");
+}
+
+.recipe-rating-editor__stars-number {
+  color: map.get(settings.$colors, "gray-l2");
+}
+
+.recipe-rating-editor__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}

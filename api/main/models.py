@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.auth import models as auth_models
-from django.contrib.auth import validators
+from django.contrib.auth import validators as auth_validators
 from django.core import exceptions
+from django.core import validators as core_validators
 from django.db import models as db_models
 from django.utils.translation import gettext_lazy as _
 
@@ -10,6 +11,14 @@ from main import utils
 
 class Recipe(db_models.Model):
     title = db_models.CharField(max_length=256)
+    rating = db_models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        validators=[
+            core_validators.MinValueValidator(1),
+            core_validators.MaxValueValidator(5),
+        ],
+    )
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="recipes"
     )
@@ -61,7 +70,7 @@ class RecipeTime(db_models.Model):
 
 
 class User(auth_models.AbstractUser):
-    username_validator = validators.UnicodeUsernameValidator()
+    username_validator = auth_validators.UnicodeUsernameValidator()
     email = db_models.EmailField(_("email address"), blank=False)
     email_confirmed_datetime = db_models.DateTimeField(blank=True, null=True)
     is_active = db_models.BooleanField(

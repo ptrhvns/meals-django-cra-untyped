@@ -13,9 +13,7 @@ function RecipeNew() {
       <PageLayout contentClassName="recipe-new__content">
         <h1>New Recipe</h1>
 
-        <p className="recipe-new__instructions">
-          Start with a recipe title.
-        </p>
+        <p className="recipe-new__instructions">Start with a recipe title.</p>
 
         <RecipeForm />
       </PageLayout>

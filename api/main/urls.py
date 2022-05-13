@@ -19,6 +19,19 @@ urlpatterns = [
         name="recipe_time_create",
     ),
     urls.path("recipe/create/", views.recipe_create, name="recipe_create"),
+    urls.path(
+        "recipe_rating/<int:recipe_id>/", views.recipe_rating, name="recipe_rating"
+    ),
+    urls.path(
+        "recipe_rating/<int:recipe_id>/destroy/",
+        views.recipe_rating_destroy,
+        name="recipe_rating_destroy",
+    ),
+    urls.path(
+        "recipe_rating/<int:recipe_id>/update/",
+        views.recipe_rating_update,
+        name="recipe_rating_update",
+    ),
     urls.path("recipe_tag/<int:tag_id>/", views.recipe_tag, name="recipe_tag"),
     urls.path(
         "recipe_tag/<int:tag_id>/destroy/",

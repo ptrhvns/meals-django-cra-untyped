@@ -152,6 +152,44 @@ def recipe_create(request):
 
 @rf_decorators.api_view(http_method_names=["GET"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_rating(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.RecipeRatingSerializer(recipe)
+    return response.Response({"data": serializer.data})
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_rating_destroy(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    recipe.rating = None
+    recipe.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_rating_update(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.RecipeRatingUpdateSerializer(
+        data=request.data, instance=recipe
+    )
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    recipe = serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag(request, tag_id):
     recipe_tag = shortcuts.get_object_or_404(
         models.RecipeTag, pk=tag_id, recipe__user=request.user

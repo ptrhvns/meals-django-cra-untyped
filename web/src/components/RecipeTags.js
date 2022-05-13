@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const propTypes = {
   data: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     recipe_times: PropTypes.array,
   }),
 };

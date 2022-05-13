@@ -9,6 +9,11 @@ export const routes = {
   logout: () => "/api/logout/",
   recipe: ({ recipeId }) => `/api/recipe/${recipeId}/`,
   recipeCreate: () => "/api/recipe/create/",
+  recipeRating: ({ recipeId }) => `/api/recipe_rating/${recipeId}/`,
+  recipeRatingDestroy: ({ recipeId }) =>
+    `/api/recipe_rating/${recipeId}/destroy/`,
+  recipeRatingUpdate: ({ recipeId }) =>
+    `/api/recipe_rating/${recipeId}/update/`,
   recipes: () => "/api/recipes/",
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
   recipeTagCreate: ({ recipeId }) =>

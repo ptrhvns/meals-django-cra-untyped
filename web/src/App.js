@@ -5,6 +5,7 @@ import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
 import RecipeNew from "./routes/RecipeNew";
+import RecipeRatingEditor from "./routes/RecipeRatingEditor";
 import RecipeTagForm from "./routes/RecipeTagForm";
 import RecipeTitleForm from "./routes/RecipeTitleForm";
 import RequireAuthn from "./components/RequireAuthn";
@@ -56,6 +57,14 @@ function App() {
           element={
             <RequireAuthn>
               <Recipe />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/rating/edit"
+          element={
+            <RequireAuthn>
+              <RecipeRatingEditor />
             </RequireAuthn>
           }
         />

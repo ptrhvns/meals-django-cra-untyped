@@ -21,8 +21,11 @@ def test_recipe_not_found(api_rf, mocker):
     request = api_rf.get(path)
     user = factories.UserFactory.build()
     authenticate(request, user)
-    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
-    goo4.side_effect = http.Http404
+    mocker.patch(
+        "main.views.shortcuts.get_object_or_404",
+        autospec=True,
+        side_effect=http.Http404,
+    )
     response = views.recipe_rating(request, 1)
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -33,8 +36,9 @@ def test_getting_recipe_rating_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     authenticate(request, user)
     recipe = factories.RecipeFactory.build(id=1, rating=5, user=user)
-    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
-    goo4.return_value = recipe
+    mocker.patch(
+        "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe
+    )
     response = views.recipe_rating(request, 1)
     assert response.status_code == status.HTTP_200_OK
     assert response.data == {"data": {"rating": recipe.rating}}

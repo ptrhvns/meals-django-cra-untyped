@@ -21,8 +21,11 @@ def test_recipe_not_found(api_rf, mocker):
     user = factories.UserFactory.build()
     test.force_authenticate(request, user=user)
     request.user = user
-    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
-    goo4.side_effect = http.Http404
+    mocker.patch(
+        "main.views.shortcuts.get_object_or_404",
+        autospec=True,
+        side_effect=http.Http404,
+    )
     response = views.recipe_tag_create(request, 1)
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
@@ -34,8 +37,9 @@ def test_invalid_request_data(api_rf, mocker):
     request = api_rf.post(path, {})
     test.force_authenticate(request, user=user)
     request.user = user
-    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
-    goo4.return_value = recipe
+    mocker.patch(
+        "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe
+    )
     response = views.recipe_tag_create(request, recipe.id)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
     assert len(response.data["errors"]) > 0
@@ -50,8 +54,9 @@ def test_creating_recipe_tag_successfully(api_rf, mocker):
     path = urls.reverse("recipe_tag_create", kwargs={"recipe_id": recipe.id})
     request = api_rf.post(path, data)
     test.force_authenticate(request, user=user)
-    goo4 = mocker.patch("main.views.shortcuts.get_object_or_404", autospec=True)
-    goo4.return_value = recipe
+    mocker.patch(
+        "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe
+    )
     arts = mocker.patch(
         "main.views.serializers.RecipeTagCreateSerializer", autospec=True
     ).return_value

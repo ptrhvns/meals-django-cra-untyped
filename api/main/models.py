@@ -50,6 +50,7 @@ class RecipeTime(db_models.Model):
     days = db_models.PositiveIntegerField(blank=True, null=True)
     hours = db_models.PositiveIntegerField(blank=True, null=True)
     minutes = db_models.PositiveIntegerField(blank=True, null=True)
+    note = db_models.CharField(blank=True, default="", max_length=2**6)
     recipe = db_models.ForeignKey(
         Recipe, on_delete=db_models.CASCADE, related_name="recipe_times"
     )

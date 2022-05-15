@@ -81,13 +81,13 @@ class RecipeTagUpdateSerializer(serializers.ModelSerializer):
 class RecipeTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTime
-        fields = ("days", "hours", "id", "minutes", "time_type")
+        fields = ("days", "hours", "id", "minutes", "note", "time_type")
 
 
 class RecipeTimeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTime
-        fields = ("days", "hours", "id", "minutes", "time_type")
+        fields = ("days", "hours", "id", "minutes", "note", "time_type")
 
     def validate(self, data):
         units = ["days", "hours", "minutes"]

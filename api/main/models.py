@@ -41,10 +41,12 @@ class RecipeTime(db_models.Model):
     ADDITIONAL = "Additional"
     COOK = "Cook"
     PREPARATION = "Preparation"
+    TOTAL = "Total"
     TIME_TYPE_CHOICES = [
         (ADDITIONAL, "Additional"),
         (COOK, "Cook"),
         (PREPARATION, "Preparation"),
+        (TOTAL, "Total"),
     ]
 
     days = db_models.PositiveIntegerField(blank=True, null=True)

@@ -2,3 +2,4 @@ __pycache__
 api/.coverage
 api/config/.env
 api/prof
+tags

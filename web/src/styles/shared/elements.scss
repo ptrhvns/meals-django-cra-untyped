@@ -16,6 +16,12 @@ a {
   }
 }
 
+body {
+  color: map.get(settings.$colors, "black");
+  font-size: 1rem;
+  margin: 0;
+}
+
 .link-button {
   background-color: map.get(settings.$colors, "blue-bg");
   border-radius: settings.$border-radius;

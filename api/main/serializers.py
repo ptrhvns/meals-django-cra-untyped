@@ -97,6 +97,19 @@ class RecipeTimeCreateSerializer(serializers.ModelSerializer):
         return data
 
 
+class RecipeTimeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTime
+        fields = ("days", "hours", "minutes", "note", "time_type")
+
+    def validate(self, data):
+        units = ["days", "hours", "minutes"]
+        error = _("At least one unit is required.")
+        if not any([data.get(u) for u in units]):
+            raise serializers.ValidationError({u: error for u in units})
+        return data
+
+
 class RecipeSerializer(serializers.ModelSerializer):
     recipe_tags = RecipeTagSerializer(many=True, required=False)
     recipe_times = RecipeTimeSerializer(many=True, required=False)

@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { omit } from "lodash";
 
 // istanbul ignore next
+// prettier-ignore
 export const routes = {
   accountDestroy: () => "/api/account/destroy/",
   csrfToken: () => "/api/csrf_token/",
@@ -10,18 +11,17 @@ export const routes = {
   recipe: ({ recipeId }) => `/api/recipe/${recipeId}/`,
   recipeCreate: () => "/api/recipe/create/",
   recipeRating: ({ recipeId }) => `/api/recipe_rating/${recipeId}/`,
-  recipeRatingDestroy: ({ recipeId }) =>
-    `/api/recipe_rating/${recipeId}/destroy/`,
-  recipeRatingUpdate: ({ recipeId }) =>
-    `/api/recipe_rating/${recipeId}/update/`,
+  recipeRatingDestroy: ({ recipeId }) => `/api/recipe_rating/${recipeId}/destroy/`,
+  recipeRatingUpdate: ({ recipeId }) => `/api/recipe_rating/${recipeId}/update/`,
   recipes: () => "/api/recipes/",
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
-  recipeTagCreate: ({ recipeId }) =>
-    `/api/recipe/${recipeId}/recipe_tag/create/`,
+  recipeTagCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_tag/create/`,
   recipeTagDestroy: ({ tagId }) => `/api/recipe_tag/${tagId}/destroy/`,
   recipeTagUpdate: ({ tagId }) => `/api/recipe_tag/${tagId}/update/`,
-  recipeTimeCreate: ({ recipeId }) =>
-    `/api/recipe/${recipeId}/recipe_time/create/`,
+  recipeTime: ({ timeId }) => `/api/recipe_time/${timeId}/`,
+  recipeTimeCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_time/create/`,
+  recipeTimeDestroy: ({ timeId }) => `/api/recipe_time/${timeId}/destroy/`,
+  recipeTimeUpdate: ({ timeId }) => `/api/recipe_time/${timeId}/update/`,
   recipeTitleUpdate: ({ recipeId }) => `/api/recipe_title/${recipeId}/update/`,
   signup: () => "/api/signup/",
   signupConfirmation: () => "/api/signup_confirmation/",

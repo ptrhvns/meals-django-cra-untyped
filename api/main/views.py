@@ -250,6 +250,16 @@ def recipe_tag_update(request, tag_id):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_time(request, time_id):
+    recipe_time = shortcuts.get_object_or_404(
+        models.RecipeTime, pk=time_id, recipe__user=request.user
+    )
+    serializer = serializers.RecipeTimeSerializer(recipe_time)
+    return response.Response({"data": serializer.data})
+
+
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_time_create(request, recipe_id):
@@ -272,6 +282,45 @@ def recipe_time_create(request, recipe_id):
 
     serializer.save(recipe=recipe)
     return response.Response({"data": serializer.data}, status=status.HTTP_201_CREATED)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_time_destroy(request, time_id):
+    recipe_time = shortcuts.get_object_or_404(
+        models.RecipeTime, pk=time_id, recipe__user=request.user
+    )
+    recipe_time.delete()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_time_update(request, time_id):
+    recipe_time = shortcuts.get_object_or_404(
+        models.RecipeTime, pk=time_id, recipe__user=request.user
+    )
+
+    # Convert unit fields with an empty string to None.
+    data = request.data.copy()
+    for k, v in request.data.items():
+        if k in ["days", "hours", "minutes"]:
+            if not v:
+                data[k] = None
+
+    serializer = serializers.RecipeTimeUpdateSerializer(data=data, instance=recipe_time)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    recipe_time = serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @rf_decorators.api_view(http_method_names=["POST"])

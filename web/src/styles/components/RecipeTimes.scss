@@ -7,6 +7,17 @@
   padding-top: 1rem;
 }
 
+.recipe-times__heading-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+a.recipe-times__heading-action {
+  color: map.get(settings.$colors, "gray");
+}
+
 .recipe-times__heading {
   color: map.get(settings.$colors, "yellow-d45");
   font-size: settings.$font-size-h4;
@@ -14,4 +25,45 @@
 
 .recipe-times__empty-notice {
   color: map.get(settings.$colors, "gray-fg");
+}
+
+.recipe-times__list-wrapper {
+  margin-top: 1rem;
+}
+
+.recipe-times__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  a {
+    color: map.get(settings.$colors, "blue-d65");
+  }
+}
+
+.recipe-times__list-item {
+  background-color: map.get(settings.$colors, "gray-l90");
+  border-radius: settings.$border-radius;
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    background-color: map.get(settings.$colors, "gray-l95");
+  }
+}
+
+.recipe-times__time-type {
+  color: map.get(settings.$colors, "gray-fg");
+  font-size: settings.$font-size-s1;
+}
+
+.recipe-times__time-value {
+  font-weight: 600;
+  margin-left: 1ex;
+}
+
+.recipe-times__time-note {
+  color: map.get(settings.$colors, "gray-fg");
+  font-size: settings.$font-size-s1;
+  font-weight: normal;
+  margin-left: 1ex;
 }

@@ -19,14 +19,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
 function RecipeTagForm() {
-  const { recipeId, tagId } = useParams();
-
   const [alertMessage, setAlertMessage] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isLoading, setIsLoading] = useState(tagId ? true : false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingError, setLoadingError] = useState(null);
   const navigate = useNavigate();
+  const { recipeId, tagId } = useParams();
+
+  const [isLoading, setIsLoading] = useState(tagId ? true : false);
+
   const {
     formState: { errors },
     handleSubmit,

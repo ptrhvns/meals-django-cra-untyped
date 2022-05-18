@@ -109,7 +109,7 @@ function RecipeTagForm() {
       </Helmet>
 
       <PageLayout contentClassName="recipe-tag-form__content">
-        <h1>{tagId ? "Edit " : "New"} Recipe Tag</h1>
+        <h1>{tagId ? "Edit" : "New"} Recipe Tag</h1>
 
         <RecipeLoading
           className="recipe-tag-form__alert"

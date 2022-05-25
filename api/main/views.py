@@ -5,6 +5,7 @@ import zoneinfo
 from django import shortcuts
 from django.conf import settings
 from django.contrib import auth
+from django.db.models import functions
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators import csrf
@@ -192,7 +193,7 @@ def recipe_rating_update(request, recipe_id):
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag(request, tag_id):
     recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, recipe__user=request.user
+        models.RecipeTag, pk=tag_id, user=request.user
     )
     serializer = serializers.RecipeTagSerializer(recipe_tag)
     return response.Response({"data": serializer.data})
@@ -213,15 +214,32 @@ def recipe_tag_create(request, recipe_id):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
-    serializer.save(recipe=recipe)
-    return response.Response({"data": serializer.data}, status=status.HTTP_201_CREATED)
+    recipe_tag = models.RecipeTag.objects.filter(
+        name__icontains=serializer.validated_data["name"], user=request.user
+    ).first()
+
+    created = False
+
+    if not recipe_tag:
+        recipe_tag = serializer.save(user=request.user)
+        created = True
+
+    if not recipe_tag.recipes.contains(recipe):
+        recipe_tag.recipes.add(recipe)
+
+    serializer = serializers.RecipeTagCreateSerializer(recipe_tag)
+
+    return response.Response(
+        {"data": serializer.data},
+        status=(status.HTTP_201_CREATED if created else status.HTTP_200_OK),
+    )
 
 
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_destroy(request, tag_id):
     recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, recipe__user=request.user
+        models.RecipeTag, pk=tag_id, user=request.user
     )
     recipe_tag.delete()
     return response.Response(status=status.HTTP_204_NO_CONTENT)
@@ -231,7 +249,7 @@ def recipe_tag_destroy(request, tag_id):
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_update(request, tag_id):
     recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, recipe__user=request.user
+        models.RecipeTag, pk=tag_id, user=request.user
     )
     serializer = serializers.RecipeTagUpdateSerializer(
         data=request.data, instance=recipe_tag
@@ -248,6 +266,19 @@ def recipe_tag_update(request, tag_id):
 
     recipe_tag = serializer.save()
     return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag_search(request):
+    if not (search_term := request.query_params.get("search_term")):
+        return response.Response({"data": {"matches": []}})
+
+    recipe_tags = models.RecipeTag.objects.filter(
+        name__icontains=search_term, user=request.user
+    ).order_by(functions.Length("name").desc())
+
+    return response.Response({"data": {"matches": [r.name for r in recipe_tags]}})
 
 
 @rf_decorators.api_view(http_method_names=["GET"])

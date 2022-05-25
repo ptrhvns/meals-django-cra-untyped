@@ -19,6 +19,7 @@ class Recipe(db_models.Model):
             core_validators.MaxValueValidator(5),
         ],
     )
+    recipe_tags = db_models.ManyToManyField("RecipeTag", related_name="recipes")
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="recipes"
     )
@@ -29,8 +30,12 @@ class Recipe(db_models.Model):
 
 class RecipeTag(db_models.Model):
     name = db_models.CharField(max_length=256)
-    recipe = db_models.ForeignKey(
-        Recipe, on_delete=db_models.CASCADE, related_name="recipe_tags"
+    user = db_models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False,
+        null=False,
+        on_delete=db_models.CASCADE,
+        related_name="recipe_tags",
     )
 
     def __str__(self):

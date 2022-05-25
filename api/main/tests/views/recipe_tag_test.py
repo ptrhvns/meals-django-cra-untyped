@@ -35,8 +35,7 @@ def test_getting_recipe_tag_successfully(api_rf, mocker):
     path = urls.reverse("recipe_tag", kwargs={"tag_id": 1})
     request = api_rf.get(path)
     authenticate(request, user)
-    recipe = factories.RecipeFactory.build(user=user, id=1)
-    recipe_tag = factories.RecipeTagFactory.build(recipe=recipe, id=1, name="TestTag")
+    recipe_tag = factories.RecipeTagFactory.build(id=1, name="TestTag", user=user)
     mocker.patch(
         "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe_tag
     )

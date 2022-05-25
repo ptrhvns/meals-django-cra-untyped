@@ -30,7 +30,7 @@ class RecipeTagFactory(factory.django.DjangoModelFactory):
         model = models.RecipeTag
 
     name = factory.Sequence(lambda n: f"Tag#{n + 1}")
-    recipe = factory.SubFactory(RecipeFactory)
+    user = factory.SubFactory(UserFactory)
 
 
 class RecipeTimeFactory(factory.django.DjangoModelFactory):

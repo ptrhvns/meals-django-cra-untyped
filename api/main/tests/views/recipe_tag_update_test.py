@@ -32,8 +32,7 @@ def test_recipe_tag_not_found(api_rf, mocker):
 
 def test_updating_with_invalid_data(api_rf, mocker):
     user = factories.UserFactory.build()
-    recipe = factories.RecipeFactory.build(user=user)
-    recipe_tag = factories.RecipeTagFactory.build(recipe=recipe, id=1)
+    recipe_tag = factories.RecipeTagFactory.build(id=1)
     mocker.patch(
         "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe_tag
     )
@@ -49,8 +48,7 @@ def test_updating_with_invalid_data(api_rf, mocker):
 
 def test_updating_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
-    recipe = factories.RecipeFactory.build(user=user)
-    recipe_tag = factories.RecipeTagFactory.build(recipe=recipe, id=1)
+    recipe_tag = factories.RecipeTagFactory.build(id=1)
     mocker.patch(
         "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe_tag
     )

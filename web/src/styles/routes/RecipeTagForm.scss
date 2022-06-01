@@ -9,6 +9,10 @@
   max-width: 35rem;
 }
 
+.recipe-tag-form__change_notice {
+  color: map.get(settings.$colors, "gray");
+}
+
 .recipe-tag-form__form {
   margin-top: 1.5rem;
 }

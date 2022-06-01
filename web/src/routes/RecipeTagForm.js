@@ -6,6 +6,7 @@ import Spinner from "../components/Spinner";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
 import {
+  faCircleInfo,
   faCircleMinus,
   faCirclePlus,
   faSquarePen,
@@ -111,6 +112,13 @@ function RecipeTagForm() {
 
       <PageLayout contentClassName="recipe-tag-form__content">
         <h1>{tagId ? "Edit" : "New"} Recipe Tag</h1>
+
+        {tagId && (
+          <p className="recipe-tag-form__change_notice">
+            <FontAwesomeIcon icon={faCircleInfo} /> Changes will affect all the
+            recipes using this tag.
+          </p>
+        )}
 
         <RecipeLoading
           className="recipe-tag-form__alert"

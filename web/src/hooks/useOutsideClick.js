@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+// Apply returned ref to an element. If user clicks outside of that element, the
+// the callback will be called.
 export default function useOutsideClick(callback) {
   const ref = useRef();
 

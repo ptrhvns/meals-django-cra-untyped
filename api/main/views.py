@@ -276,7 +276,7 @@ def recipe_tag_search(request):
 
     recipe_tags = models.RecipeTag.objects.filter(
         name__icontains=search_term, user=request.user
-    ).order_by(functions.Length("name").desc())
+    ).order_by(functions.Length("name").asc())
 
     return response.Response({"data": {"matches": [r.name for r in recipe_tags]}})
 

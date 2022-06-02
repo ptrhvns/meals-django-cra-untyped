@@ -53,17 +53,15 @@ def test_matching_recipe_tags_found_sorted_by_length(api_rf, mocker):
     user = factories.UserFactory.create()
     rh.authenticate(request, user)
     recipe_tags = [
-        factories.RecipeTagFactory.create(name="Dinner", user=user),
         factories.RecipeTagFactory.create(name="Healthy Dinner", user=user),
+        factories.RecipeTagFactory.create(name="Dinner", user=user),
     ]
     response = views.recipe_tag_search(request)
     assert response.status_code == status.HTTP_200_OK
     assert response.data == {
         "data": {
             "matches": list(
-                reversed(
-                    sorted([rt.name for rt in recipe_tags], key=lambda name: len(name))
-                )
+                sorted([rt.name for rt in recipe_tags], key=lambda name: len(name))
             )
         }
     }

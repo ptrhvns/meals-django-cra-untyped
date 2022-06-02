@@ -1,12 +1,13 @@
 import Container from "./Container";
 import PropTypes from "prop-types";
 import useAuthn from "../hooks/useAuthn";
+import useOutsideClick from "../hooks/useOutsideClick";
 import { faBars, faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { join } from "lodash";
 import { Link } from "react-router-dom";
 import { post } from "../lib/api";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const propTypes = {
   className: PropTypes.string,
@@ -19,22 +20,9 @@ const defaultProps = {
 function Navbar({ className }) {
   const [showMenu, setShowMenu] = useState(false);
   const authn = useAuthn();
-  const menuRef = useRef(null);
+  const menuRef = useOutsideClick(() => setShowMenu(false));
 
   const cn = join(["navbar", className], " ");
-
-  const handleOutsideMenuClick = (event) => {
-    /* istanbul ignore next */
-    if (!menuRef.current) return;
-
-    if (menuRef.current.contains(event.target)) return;
-    setShowMenu(false);
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleOutsideMenuClick);
-    return () => document.removeEventListener("click", handleOutsideMenuClick);
-  }, []);
 
   const handleLogout = async () => {
     await post({ route: "logout" });

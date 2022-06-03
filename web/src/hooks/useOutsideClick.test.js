@@ -14,14 +14,14 @@ function TestComponent({ callback }) {
   );
 }
 
-function buildTestComponent({ callback }) {
+function buildComponent({ callback }) {
   return <TestComponent callback={callback} />;
 }
 
 it("calls callback prop when user clicks outside of element using ref", async () => {
   const user = userEvent.setup();
   const callback = jest.fn();
-  render(buildTestComponent({ callback }));
+  render(buildComponent({ callback }));
   await user.click(screen.getByTestId("outside"));
   expect(callback).toHaveBeenCalled();
 });

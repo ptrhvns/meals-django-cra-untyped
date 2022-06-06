@@ -66,7 +66,7 @@ class RecipeTagSerializer(serializers.ModelSerializer):
         fields = ("id", "name")
 
 
-class RecipeTagCreateSerializer(serializers.ModelSerializer):
+class RecipeTagAssocateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTag
         fields = ("id", "name")

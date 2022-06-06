@@ -201,9 +201,9 @@ def recipe_tag(request, tag_id):
 
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
-def recipe_tag_create(request, recipe_id):
+def recipe_tag_associate(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
-    serializer = serializers.RecipeTagCreateSerializer(data=request.data)
+    serializer = serializers.RecipeTagAssocateSerializer(data=request.data)
 
     if not serializer.is_valid():
         return response.Response(
@@ -215,7 +215,7 @@ def recipe_tag_create(request, recipe_id):
         )
 
     recipe_tag = models.RecipeTag.objects.filter(
-        name__icontains=serializer.validated_data["name"], user=request.user
+        name__iexact=serializer.validated_data["name"], user=request.user
     ).first()
 
     created = False
@@ -227,7 +227,7 @@ def recipe_tag_create(request, recipe_id):
     if not recipe_tag.recipes.contains(recipe):
         recipe_tag.recipes.add(recipe)
 
-    serializer = serializers.RecipeTagCreateSerializer(recipe_tag)
+    serializer = serializers.RecipeTagAssocateSerializer(recipe_tag)
 
     return response.Response(
         {"data": serializer.data},

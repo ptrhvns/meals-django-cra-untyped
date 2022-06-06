@@ -1,0 +1,40 @@
+@use "../shared/settings";
+
+.recipe-tag-create-form__content {
+  max-width: 35rem;
+}
+
+.recipe-tag-create-form__form {
+  margin-top: 1.5rem;
+}
+
+.recipe-tag-create-form__alert {
+  margin-top: 1.5rem;
+}
+
+.recipe-tag-create-form__alert + .recipe-tag-create-form__field {
+  margin-top: 1rem;
+}
+
+.recipe-tag-create-form__input-wrapper {
+  margin-top: 0.5rem;
+}
+
+.recipe-tag-create-form__input {
+  width: 100%;
+}
+
+.recipe-tag-create-form__matches {
+  width: 100%;
+}
+
+.recipe-tag-create-form__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.recipe-tag-create-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}

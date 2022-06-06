@@ -17,7 +17,7 @@ export const routes = {
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
   recipeTagAssociate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_tag/associate/`,
   recipeTagDestroy: ({ tagId }) => `/api/recipe_tag/${tagId}/destroy/`,
-  recipeTagSearch: () => `/api/recipe_tag/search/`,
+  recipeTagSearch: ({ searchTerm }) => `/api/recipe_tag/search/?search_term=${encodeURI(searchTerm)}`,
   recipeTagUpdate: ({ tagId }) => `/api/recipe_tag/${tagId}/update/`,
   recipeTime: ({ timeId }) => `/api/recipe_time/${timeId}/`,
   recipeTimeCreate: ({ recipeId }) => `/api/recipe/${recipeId}/recipe_time/create/`,

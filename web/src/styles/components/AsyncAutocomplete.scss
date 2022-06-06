@@ -1,0 +1,25 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.async-autocomplete__matches-wrapper {
+  position: relative;
+}
+
+.async-autocomplete__matches {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius;
+  border: 1px solid map.get(settings.$colors, "gray-border");
+  margin-top: 0.5rem;
+  position: absolute;
+  z-index: 9999;
+}
+
+.async-autocomplete__match {
+  padding: 0.25rem 0.5rem;
+}
+
+.async-autocomplete__match-active {
+  background-color: map.get(settings.$colors, "blue-bg");
+  color: map.get(settings.$colors, "blue-fg");
+  cursor: pointer;
+}

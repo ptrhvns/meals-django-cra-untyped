@@ -38,6 +38,9 @@ class RecipeTag(db_models.Model):
         related_name="recipe_tags",
     )
 
+    class Meta:
+        unique_together = ["name", "user"]
+
     def __str__(self):
         return self.name
 

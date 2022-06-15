@@ -11,6 +11,8 @@ function Dashboard() {
       </Helmet>
 
       <PageLayout>
+        <h1>Dashboard</h1>
+
         <RecipeList />
       </PageLayout>
     </div>

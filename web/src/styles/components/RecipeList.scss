@@ -2,11 +2,15 @@
 @use "sass:map";
 
 .recipe-list {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .recipe-list__notice {
   color: map.get(settings.$colors, "gray");
+}
+
+.recipe-list__alert {
+  margin-top: 1rem;
 }
 
 .recipe-list__list-wrapper {
@@ -20,5 +24,5 @@
 }
 
 .recipe-list__actions {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }

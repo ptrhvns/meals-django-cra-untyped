@@ -78,6 +78,12 @@ class RecipeTagUpdateSerializer(serializers.ModelSerializer):
         fields = ("name",)
 
 
+class RecipeTagUpdateForRecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeTag
+        fields = ("name",)
+
+
 class RecipeTimeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RecipeTime

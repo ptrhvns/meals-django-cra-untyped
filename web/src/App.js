@@ -7,7 +7,7 @@ import Recipe from "./routes/Recipe";
 import RecipeNew from "./routes/RecipeNew";
 import RecipeRatingEditor from "./routes/RecipeRatingEditor";
 import RecipeTagCreateForm from "./routes/RecipeTagCreateForm";
-import RecipeTagForm from "./routes/RecipeTagForm";
+import RecipeTagEditForm from "./routes/RecipeTagEditForm";
 import RecipeTimeForm from "./routes/RecipeTimeForm";
 import RecipeTitleForm from "./routes/RecipeTitleForm";
 import RequireAuthn from "./components/RequireAuthn";
@@ -84,7 +84,7 @@ function App() {
           path="/recipe/:recipeId/tag/:tagId/edit"
           element={
             <RequireAuthn>
-              <RecipeTagForm />
+              <RecipeTagEditForm />
             </RequireAuthn>
           }
         />

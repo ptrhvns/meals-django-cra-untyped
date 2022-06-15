@@ -5,6 +5,7 @@ import zoneinfo
 from django import shortcuts
 from django.conf import settings
 from django.contrib import auth
+from django.db import transaction
 from django.db.models import functions
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -247,6 +248,17 @@ def recipe_tag_destroy(request, tag_id):
 
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag_dissociate(request, tag_id, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, recipes=recipe, user=request.user
+    )
+    recipe.recipe_tags.remove(recipe_tag)
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_update(request, tag_id):
     recipe_tag = shortcuts.get_object_or_404(
         models.RecipeTag, pk=tag_id, user=request.user
@@ -254,7 +266,22 @@ def recipe_tag_update(request, tag_id):
     serializer = serializers.RecipeTagUpdateSerializer(
         data=request.data, instance=recipe_tag
     )
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+    serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
 
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_tag_update_for_recipe(request, tag_id, recipe_id):
+    serializer = serializers.RecipeTagUpdateForRecipeSerializer(data=request.data)
     if not serializer.is_valid():
         return response.Response(
             {
@@ -264,7 +291,17 @@ def recipe_tag_update(request, tag_id):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
-    recipe_tag = serializer.save()
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, user=request.user
+    )
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    with transaction.atomic():
+        recipe.recipe_tags.remove(recipe_tag)
+        recipe_tag, saved = models.RecipeTag.objects.get_or_create(
+            **serializer.validated_data, user=request.user
+        )
+        recipe.recipe_tags.add(recipe_tag)
+
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 

@@ -167,6 +167,8 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   ```sh
   cd web
   CI=true npm test -- --coverage
+
+  # open coverage/index.html wth a browser to view HTML report:
   ```
 
 ### Running API Tests

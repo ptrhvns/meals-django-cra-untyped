@@ -54,6 +54,10 @@
       "<rootDir>/node_modules/",
       "<rootDir>/src/index.js",
       "<rootDir>/src/reportWebVitals.js"
+    ],
+    "coverageReporters": [
+      "html",
+      "text"
     ]
   }
 }

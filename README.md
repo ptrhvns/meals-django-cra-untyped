@@ -2,7 +2,24 @@
 
 ## Description
 
-This is a website for managing meals.
+This is a website for managing meals (e.g. recipes, menus, shopping lists).
+
+## Technologies
+
+Front-end / web:
+
+- FontAwesome
+- Jest / Testing Library
+- React
+- Sass
+
+Back-end / API:
+
+- Celery
+- Django
+- PostgreSQL
+- Pytest
+- Redis
 
 ## Setting Up a Development Environment
 
@@ -146,7 +163,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
 ## Running Tests
 
-### Running Web Tests
+### Running Front-End / Web Tests
 
 - Run tests (one-time run):
 
@@ -168,10 +185,10 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   cd web
   CI=true npm test -- --coverage
 
-  # open coverage/index.html wth a browser to view HTML report:
+  # Open coverage/index.html with a browser to view HTML report.
   ```
 
-### Running API Tests
+### Running Back-End / API Tests
 
 - Run tests:
 
@@ -189,5 +206,5 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
   pytest --cov --cov-report html # HTML report
   pytest --cov --cov-report term-missing # terminal report
 
-  # Open htmlcov/index.html with a browser if HTML report is chosen.
+  # Open htmlcov/index.html with a browser if HTML report was chosen.
   ```

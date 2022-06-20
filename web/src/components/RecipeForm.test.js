@@ -12,10 +12,11 @@ import ReactDOM from "react-dom";
 import RecipeForm from "./RecipeForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
-import { act, render, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { within } from "@testing-library/dom";
 
 function buildComponent() {
   return (
@@ -80,7 +81,8 @@ describe("when the form has been submitted", () => {
       const container = render(buildComponent());
       await act(() => submitForm(user, container));
       expect(container.queryByText(message)).toBeTruthy();
-      await user.click(container.getByRole("button", { name: "Dismiss" }));
+      const alert = screen.getByTestId("alert");
+      await user.click(within(alert).getByRole("button", { name: "Dismiss" }));
       expect(container.queryByText(message)).not.toBeTruthy();
     });
   });
@@ -108,5 +110,14 @@ describe("when the form has been submitted", () => {
         replace: true,
       });
     });
+  });
+});
+
+describe("when user clicks 'Dismiss' button", () => {
+  it("navgates browser to '/'", async () => {
+    const user = userEvent.setup();
+    render(buildComponent());
+    await user.click(screen.getByRole("button", { name: "Dismiss" }));
+    expect(navigate).toHaveBeenCalledWith("/");
   });
 });

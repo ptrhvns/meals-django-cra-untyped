@@ -48,6 +48,10 @@ function RecipeForm() {
     navigate(`/recipe/${response.data.id}`, { replace: true });
   };
 
+  const handleDismissForm = () => {
+    navigate("/");
+  };
+
   return (
     <div className="recipe-form">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,6 +94,8 @@ function RecipeForm() {
             </Spinner>{" "}
             Save and continue
           </button>
+
+          <button onClick={handleDismissForm}>Dismiss</button>
         </div>
       </form>
     </div>

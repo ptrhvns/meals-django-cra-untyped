@@ -20,7 +20,6 @@ isort = "^5.10.1"
 watchdog = {extras = ["watchmedo"], version = "^2.1.6"}
 pytest-django = "^4.5.2"
 pytest-cov = "^3.0.0"
-pytest-sugar = "^0.9.4"
 pytest-clarity = "^1.0.1"
 pytest-freezegun = "^0.4.2"
 pytest-mock = "^3.6.1"

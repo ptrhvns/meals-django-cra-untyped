@@ -1,5 +1,6 @@
 import pytest
 from django import urls
+from django.conf import settings
 from rest_framework import status
 
 from main import models, views
@@ -34,6 +35,48 @@ def test_logging_in_successfully(client):
 
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert "sessionid" in response.cookies.keys()
+
+
+@pytest.mark.django_db
+def test_logging_in_with_remember_me_set(client):
+    models.User.objects.create_user(
+        email="smith@example.com",
+        is_active=True,
+        password="alongpassword",
+        username="smith",
+    )
+
+    response = client.post(
+        urls.reverse("login"),
+        {
+            "password": "alongpassword",
+            "remember_me": True,
+            "username": "smith",
+        },
+    )
+
+    assert not response.client.session.get_expire_at_browser_close()
+    assert response.client.session.get_expiry_age() == settings.SESSION_COOKIE_AGE
+
+
+@pytest.mark.django_db
+def test_logging_in_without_remember_me_set(client):
+    models.User.objects.create_user(
+        email="smith@example.com",
+        is_active=True,
+        password="alongpassword",
+        username="smith",
+    )
+
+    response = client.post(
+        urls.reverse("login"),
+        {
+            "password": "alongpassword",
+            "username": "smith",
+        },
+    )
+
+    assert response.client.session.get_expire_at_browser_close()
 
 
 @pytest.mark.django_db

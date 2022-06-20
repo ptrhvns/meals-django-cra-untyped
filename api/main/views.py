@@ -114,6 +114,12 @@ def login(request):
 
     logger.info("login succeeded for username %(username)s", {"username": username})
     auth.login(request, user)
+
+    if request.data.get("remember_me"):
+        request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+    else:
+        request.session.set_expiry(0)
+
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 

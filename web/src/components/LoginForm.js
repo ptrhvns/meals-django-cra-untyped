@@ -32,7 +32,7 @@ function LoginForm() {
     setIsSubmitting(true);
 
     const response = await post({
-      data: pick(data, ["password", "username"]),
+      data: pick(data, ["password", "remember_me", "username"]),
       route: "login",
     });
 
@@ -112,6 +112,18 @@ function LoginForm() {
               error={errors?.password?.message}
             />
           </div>
+        </div>
+
+        <div className="login-form-field">
+          <label className="login-form__remember-me" htmlFor="remember-me">
+            <input
+              defaultChecked
+              id="remember-me"
+              type="checkbox"
+              {...register("remember_me")}
+            />{" "}
+            Remember me
+          </label>
         </div>
 
         <div className="login-form-actions">

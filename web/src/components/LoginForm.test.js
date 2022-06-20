@@ -70,6 +70,7 @@ describe("when the form has been submitted", () => {
     expect(post).toHaveBeenCalledWith({
       data: {
         password: "alongpassword",
+        remember_me: true,
         username: "smith",
       },
       route: "login",

@@ -3,11 +3,12 @@ import FieldError from "../components/FieldError";
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import Spinner from "../components/Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, post } from "../lib/api";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
@@ -20,6 +21,8 @@ function RecipeTimeForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loadingError, setLoadingError] = useState(null);
   const navigate = useNavigate();
+  const { get, post } = useApi();
+  const { isUnmounted } = useIsMounted();
   const { recipeId, timeId } = useParams();
 
   const [isLoading, setIsLoading] = useState(timeId ? true : false);
@@ -39,6 +42,11 @@ function RecipeTimeForm() {
         routeData: { timeId },
       }).then((response) => {
         // istanbul ignore next
+        if (isUnmounted()) {
+          return;
+        }
+
+        // istanbul ignore next
         if (response.isError) {
           setLoadingError(response.message);
         } else {
@@ -50,7 +58,7 @@ function RecipeTimeForm() {
         setIsLoading(false);
       });
     }
-  }, [timeId, setValue]);
+  }, [get, isUnmounted, setValue, timeId]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);

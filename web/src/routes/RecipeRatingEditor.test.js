@@ -1,4 +1,7 @@
-jest.mock("../lib/api", () => ({ get: jest.fn(), post: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -9,14 +12,14 @@ jest.mock("react-router-dom", () => ({
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
 import RecipeRatingEditor from "./RecipeRatingEditor";
+import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
 import { HelmetProvider } from "react-helmet-async";
+import { iteratee } from "lodash";
 import { MemoryRouter } from "react-router-dom";
-import { get, post } from "../lib/api";
 import { render, screen, waitFor } from "@testing-library/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { within } from "@testing-library/dom";
-import { iteratee } from "lodash";
 
 function buildComponent(props = {}) {
   return (
@@ -30,11 +33,14 @@ function buildComponent(props = {}) {
   );
 }
 
+const get = jest.fn();
+const post = jest.fn();
 let navigate;
 
 beforeEach(() => {
   get.mockResolvedValue({ data: { rating: 3 } });
   post.mockResolvedValue({});
+  useApi.mockReturnValue({ get, post });
   navigate = jest.fn();
   useNavigate.mockReturnValue(navigate);
   useParams.mockReturnValue({ recipeId: 1 });

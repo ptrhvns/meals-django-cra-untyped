@@ -1,6 +1,8 @@
 import Alert from "./Alert";
 import FieldError from "./FieldError";
 import Spinner from "./Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import {
   faExclamationCircle,
   faPlusCircle,
@@ -9,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { pick } from "lodash";
-import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
@@ -17,6 +18,8 @@ function SignupForm() {
   const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const { isUnmounted } = useIsMounted();
+  const { post } = useApi();
 
   const {
     formState: { errors },
@@ -27,10 +30,17 @@ function SignupForm() {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+
     const response = await post({
       data: pick(data, ["email", "password", "username"]),
       route: "signup",
     });
+
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
+
     setIsSubmitting(false);
 
     if (response.isError) {

@@ -1,21 +1,22 @@
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
+
 jest.mock("../hooks/useAuthn", () => ({
   __esModule: true,
   default: jest.fn(),
 }));
 
-jest.mock("../lib/api", () => ({
-  post: jest.fn(),
-}));
-
 import AuthnProvider from "../providers/AuthnProvider";
 import Navbar from "./Navbar";
 import ReactDOM from "react-dom";
+import useApi from "../hooks/useApi";
 import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
+import { act, render } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { post } from "../lib/api";
-import { act, render } from "@testing-library/react";
 
 function buildComponent() {
   return (
@@ -26,6 +27,13 @@ function buildComponent() {
     </MemoryRouter>
   );
 }
+
+const post = jest.fn();
+
+beforeEach(() => {
+  post.mockResolvedValue({});
+  useApi.mockReturnValue({ post });
+});
 
 it("renders successfully", () => {
   const div = document.createElement("div");

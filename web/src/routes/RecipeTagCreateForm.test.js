@@ -1,4 +1,7 @@
-jest.mock("../lib/api", () => ({ get: jest.fn(), post: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -12,8 +15,8 @@ import AsyncAutocomplete from "../components/AsyncAutocomplete";
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
 import RecipeTagCreateForm from "./RecipeTagCreateForm";
+import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
-import { get, post } from "../lib/api";
 import { head } from "lodash";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
@@ -37,12 +40,15 @@ async function fillOutAndSubmitForm(user, { name = "TestTag" } = {}) {
   await user.click(screen.getByRole("button", { name: "Save" }));
 }
 
+const get = jest.fn();
+const post = jest.fn();
 let navigate;
 
 beforeEach(() => {
   AsyncAutocomplete.mockReturnValue(<></>);
   get.mockResolvedValue({ data: { matches: [] } });
   post.mockResolvedValue({});
+  useApi.mockReturnValue({ get, post });
   navigate = jest.fn();
   useNavigate.mockReturnValue(navigate);
   useParams.mockReturnValue({ recipeId: 1 });

@@ -8,6 +8,7 @@ from rest_framework import permissions, status, test
 from main import views
 from main.tests import factories
 from main.tests.support import drf_view_helpers as dvh
+from main.tests.support.auth import authenticate
 
 
 def test_http_method_names():
@@ -45,8 +46,7 @@ def test_getting_recipes_successfully(api_rf, mocker):
 def test_getting_empty_recipes(api_rf, mocker):
     user = factories.UserFactory.build()
     request = api_rf.get(urls.reverse("recipes"))
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     recipe_mock = mocker.MagicMock()
     recipe_mock.objects.filter().all.return_value = []
     mocker.patch("main.views.models.Recipe", new=recipe_mock)

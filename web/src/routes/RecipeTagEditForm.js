@@ -3,12 +3,13 @@ import FieldError from "../components/FieldError";
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import Spinner from "../components/Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, post } from "../lib/api";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
@@ -24,6 +25,8 @@ function RecipeTagEditForm() {
   const [showDeleteMenu, setShowDeleteMenu] = useState(false);
   const [showSaveMenu, setShowSaveMenu] = useState(false);
   const navigate = useNavigate();
+  const { get, post } = useApi();
+  const { isUnmounted } = useIsMounted();
   const { recipeId, tagId } = useParams();
 
   const deleteMenuRef = useOutsideClick(() => setShowDeleteMenu(false));
@@ -44,6 +47,11 @@ function RecipeTagEditForm() {
       routeData: { tagId },
     }).then((response) => {
       // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
+
+      // istanbul ignore next
       if (response.isError) {
         setLoadingError(response.message);
       } else {
@@ -52,7 +60,7 @@ function RecipeTagEditForm() {
 
       setIsLoading(false);
     });
-  }, [tagId, setValue]);
+  }, [get, isUnmounted, tagId, setValue]);
 
   // Same as saving for this recipe only.
   const handleFormSubmit = async (data) => {
@@ -63,6 +71,11 @@ function RecipeTagEditForm() {
       route: "recipeTagUpdateForRecipe",
       routeData: { recipeId, tagId },
     });
+
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
 
     setIsSaving(false);
 
@@ -106,6 +119,11 @@ function RecipeTagEditForm() {
       routeData: { tagId },
     });
 
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
+
     setIsSaving(false);
 
     if (response.isError) {
@@ -140,6 +158,11 @@ function RecipeTagEditForm() {
       routeData: { recipeId, tagId },
     });
 
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
+
     setIsDeleting(false);
 
     if (response.isError) {
@@ -169,6 +192,11 @@ function RecipeTagEditForm() {
       route: "recipeTagDestroy",
       routeData: { tagId },
     });
+
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
 
     setIsDeleting(false);
 

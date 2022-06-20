@@ -1,9 +1,12 @@
-jest.mock("../lib/api", () => ({ get: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
 import Recipe from "./Recipe";
-import { get } from "../lib/api";
+import useApi from "../hooks/useApi";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -19,6 +22,13 @@ function buildComponent(props = {}) {
     </HelmetProvider>
   );
 }
+
+const get = jest.fn();
+
+beforeEach(() => {
+  get.mockResolvedValue({});
+  useApi.mockReturnValue({ get });
+});
 
 it("renders successfully", () => {
   const div = document.createElement("div");

@@ -1,12 +1,12 @@
 import Container from "./Container";
 import PropTypes from "prop-types";
+import useApi from "../hooks/useApi";
 import useAuthn from "../hooks/useAuthn";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { faBars, faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { join } from "lodash";
 import { Link } from "react-router-dom";
-import { post } from "../lib/api";
 import { useState } from "react";
 
 const propTypes = {
@@ -21,6 +21,7 @@ function Navbar({ className }) {
   const [showMenu, setShowMenu] = useState(false);
   const authn = useAuthn();
   const menuRef = useOutsideClick(() => setShowMenu(false));
+  const { post } = useApi();
 
   const cn = join(["navbar", className], " ");
 

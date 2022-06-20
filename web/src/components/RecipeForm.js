@@ -1,11 +1,12 @@
 import Alert from "./Alert";
 import FieldError from "./FieldError";
 import Spinner from "./Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { pick } from "lodash";
-import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -14,6 +15,8 @@ function RecipeForm() {
   const [alertMessage, setAlertMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { isUnmounted } = useIsMounted();
+  const { post } = useApi();
 
   const {
     formState: { errors },
@@ -24,10 +27,17 @@ function RecipeForm() {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+
     const response = await post({
       data: pick(data, ["title"]),
       route: "recipeCreate",
     });
+
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
+
     setIsSubmitting(false);
 
     if (response.isError) {

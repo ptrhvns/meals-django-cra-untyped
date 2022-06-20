@@ -2,10 +2,11 @@ import Alert from "../components/Alert";
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import Spinner from "../components/Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { faCircleMinus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, post } from "../lib/api";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,6 +20,8 @@ function RecipeRatingEditor() {
   const [rating, setRating] = useState(0);
   const [ratingIsChangingTo, setRatingIsChangingTo] = useState(null);
   const navigate = useNavigate();
+  const { get, post } = useApi();
+  const { isUnmounted } = useIsMounted();
   const { recipeId } = useParams();
 
   const [effectiveRating, setEffectiveRating] = useState(rating);
@@ -29,6 +32,11 @@ function RecipeRatingEditor() {
       routeData: { recipeId },
     }).then((response) => {
       // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
+
+      // istanbul ignore next
       if (response.isError) {
         setLoadingError(response.message);
       } else {
@@ -38,7 +46,7 @@ function RecipeRatingEditor() {
 
       setIsLoading(false);
     });
-  }, [recipeId]);
+  }, [get, isUnmounted, recipeId]);
 
   const handleDismissEditor = () => {
     navigate(`/recipe/${recipeId}`);
@@ -57,6 +65,11 @@ function RecipeRatingEditor() {
       route: "recipeRatingDestroy",
       routeData: { recipeId },
     }).then((response) => {
+      // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
+
       if (response.isError) {
         setAlertMessage(response.message);
         setIsResetting(false);
@@ -82,6 +95,11 @@ function RecipeRatingEditor() {
       route: "recipeRatingUpdate",
       routeData: { recipeId },
     }).then((response) => {
+      // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
+
       if (response.isError) {
         setAlertMessage(response.message);
         setIsUpdating(false);

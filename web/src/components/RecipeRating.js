@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isInteger } from "lodash";
 import { Link } from "react-router-dom";
 
 const propTypes = {

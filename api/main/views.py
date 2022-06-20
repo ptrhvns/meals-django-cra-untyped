@@ -281,7 +281,12 @@ def recipe_tag_update(request, tag_id):
 @rf_decorators.api_view(http_method_names=["POST"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_update_for_recipe(request, tag_id, recipe_id):
+    recipe_tag = shortcuts.get_object_or_404(
+        models.RecipeTag, pk=tag_id, user=request.user
+    )
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
     serializer = serializers.RecipeTagUpdateForRecipeSerializer(data=request.data)
+
     if not serializer.is_valid():
         return response.Response(
             {
@@ -291,10 +296,6 @@ def recipe_tag_update_for_recipe(request, tag_id, recipe_id):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
-    recipe_tag = shortcuts.get_object_or_404(
-        models.RecipeTag, pk=tag_id, user=request.user
-    )
-    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
     with transaction.atomic():
         recipe.recipe_tags.remove(recipe_tag)
         recipe_tag, saved = models.RecipeTag.objects.get_or_create(

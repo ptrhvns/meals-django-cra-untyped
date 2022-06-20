@@ -1,4 +1,7 @@
-jest.mock("../lib/api", () => ({ post: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -7,11 +10,11 @@ jest.mock("react-router-dom", () => ({
 
 import ReactDOM from "react-dom";
 import RecipeForm from "./RecipeForm";
+import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
-import { post } from "../lib/api";
 import { useNavigate } from "react-router-dom";
 
 function buildComponent() {
@@ -36,9 +39,12 @@ it("renders successfully", () => {
   ReactDOM.render(buildComponent(), div);
 });
 
+const post = jest.fn();
 let navigate;
 
 beforeEach(() => {
+  post.mockResolvedValue({});
+  useApi.mockReturnValue({ post });
   navigate = jest.fn();
   useNavigate.mockReturnValue(navigate);
 });

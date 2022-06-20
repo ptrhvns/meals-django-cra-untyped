@@ -3,11 +3,12 @@ import AsyncAutocomplete from "../components/AsyncAutocomplete";
 import FieldError from "../components/FieldError";
 import PageLayout from "../components/PageLayout";
 import Spinner from "../components/Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, post } from "../lib/api";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
@@ -18,6 +19,8 @@ function RecipeTagCreateForm() {
   const [alertMessage, setAlertMessage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { get, post } = useApi();
+  const { isUnmounted } = useIsMounted();
   const { recipeId } = useParams();
 
   const {
@@ -36,6 +39,11 @@ function RecipeTagCreateForm() {
       route: "recipeTagAssociate",
       routeData: { recipeId },
     });
+
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
 
     setIsSubmitting(false);
 
@@ -60,6 +68,11 @@ function RecipeTagCreateForm() {
       route: "recipeTagSearch",
       routeData: { searchTerm },
     }).then((response) => {
+      // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
+
       callback(response.isError ? [] : response?.data?.matches);
     });
   };

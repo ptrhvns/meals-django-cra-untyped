@@ -1,12 +1,13 @@
 import Alert from "../components/Alert";
 import Container from "../components/Container";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, head, join } from "lodash";
 import { faCookieBite, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { post } from "../lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -15,6 +16,8 @@ function SignupConfirmation() {
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState(null);
   const params = useParams();
+  const { isUnmounted } = useIsMounted();
+  const { post } = useApi();
 
   useEffect(() => {
     (async () => {
@@ -22,6 +25,11 @@ function SignupConfirmation() {
         data: { token: params.token },
         route: "signupConfirmation",
       });
+
+      // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
 
       if (response.isError) {
         setIsError(true);
@@ -33,7 +41,7 @@ function SignupConfirmation() {
       setMessage(response.message);
       setIsConfirming(false);
     })();
-  }, [params, setIsConfirming, setIsError, setMessage]);
+  }, [isUnmounted, params, post, setIsConfirming, setIsError, setMessage]);
 
   return (
     <div className="signup-confirmation">

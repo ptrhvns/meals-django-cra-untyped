@@ -1,12 +1,13 @@
 import Alert from "./Alert";
 import FieldError from "./FieldError";
 import Spinner from "./Spinner";
+import useApi from "../hooks/useApi";
 import useAuthn from "../hooks/useAuthn";
+import useIsMounted from "../hooks/useIsMounted";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { pick } from "lodash";
-import { post } from "../lib/api";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -17,6 +18,8 @@ function AccountDeleteForm() {
   const [showForm, setShowForm] = useState(false);
   const authn = useAuthn();
   const navigate = useNavigate();
+  const { isUnmounted } = useIsMounted();
+  const { post } = useApi();
 
   const {
     formState: { errors },
@@ -34,10 +37,17 @@ function AccountDeleteForm() {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
+
     const response = await post({
       data: pick(data, ["password"]),
       route: "accountDestroy",
     });
+
+    // istanbul ignore next
+    if (isUnmounted()) {
+      return;
+    }
+
     setIsSubmitting(false);
 
     if (response.isError) {

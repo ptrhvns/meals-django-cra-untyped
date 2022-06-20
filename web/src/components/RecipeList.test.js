@@ -1,9 +1,12 @@
-jest.mock("../lib/api", () => ({ get: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 import ReactDOM from "react-dom";
 import RecipeList from "./RecipeList";
 import { act, render, screen, waitFor, within } from "@testing-library/react";
-import { get } from "../lib/api";
+import useApi from "../hooks/useApi";
 import { MemoryRouter } from "react-router-dom";
 
 function buildComponent(props = {}) {
@@ -13,6 +16,13 @@ function buildComponent(props = {}) {
     </MemoryRouter>
   );
 }
+
+const get = jest.fn();
+
+beforeEach(() => {
+  get.mockResolvedValue({ data: { title: "Test Title" } });
+  useApi.mockReturnValue({ get });
+});
 
 it("renders successfully", () => {
   const div = document.createElement("div");

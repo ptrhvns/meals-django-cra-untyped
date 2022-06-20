@@ -1,7 +1,8 @@
 import Alert from "./Alert";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { faCirclePlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get } from "../lib/api";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -9,11 +10,19 @@ function RecipeList() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingError, setLoadingError] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  const { get } = useApi();
+  const { isUnmounted } = useIsMounted();
 
   useEffect(
     () =>
       (async () => {
         const response = await get({ route: "recipes" });
+
+        // istanbul ignore next
+        if (isUnmounted()) {
+          return;
+        }
+
         setIsLoading(false);
 
         if (response.isError) {
@@ -22,7 +31,7 @@ function RecipeList() {
 
         setRecipes(response.data);
       })(),
-    []
+    [get, isUnmounted]
   );
 
   let content;

@@ -1,12 +1,15 @@
-jest.mock("../lib/api", () => ({ post: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 import ReactDOM from "react-dom";
 import SignupForm from "./SignupForm";
+import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
-import { post } from "../lib/api";
 
 function buildComponent() {
   return (
@@ -22,6 +25,13 @@ async function submitForm(user, { getByLabelText, getByRole }) {
   await user.type(getByLabelText("Password"), "alongpassword");
   await user.click(getByRole("button", { name: "Create account" }));
 }
+
+const post = jest.fn();
+
+beforeEach(() => {
+  post.mockResolvedValue({});
+  useApi.mockReturnValue({ post });
+});
 
 it("renders successfully", () => {
   const div = document.createElement("div");

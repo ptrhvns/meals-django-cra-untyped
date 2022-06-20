@@ -3,11 +3,12 @@ import FieldError from "../components/FieldError";
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
 import Spinner from "../components/Spinner";
+import useApi from "../hooks/useApi";
+import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { get, post } from "../lib/api";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
@@ -27,6 +28,8 @@ function RecipeTitleForm() {
     setError,
     setValue,
   } = useForm();
+  const { get, post } = useApi();
+  const { isUnmounted } = useIsMounted();
   const { recipeId } = useParams();
 
   useEffect(() => {
@@ -34,6 +37,11 @@ function RecipeTitleForm() {
       route: "recipe",
       routeData: { recipeId },
     }).then((response) => {
+      // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
+
       // istanbul ignore next
       if (response.isError) {
         setLoadingError(response.message);
@@ -43,7 +51,7 @@ function RecipeTitleForm() {
 
       setIsLoading(false);
     });
-  }, [recipeId, setValue]);
+  }, [get, isUnmounted, recipeId, setValue]);
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);

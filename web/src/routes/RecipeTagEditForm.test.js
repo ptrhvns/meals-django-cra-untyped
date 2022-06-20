@@ -1,4 +1,7 @@
-jest.mock("../lib/api", () => ({ get: jest.fn(), post: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -9,8 +12,8 @@ jest.mock("react-router-dom", () => ({
 import AuthnProvider from "../providers/AuthnProvider";
 import ReactDOM from "react-dom";
 import RecipeTagEditForm from "./RecipeTagEditForm";
+import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
-import { get, post } from "../lib/api";
 import { head } from "lodash";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
@@ -34,11 +37,14 @@ async function renderAndWaitUntilReady(component) {
   await waitFor(() => screen.getByLabelText("Name"));
 }
 
+const get = jest.fn();
+const post = jest.fn();
 let navigate;
 
 beforeEach(() => {
   get.mockResolvedValue({ data: { name: "TestTag" } });
   post.mockResolvedValue({});
+  useApi.mockReturnValue({ get, post });
   navigate = jest.fn();
   useNavigate.mockReturnValue(navigate);
   useParams.mockReturnValue({ recipeId: 1 });
@@ -50,7 +56,7 @@ it("renders successfully", () => {
 });
 
 it("renders correct <title>", async () => {
-  render(buildComponent());
+  await renderAndWaitUntilReady(buildComponent());
   await waitFor(() => expect(document.title).toContain("Edit Recipe Tag"));
 });
 

@@ -1,12 +1,14 @@
-jest.mock("../lib/api", () => ({ post: jest.fn() }));
+jest.mock("../hooks/useApi", () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 import ReactDOM from "react-dom";
 import SignupConfirmation from "./SignupConfirmation";
+import useApi from "../hooks/useApi";
 import { act, render, waitFor } from "@testing-library/react";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { post } from "../lib/api";
-import { routes } from "../lib/api";
 
 function buildComponent() {
   return (
@@ -17,6 +19,13 @@ function buildComponent() {
     </MemoryRouter>
   );
 }
+
+const post = jest.fn();
+
+beforeEach(() => {
+  post.mockResolvedValue({});
+  useApi.mockReturnValue({ post });
+});
 
 it("renders successfully", () => {
   const div = document.createElement("div");

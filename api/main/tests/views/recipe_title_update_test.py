@@ -1,9 +1,10 @@
 from django import http, urls
-from rest_framework import permissions, status, test
+from rest_framework import permissions, status
 
 from main import views
 from main.tests import factories
 from main.tests.support import drf_view_helpers as dvh
+from main.tests.support.request_helpers import authenticate
 
 
 def test_http_method_names():
@@ -21,8 +22,7 @@ def test_updating_with_missing_recipe(api_rf, mocker):
         urls.reverse("recipe_title_update", kwargs={"recipe_id": 777}),
         {"title": "Test Title"},
     )
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     mocker.patch(
         "main.views.shortcuts.get_object_or_404",
         autospec=True,
@@ -41,8 +41,7 @@ def test_updating_with_invalid_data(api_rf, mocker):
     request = api_rf.post(
         urls.reverse("recipe_title_update", kwargs={"recipe_id": recipe.id}), {}
     )
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     response = views.recipe_title_update(request, recipe.id)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
     assert len(response.data["errors"]) > 0
@@ -64,8 +63,7 @@ def test_updating_successfully(api_rf, mocker):
         urls.reverse("recipe_title_update", kwargs={"recipe_id": recipe.id}),
         {"title": "Test Title"},
     )
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     response = views.recipe_title_update(request, recipe.id)
     assert response.status_code == status.HTTP_204_NO_CONTENT
     urts_instance.save.assert_called()

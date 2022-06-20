@@ -1,9 +1,10 @@
 from django import urls
-from rest_framework import permissions, status, test
+from rest_framework import permissions, status
 
 from main import views
 from main.tests import factories
 from main.tests.support import drf_view_helpers as dvh
+from main.tests.support.request_helpers import authenticate
 
 
 def test_http_method_names():
@@ -18,7 +19,7 @@ def test_permission_classes():
 def test_invalid_request_data(api_rf):
     request = api_rf.post(urls.reverse("recipe_create"), {})
     user = factories.UserFactory.build()
-    test.force_authenticate(request, user=user)
+    authenticate(request, user)
     response = views.recipe_create(request)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
     assert len(response.data["errors"]) > 0
@@ -35,7 +36,7 @@ def test_creating_recipe_successfully(api_rf, mocker):
     crs_instance.is_valid.return_value = True
     crs_instance.save.return_value = recipe
     request = api_rf.post(urls.reverse("recipe_create"), {"title": "Test Recipe"})
-    test.force_authenticate(request, user=user)
+    authenticate(request, user)
     request.user = user
     response = views.recipe_create(request)
     assert response.status_code == status.HTTP_201_CREATED

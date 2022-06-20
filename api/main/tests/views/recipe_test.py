@@ -1,10 +1,11 @@
 import pytest
 from django import http, urls
-from rest_framework import permissions, status, test
+from rest_framework import permissions, status
 
 from main import views
 from main.tests import factories
 from main.tests.support import drf_view_helpers as dvh
+from main.tests.support.request_helpers import authenticate
 
 
 def test_http_method_names():
@@ -21,8 +22,7 @@ def test_getting_recipe_successfully(api_rf, mocker):
     user = factories.UserFactory.build()
     recipe = factories.RecipeFactory.build(id=777, user=user)
     request = api_rf.get(urls.reverse("recipe", kwargs={"recipe_id": recipe.id}))
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     mocker.patch(
         "main.views.shortcuts.get_object_or_404", autospec=True, return_value=recipe
     )
@@ -42,8 +42,7 @@ def test_getting_recipe_successfully(api_rf, mocker):
 def test_getting_missing_recipe(api_rf, mocker):
     user = factories.UserFactory.build()
     request = api_rf.get(urls.reverse("recipe", kwargs={"recipe_id": 777}))
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     mocker.patch(
         "main.views.shortcuts.get_object_or_404",
         autospec=True,

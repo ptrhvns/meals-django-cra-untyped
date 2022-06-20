@@ -5,7 +5,7 @@ from rest_framework import permissions, status
 from main import views
 from main.tests import factories
 from main.tests.support import drf_view_helpers as dvh
-from main.tests.support.auth import authenticate
+from main.tests.support.request_helpers import authenticate
 
 
 def test_http_method_names():

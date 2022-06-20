@@ -1,9 +1,10 @@
 from django import urls
-from rest_framework import permissions, status, test
+from rest_framework import permissions, status
 
 from main import views
 from main.tests import factories
 from main.tests.support import drf_view_helpers as dvh
+from main.tests.support.request_helpers import authenticate
 
 
 def test_http_method_names():
@@ -18,7 +19,7 @@ def test_permission_classes():
 def test_invalid_request_data(api_rf):
     request = api_rf.post(urls.reverse("account_destroy"), {})
     user = factories.UserFactory.build()
-    test.force_authenticate(request, user=user)
+    authenticate(request, user)
     response = views.account_destroy(request)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
     assert len(response.data["errors"]) > 0
@@ -28,7 +29,7 @@ def test_invalid_request_data(api_rf):
 def test_incorrect_password(api_rf):
     request = api_rf.post(urls.reverse("account_destroy"), {"password": "invalid"})
     user = factories.UserFactory.build()
-    test.force_authenticate(request, user=user)
+    authenticate(request, user)
     response = views.account_destroy(request)
     assert response.status_code == status.HTTP_403_FORBIDDEN
     assert len(response.data["message"]) > 0
@@ -38,10 +39,8 @@ def test_deleting_account_successfully(api_rf, mocker):
     password = "alongpassword"
     user = factories.UserFactory.build(password=password)
     delete_mock = mocker.patch.object(user, "delete", autospec=True)
-
     request = api_rf.post(urls.reverse("account_destroy"), {"password": password})
-    test.force_authenticate(request, user=user)
-    request.user = user
+    authenticate(request, user)
     request.session = {}
     logout_mock = mocker.patch("main.views.auth.logout")
 

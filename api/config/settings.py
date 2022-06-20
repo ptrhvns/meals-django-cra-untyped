@@ -131,13 +131,19 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication"
     ],
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
-    "DEFAULT_THROTTLE_CLASSES": [
-        "rest_framework.throttling.AnonRateThrottle",
-        "rest_framework.throttling.UserRateThrottle",
-    ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "50/second", "user": "50/second"},
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
+
+if not DEBUG:
+    REST_FRAMEWORK.update(
+        {
+            "DEFAULT_THROTTLE_CLASSES": [
+                "rest_framework.throttling.AnonRateThrottle",
+                "rest_framework.throttling.UserRateThrottle",
+            ],
+            "DEFAULT_THROTTLE_RATES": {"anon": "50/second", "user": "50/second"},
+        }
+    )
 
 SITE_TITLE = "Meals"
 

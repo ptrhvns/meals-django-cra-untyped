@@ -312,6 +312,9 @@ def recipe_tag_update_for_recipe(request, tag_id, recipe_id):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
+MAX_RECIPE_TAGS_IN_SEARCH = 10
+
+
 @rf_decorators.api_view(http_method_names=["GET"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_search(request):
@@ -320,7 +323,7 @@ def recipe_tag_search(request):
 
     recipe_tags = models.RecipeTag.objects.filter(
         name__icontains=search_term, user=request.user
-    ).order_by(functions.Length("name").asc())
+    ).order_by(functions.Length("name").asc())[:MAX_RECIPE_TAGS_IN_SEARCH]
 
     return response.Response({"data": {"matches": [r.name for r in recipe_tags]}})
 

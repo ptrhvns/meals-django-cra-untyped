@@ -54,6 +54,22 @@ class RecipeRatingUpdateSerializer(serializers.ModelSerializer):
     rating = serializers.IntegerField(max_value=5, min_value=1, required=True)
 
 
+class RecipeServingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("servings",)
+
+
+class RecipeServingsUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Recipe
+        fields = ("servings",)
+
+    servings = serializers.DecimalField(
+        max_digits=6, decimal_places=2, coerce_to_string=False, required=True
+    )
+
+
 class RecipesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
@@ -117,12 +133,15 @@ class RecipeTimeUpdateSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    recipe_tags = RecipeTagSerializer(many=True, required=False)
-    recipe_times = RecipeTimeSerializer(many=True, required=False)
-
     class Meta:
         model = models.Recipe
-        fields = ("id", "rating", "recipe_tags", "recipe_times", "title")
+        fields = ("id", "rating", "recipe_tags", "recipe_times", "servings", "title")
+
+    recipe_tags = RecipeTagSerializer(many=True, required=False)
+    recipe_times = RecipeTimeSerializer(many=True, required=False)
+    servings = serializers.DecimalField(
+        max_digits=6, decimal_places=2, coerce_to_string=False, required=False
+    )
 
 
 class RecipeTitleUpdateSerializer(serializers.ModelSerializer):

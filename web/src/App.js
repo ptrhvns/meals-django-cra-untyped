@@ -6,6 +6,7 @@ import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
 import RecipeNew from "./routes/RecipeNew";
 import RecipeRatingEditor from "./routes/RecipeRatingEditor";
+import RecipeServingsEditor from "./routes/RecipeServingsEditor";
 import RecipeTagCreateForm from "./routes/RecipeTagCreateForm";
 import RecipeTagEditForm from "./routes/RecipeTagEditForm";
 import RecipeTimeForm from "./routes/RecipeTimeForm";
@@ -70,7 +71,14 @@ function App() {
             </RequireAuthn>
           }
         />
-
+        <Route
+          path="/recipe/:recipeId/servings/edit"
+          element={
+            <RequireAuthn>
+              <RecipeServingsEditor />
+            </RequireAuthn>
+          }
+        />
         <Route
           path="/recipe/:recipeId/tag/new"
           element={
@@ -79,7 +87,6 @@ function App() {
             </RequireAuthn>
           }
         />
-
         <Route
           path="/recipe/:recipeId/tag/:tagId/edit"
           element={

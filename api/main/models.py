@@ -20,6 +20,13 @@ class Recipe(db_models.Model):
         ],
     )
     recipe_tags = db_models.ManyToManyField("RecipeTag", related_name="recipes")
+    servings = db_models.DecimalField(
+        blank=True,
+        decimal_places=2,
+        max_digits=6,
+        null=True,
+        validators=[core_validators.MinValueValidator(0)],
+    )
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="recipes"
     )

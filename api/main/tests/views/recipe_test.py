@@ -34,6 +34,7 @@ def test_getting_recipe_successfully(api_rf, mocker):
             "rating": None,
             "recipe_tags": [],
             "recipe_times": [],
+            "servings": None,
             "title": recipe.title,
         }
     }

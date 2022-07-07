@@ -174,7 +174,13 @@ function RecipeRatingEditor() {
             >
               {stars}{" "}
               <span className="recipe-rating-editor__stars-number">
-                ({effectiveRating})
+                (
+                {effectiveRating || (
+                  <span data-testid="recipe-rating-editor__stars-empty-number">
+                    &ndash;
+                  </span>
+                )}
+                )
               </span>
             </div>
           )}

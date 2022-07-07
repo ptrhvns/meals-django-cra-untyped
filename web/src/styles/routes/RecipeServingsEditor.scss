@@ -1,0 +1,62 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-servings-editor__content {
+  max-width: 35rem;
+}
+
+.recipe-servings-editor__loading {
+  margin-top: 1.5rem;
+}
+
+.recipe-servings-editor__form {
+  margin-top: 1.5rem;
+}
+
+.recipe-servings-editor__alert {
+  margin-top: 1rem;
+}
+
+.recipe-servings-editor__alert + .recipe-servings-editor__field {
+  margin-top: 1rem;
+}
+
+.recipe-servings-editor__input-wrapper {
+  align-content: center;
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.recipe-servings-editor__plus-button {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.recipe-servings-editor__input {
+  border-radius: 0;
+  text-align: center;
+  width: calc(100% - 100px);
+}
+
+.recipe-servings-editor__minus-button {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.recipe-servings-editor__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.recipe-servings-editor__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.recipe-servings-editor__bottom-navigation {
+  border-top: 1px solid map.get(settings.$colors, "gray-divider");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}

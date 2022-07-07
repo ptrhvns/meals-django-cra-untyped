@@ -202,3 +202,15 @@ describe("when user clicks 'Reset' button", () => {
     });
   });
 });
+
+describe("when rating is empty", () => {
+  it("display an empty indicator for the rating", async () => {
+    get.mockResolvedValue({ data: { rating: 0 } });
+    render(buildComponent());
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId("recipe-rating-editor__stars-empty-number")
+      ).toBeTruthy();
+    });
+  });
+});

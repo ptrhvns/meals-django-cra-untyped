@@ -18,6 +18,9 @@ export const ROUTES = {
   recipeRatingDestroy: ({ recipeId }) => `/api/recipe_rating/${recipeId}/destroy/`,
   recipeRatingUpdate: ({ recipeId }) => `/api/recipe_rating/${recipeId}/update/`,
   recipes: () => "/api/recipes/",
+  recipeServings: ({ recipeId }) => `/api/recipe_servings/${recipeId}/`,
+  recipeServingsDestroy: ({ recipeId }) => `/api/recipe_servings/${recipeId}/destroy/`,
+  recipeServingsUpdate: ({ recipeId }) => `/api/recipe_servings/${recipeId}/update/`,
   recipeTag: ({ tagId }) => `/api/recipe_tag/${tagId}/`,
   recipeTagAssociate: ({ recipeId }) => `/api/recipe_tag/recipe/${recipeId}/associate/`,
   recipeTagDestroy: ({ tagId }) => `/api/recipe_tag/${tagId}/destroy/`,
@@ -85,7 +88,14 @@ export default function useApi() {
         };
       }
 
-      let json = {};
+      if (
+        !response.ok &&
+        (response.status === 401 || response.status === 403)
+      ) {
+        logout(() => navigate(ROUTES.login()));
+      }
+
+      let json;
       let text;
 
       try {
@@ -102,10 +112,6 @@ export default function useApi() {
       }
 
       if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-          logout(() => navigate(ROUTES.login()));
-        }
-
         return {
           isError: true,
           message: json.message ?? "The response to your request was an error.",
@@ -113,7 +119,7 @@ export default function useApi() {
         };
       }
 
-      return json;
+      return json || {};
     },
     [logout, navigate]
   );

@@ -1,0 +1,50 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-servings {
+  border-top: 1px solid map.get(settings.$colors, "gray-l85");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.recipe-servings__heading-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.recipe-servings__heading {
+  color: map.get(settings.$colors, "yellow-d45");
+  font-size: settings.$font-size-h4;
+}
+
+a.recipe-servings__heading-action {
+  color: map.get(settings.$colors, "gray");
+}
+
+.recipe-servings__empty-notice {
+  color: map.get(settings.$colors, "gray-fg");
+}
+
+.recipe-servings__value-wrapper {
+  background-color: map.get(settings.$colors, "gray-l90");
+  border-radius: settings.$border-radius;
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+
+  a {
+    color: map.get(settings.$colors, "blue-d65");
+  }
+}
+
+.recipe-servings__value-label {
+  color: map.get(settings.$colors, "gray-fg");
+  font-size: settings.$font-size-s1;
+}
+
+.recipe-servings__value {
+  font-weight: 600;
+  margin-left: 1ex;
+}

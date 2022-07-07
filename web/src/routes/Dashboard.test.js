@@ -1,9 +1,19 @@
+jest.mock("../components/RecipeList", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
 import AuthnProvider from "../providers/AuthnProvider";
 import Dashboard from "./Dashboard";
 import ReactDOM from "react-dom";
+import RecipeList from "../components/RecipeList";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 import { render, waitFor } from "@testing-library/react";
+
+beforeEach(() => {
+  RecipeList.mockReturnValue(<div />);
+});
 
 function buildComponent() {
   return (

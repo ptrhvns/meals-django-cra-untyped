@@ -13,9 +13,43 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django import urls
+from django import http, urls
 from django.conf import settings
 from django.contrib import admin
+from rest_framework import status
+
+
+def bad_request(request, exception=None):
+    return http.JsonResponse(
+        {"message": "Your request was invalid."}, status=status.HTTP_400_BAD_REQUEST
+    )
+
+
+def forbidden(request, exception=None):
+    return http.JsonResponse(
+        {"message": "Your request was not authorized."},
+        status=status.HTTP_403_FORBIDDEN,
+    )
+
+
+def not_found(request, exception=None):
+    return http.JsonResponse(
+        {"message": "A resource matching your request was not found."},
+        status=status.HTTP_404_NOT_FOUND,
+    )
+
+
+def internal_server_error(request, exception=None):
+    return http.JsonResponse(
+        {"message": "An error occurred while processing your request."},
+        status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    )
+
+
+handler400 = bad_request
+handler403 = forbidden
+handler404 = not_found
+handler500 = internal_server_error
 
 urlpatterns = [
     urls.path("api/", urls.include("main.urls")),

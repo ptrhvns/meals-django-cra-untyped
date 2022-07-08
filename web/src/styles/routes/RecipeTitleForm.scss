@@ -1,6 +1,10 @@
 @use "../shared/settings";
 @use "sass:map";
 
+.recipe-title-form__content {
+  max-width: 35rem;
+}
+
 .recipe-title-form {
   background-color: map.get(settings.$colors, "gray-l95");
 }
@@ -26,7 +30,11 @@
 }
 
 .recipe-title-form__actions {
-  display: flex;
-  gap: 0.5rem;
   margin-top: 1.5rem;
+}
+
+.recipe-title-form__bottom-navigation {
+  border-top: 1px solid map.get(settings.$colors, "gray-divider");
+  margin-top: 2rem;
+  padding-top: 1rem;
 }

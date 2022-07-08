@@ -7,10 +7,14 @@ import useApi from "../hooks/useApi";
 import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowLeft,
+  faCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -76,17 +80,16 @@ function RecipeTitleForm() {
     setAlertMessage(null);
   };
 
-  const handleDismissForm = () => {
-    navigate(`/recipe/${recipeId}`);
-  };
-
   return (
     <div className="recipe-title-form">
       <Helmet>
         <title>{buildTitle("Edit Recipe Title")}</title>
       </Helmet>
 
-      <PageLayout className="recipe-title-form__content" variant="content">
+      <PageLayout
+        contentClassName="recipe-title-form__content"
+        variant="content"
+      >
         <RecipeLoading error={loadingError} isLoading={isLoading}>
           {() => (
             <>
@@ -141,15 +144,17 @@ function RecipeTitleForm() {
                     </Spinner>{" "}
                     Save
                   </button>
-
-                  <button onClick={handleDismissForm} type="button">
-                    Dismiss
-                  </button>
                 </div>
               </form>
             </>
           )}
         </RecipeLoading>
+
+        <div className="recipe-title-form__bottom-navigation">
+          <Link to={`/recipe/${recipeId}`}>
+            <FontAwesomeIcon icon={faCircleArrowLeft} /> Go to recipe
+          </Link>
+        </div>
       </PageLayout>
     </div>
   );

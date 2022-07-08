@@ -150,15 +150,3 @@ describe("when the form has been submitted", () => {
     });
   });
 });
-
-describe("when form is dismissed", () => {
-  it("navigates user to '/recipe/${recipeId}", async () => {
-    const recipeId = 1;
-    useParams.mockReturnValue({ recipeId });
-    const user = userEvent.setup();
-    render(buildComponent());
-    await waitFor(() => screen.queryByLabelText("Title"));
-    await user.click(screen.getByRole("button", { name: "Dismiss" }));
-    expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
-  });
-});

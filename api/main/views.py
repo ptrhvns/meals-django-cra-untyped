@@ -2,7 +2,7 @@ import datetime
 import logging
 import zoneinfo
 
-from django import shortcuts
+from django import http, shortcuts
 from django.conf import settings
 from django.contrib import auth
 from django.db import transaction
@@ -16,6 +16,33 @@ from rest_framework import permissions, response, status
 from main import client, models, serializers, tasks
 
 logger = logging.getLogger(__name__)
+
+
+def bad_request(request, exception=None):
+    return http.JsonResponse(
+        {"message": "Your request was invalid."}, status=status.HTTP_400_BAD_REQUEST
+    )
+
+
+def forbidden(request, exception=None):
+    return http.JsonResponse(
+        {"message": "Your request was not authorized."},
+        status=status.HTTP_403_FORBIDDEN,
+    )
+
+
+def not_found(request, exception=None):
+    return http.JsonResponse(
+        {"message": "A resource matching your request was not found."},
+        status=status.HTTP_404_NOT_FOUND,
+    )
+
+
+def internal_server_error(request, exception=None):
+    return http.JsonResponse(
+        {"message": "An error occurred while processing your request."},
+        status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    )
 
 
 @rf_decorators.api_view(http_method_names=["POST"])

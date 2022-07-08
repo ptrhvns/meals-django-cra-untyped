@@ -36,7 +36,7 @@ function RecipeRating({ data }) {
 
       {!data.rating ? (
         <p className="recipe-rating__empty-notice">
-          No rating has been set yet.
+          Rating hasn't been set yet.
         </p>
       ) : (
         <div className="recipe-rating__content">

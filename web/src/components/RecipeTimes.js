@@ -32,7 +32,7 @@ function recipeTimes({ data }) {
 
       {isEmpty(data.recipe_times) ? (
         <p className="recipe-times__empty-notice">
-          No times have been created yet.
+          Times haven't been created yet.
         </p>
       ) : (
         <div className="recipe-times__list-wrapper">

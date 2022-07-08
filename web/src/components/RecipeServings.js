@@ -24,7 +24,7 @@ function RecipeServings({ data }) {
 
       {!data.servings ? (
         <p className="recipe-servings__empty-notice">
-          No servings have been set yet.
+          Servings has been set yet.
         </p>
       ) : (
         <span className="recipe-servings__value-wrapper">

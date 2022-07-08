@@ -29,7 +29,7 @@ function RecipeTags({ data }) {
 
       {isEmpty(data.recipe_tags) ? (
         <p className="recipe-tags__empty-notice">
-          No tags have been created yet.
+          Tags haven't been created yet.
         </p>
       ) : (
         <div className="recipe-tags__list-wrapper">

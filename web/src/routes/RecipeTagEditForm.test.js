@@ -332,15 +332,3 @@ describe("when user deletes tag for all recipes", () => {
     });
   });
 });
-
-describe("when user dismisses form", () => {
-  it("navgates user to recipe", async () => {
-    const user = userEvent.setup();
-    const recipeId = 7;
-    useParams.mockReturnValue({ recipeId });
-    render(buildComponent());
-    await waitFor(() => screen.getByLabelText("Name"));
-    await user.click(screen.getByRole("button", { name: "Dismiss" }));
-    expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
-  });
-});

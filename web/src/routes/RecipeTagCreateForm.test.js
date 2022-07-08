@@ -144,14 +144,3 @@ describe("when getTagMatches is called", () => {
     });
   });
 });
-
-describe("when user clicks 'Dismiss' button", () => {
-  it("navgates user to recipe", async () => {
-    const user = userEvent.setup();
-    const recipeId = 7;
-    useParams.mockReturnValue({ recipeId });
-    render(buildComponent());
-    await user.click(screen.getByRole("button", { name: "Dismiss" }));
-    expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
-  });
-});

@@ -7,10 +7,14 @@ import useApi from "../hooks/useApi";
 import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowLeft,
+  faCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -57,10 +61,6 @@ function RecipeTagCreateForm() {
 
   const handleDismissAlert = () => {
     setAlertMessage(null);
-  };
-
-  const handleDismissForm = () => {
-    navigate(`/recipe/${recipeId}`);
   };
 
   const getTagMatches = (searchTerm, callback) => {
@@ -139,12 +139,14 @@ function RecipeTagCreateForm() {
               </Spinner>{" "}
               Save
             </button>
-
-            <button onClick={handleDismissForm} type="button">
-              Dismiss
-            </button>
           </div>
         </form>
+
+        <div className="recipe-tag-create-form__bottom-navigation">
+          <Link to={`/recipe/${recipeId}`}>
+            <FontAwesomeIcon icon={faCircleArrowLeft} /> Go to recipe
+          </Link>
+        </div>
       </PageLayout>
     </div>
   );

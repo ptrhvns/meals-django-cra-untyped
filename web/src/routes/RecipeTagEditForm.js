@@ -8,10 +8,14 @@ import useIsMounted from "../hooks/useIsMounted";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCircleArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -89,10 +93,6 @@ function RecipeTagEditForm() {
 
   const handleDismissAlert = () => {
     setAlertMessage(null);
-  };
-
-  const handleDismissForm = () => {
-    navigate(`/recipe/${recipeId}`);
   };
 
   const handleSaveMenuButtonClick = () => {
@@ -260,43 +260,37 @@ function RecipeTagEditForm() {
               </div>
 
               <div className="recipe-tag-edit-form__actions">
-                <div className="recipe-tag-edit-form__actions-left">
-                  <button
-                    className="button-primary recipe-tag-edit-form__menu-button"
-                    onClick={handleSaveMenuButtonClick}
-                    type="button"
-                  >
-                    <Spinner spin={isSaving}>
-                      <FontAwesomeIcon icon={faCaretDown} />
-                    </Spinner>{" "}
-                    Save for ...
-                    {showSaveMenu && (
-                      <div
-                        className="recipe-tag-edit-form__button-menu-wrapper"
-                        ref={saveMenuRef}
-                      >
-                        <ul className="recipe-tag-edit-form__button-menu">
-                          <li
-                            className="recipe-tag-edit-form__button-menu-save-item"
-                            onClick={handleSaveForThisRecipeClick}
-                          >
-                            ... this recipe
-                          </li>
-                          <li
-                            className="recipe-tag-edit-form__button-menu-save-item"
-                            onClick={handleSaveForAllRecipesClick}
-                          >
-                            ... all recipes
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </button>
-
-                  <button onClick={handleDismissForm} type="button">
-                    Dismiss
-                  </button>
-                </div>
+                <button
+                  className="button-primary recipe-tag-edit-form__menu-button"
+                  onClick={handleSaveMenuButtonClick}
+                  type="button"
+                >
+                  <Spinner spin={isSaving}>
+                    <FontAwesomeIcon icon={faCaretDown} />
+                  </Spinner>{" "}
+                  Save for ...
+                  {showSaveMenu && (
+                    <div
+                      className="recipe-tag-edit-form__button-menu-wrapper"
+                      ref={saveMenuRef}
+                    >
+                      <ul className="recipe-tag-edit-form__button-menu">
+                        <li
+                          className="recipe-tag-edit-form__button-menu-save-item"
+                          onClick={handleSaveForThisRecipeClick}
+                        >
+                          ... this recipe
+                        </li>
+                        <li
+                          className="recipe-tag-edit-form__button-menu-save-item"
+                          onClick={handleSaveForAllRecipesClick}
+                        >
+                          ... all recipes
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </button>
 
                 <div>
                   <button
@@ -335,6 +329,12 @@ function RecipeTagEditForm() {
             </form>
           )}
         </RecipeLoading>
+
+        <div className="recipe-tag-edit-form__bottom-navigation">
+          <Link to={`/recipe/${recipeId}`}>
+            <FontAwesomeIcon icon={faCircleArrowLeft} /> Go to recipe
+          </Link>
+        </div>
       </PageLayout>
     </div>
   );

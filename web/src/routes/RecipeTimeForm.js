@@ -7,10 +7,15 @@ import useApi from "../hooks/useApi";
 import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
-import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowLeft,
+  faCircleMinus,
+  faCirclePlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -81,10 +86,6 @@ function RecipeTimeForm() {
 
   const handleDismissAlert = () => {
     setAlertMessage(null);
-  };
-
-  const handleDismissForm = () => {
-    navigate(`/recipe/${recipeId}`);
   };
 
   const handleDelete = async () => {
@@ -288,44 +289,38 @@ function RecipeTimeForm() {
               </div>
 
               <div className="recipe-time-form__actions">
-                <div className="recipe-time-form__actions-left">
-                  <button
-                    className="button-primary recipe-time-form__action"
-                    type="submit"
-                  >
-                    <Spinner spin={isSubmitting}>
-                      <FontAwesomeIcon icon={faCirclePlus} />
-                    </Spinner>{" "}
-                    Save
-                  </button>
-
-                  <button
-                    className="recipe-time-form__action"
-                    onClick={handleDismissForm}
-                    type="button"
-                  >
-                    Dismiss
-                  </button>
-                </div>
+                <button
+                  className="button-primary recipe-time-form__action"
+                  type="submit"
+                >
+                  <Spinner spin={isSubmitting}>
+                    <FontAwesomeIcon icon={faCirclePlus} />
+                  </Spinner>{" "}
+                  Save
+                </button>
 
                 {timeId && (
-                  <div className="recipe-time-form__actions-right">
-                    <button
-                      className="button-danger recipe-time-form__action"
-                      onClick={handleDelete}
-                      type="button"
-                    >
-                      <Spinner spin={isDeleting}>
-                        <FontAwesomeIcon icon={faCircleMinus} />
-                      </Spinner>{" "}
-                      Delete
-                    </button>
-                  </div>
+                  <button
+                    className="button-danger recipe-time-form__action"
+                    onClick={handleDelete}
+                    type="button"
+                  >
+                    <Spinner spin={isDeleting}>
+                      <FontAwesomeIcon icon={faCircleMinus} />
+                    </Spinner>{" "}
+                    Delete
+                  </button>
                 )}
               </div>
             </form>
           )}
         </RecipeLoading>
+
+        <div className="recipe-time-form__bottom-navigation">
+          <Link to={`/recipe/${recipeId}`}>
+            <FontAwesomeIcon icon={faCircleArrowLeft} /> Go to recipe
+          </Link>
+        </div>
       </PageLayout>
     </div>
   );

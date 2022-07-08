@@ -113,18 +113,6 @@ describe("when user selects a star", () => {
   });
 });
 
-describe("when user clicks 'Dismiss' button", () => {
-  it("navgates user to recipe", async () => {
-    const user = userEvent.setup();
-    const recipeId = 7;
-    useParams.mockReturnValue({ recipeId });
-    render(buildComponent());
-    await waitFor(() => screen.getByText("(3)"));
-    await user.click(screen.getByRole("button", { name: "Dismiss" }));
-    expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
-  });
-});
-
 describe("when user clicks 'Reset' button", () => {
   describe("when rating is updating", () => {
     it("does not send rating reset request to API", async () => {

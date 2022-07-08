@@ -5,9 +5,10 @@ import Spinner from "../components/Spinner";
 import useApi from "../hooks/useApi";
 import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
-import { faCircleMinus, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faCircleMinus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -47,10 +48,6 @@ function RecipeRatingEditor() {
       setIsLoading(false);
     });
   }, [get, isUnmounted, recipeId]);
-
-  const handleDismissEditor = () => {
-    navigate(`/recipe/${recipeId}`);
-  };
 
   const handleReset = () => {
     if (isUpdating) return;
@@ -187,20 +184,18 @@ function RecipeRatingEditor() {
         </RecipeLoading>
 
         <div className="recipe-rating-editor__actions">
-          <button
-            className="recipe-rating-editor__action"
-            onClick={handleDismissEditor}
-            type="button"
-          >
-            Dismiss
-          </button>
-
           <button className="button-danger" onClick={handleReset} type="button">
             <Spinner spin={isResetting}>
               <FontAwesomeIcon icon={faCircleMinus} />
             </Spinner>{" "}
             Reset
           </button>
+        </div>
+
+        <div className="recipe-rating-editor__bottom-navigation">
+          <Link to={`/recipe/${recipeId}`}>
+            <FontAwesomeIcon icon={faCircleArrowLeft} /> Go to recipe
+          </Link>
         </div>
       </PageLayout>
     </div>

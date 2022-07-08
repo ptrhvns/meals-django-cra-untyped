@@ -39,9 +39,11 @@
 }
 
 .recipe-rating-editor__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: space-between;
   margin-top: 1.5rem;
+}
+
+.recipe-rating-editor__bottom-navigation {
+  border-top: 1px solid map.get(settings.$colors, "gray-divider");
+  margin-top: 2rem;
+  padding-top: 1rem;
 }

@@ -189,17 +189,6 @@ describe("when form has been submitted", () => {
   });
 });
 
-describe("when form has been dismissed", () => {
-  it("navigates user to recipe", async () => {
-    const recipeId = 7;
-    useParams.mockReturnValue({ recipeId });
-    const user = userEvent.setup();
-    render(buildComponent());
-    await user.click(screen.getByRole("button", { name: "Dismiss" }));
-    expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
-  });
-});
-
 describe("when time has been deleted", () => {
   describe("when user confirms deletion", () => {
     it("requests time destruction from API", async () => {

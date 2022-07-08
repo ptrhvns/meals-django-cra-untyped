@@ -22,7 +22,7 @@ it("renders successfully", () => {
 describe("when data.recipe_times is empty", () => {
   it("renders and empty notice", () => {
     render(buildComponent({ data: { recipe_times: [] } }));
-    expect(screen.queryByText("No times have been created yet.")).toBeTruthy();
+    expect(screen.queryByText("Times haven't been created yet.")).toBeTruthy();
   });
 });
 

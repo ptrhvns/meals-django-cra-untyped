@@ -21,6 +21,11 @@ Back-end / API:
 - Pytest
 - Redis
 
+Linters and formatters:
+
+- Front-end: eslint, prettier
+- Back-end: isort, flake8, black
+
 ## Setting Up a Development Environment
 
 The following assumes the use of a Linux (Ubuntu 20.04) development environment.

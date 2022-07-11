@@ -15,6 +15,7 @@
 @use "styles/components/RecipeForm";
 @use "styles/components/RecipeList";
 @use "styles/components/RecipeLoading";
+@use "styles/components/RecipeNotes";
 @use "styles/components/RecipeRating";
 @use "styles/components/RecipeServings";
 @use "styles/components/RecipeTags";
@@ -29,6 +30,7 @@
 @use "styles/routes/PrivacyPolicy";
 @use "styles/routes/Recipe";
 @use "styles/routes/RecipeNew";
+@use "styles/routes/RecipeNotesEditor";
 @use "styles/routes/RecipeRatingEditor";
 @use "styles/routes/RecipeServingsEditor";
 @use "styles/routes/RecipeTagCreateForm";

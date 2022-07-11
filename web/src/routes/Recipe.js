@@ -1,5 +1,6 @@
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
+import RecipeNotes from "../components/RecipeNotes";
 import RecipeRating from "../components/RecipeRating";
 import RecipeServings from "../components/RecipeServings";
 import RecipeTags from "../components/RecipeTags";
@@ -20,7 +21,6 @@ function Recipe() {
   const { isUnmounted } = useIsMounted();
   const { recipeId } = useParams();
 
-  // TODO remove istanbul directive when this is more testable.
   /* istanbul ignore next */
   useEffect(() => {
     get({
@@ -56,6 +56,7 @@ function Recipe() {
               <RecipeRating data={recipeData} />
               <RecipeTimes data={recipeData} />
               <RecipeServings data={recipeData} />
+              <RecipeNotes data={recipeData} />
             </div>
           )}
         </RecipeLoading>

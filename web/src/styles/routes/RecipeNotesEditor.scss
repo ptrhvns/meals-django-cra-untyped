@@ -1,0 +1,44 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-notes-editor__content {
+  max-width: 35rem;
+}
+
+.recipe-notes-editor__loading {
+  margin-top: 1.5rem;
+}
+
+.recipe-notes-editor__form {
+  margin-top: 1.5rem;
+}
+
+.recipe-notes-editor__alert + .recipe-notes-editor__field {
+  margin-top: 1rem;
+}
+
+.recipe-notes-editor__input-wrapper {
+  margin-top: 0.5rem;
+}
+
+.recipe-notes-editor__input {
+  width: 100%;
+}
+
+.recipe-notes-editor__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.recipe-notes-editor__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.recipe-notes-editor__bottom-navigation {
+  border-top: 1px solid map.get(settings.$colors, "gray-divider");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}

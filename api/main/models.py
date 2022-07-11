@@ -10,7 +10,7 @@ from main import utils
 
 
 class Recipe(db_models.Model):
-    title = db_models.CharField(max_length=256)
+    notes = db_models.TextField(blank=True)
     rating = db_models.PositiveSmallIntegerField(
         blank=True,
         null=True,
@@ -27,6 +27,7 @@ class Recipe(db_models.Model):
         null=True,
         validators=[core_validators.MinValueValidator(0)],
     )
+    title = db_models.CharField(max_length=256)
     user = db_models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=db_models.CASCADE, related_name="recipes"
     )

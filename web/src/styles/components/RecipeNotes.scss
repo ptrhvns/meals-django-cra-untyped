@@ -1,0 +1,29 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-notes {
+  border-top: 1px solid map.get(settings.$colors, "gray-l85");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.recipe-notes__heading-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.recipe-notes__heading {
+  color: map.get(settings.$colors, "yellow-d45");
+  font-size: settings.$font-size-h4;
+}
+
+a.recipe-notes__heading-action {
+  color: map.get(settings.$colors, "gray");
+}
+
+.recipe-notes__empty-notice {
+  color: map.get(settings.$colors, "gray-fg");
+}
+

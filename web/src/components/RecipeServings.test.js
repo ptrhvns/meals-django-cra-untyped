@@ -1,8 +1,8 @@
-import ReactDOM from "react-dom";
 import RecipeServings from "./RecipeServings";
+import { act, render, screen } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 import { merge } from "lodash";
-import { render, screen } from "@testing-library/react";
 
 function buildComponent(props = {}) {
   props = merge({ data: { id: 1 } }, props);
@@ -15,8 +15,9 @@ function buildComponent(props = {}) {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 describe("when servings is missing from data prop", () => {
@@ -29,7 +30,7 @@ describe("when servings is missing from data prop", () => {
 describe("when servings is present in data prop", () => {
   describe("when servings ends in '.00'", () => {
     it("renders servings without decimal places", () => {
-      const servings = 4.00;
+      const servings = 4.0;
       render(buildComponent({ data: { servings } }));
       expect(screen.queryByText("Servings:")).toBeTruthy();
       expect(screen.queryByText(Math.floor(servings))).toBeTruthy();

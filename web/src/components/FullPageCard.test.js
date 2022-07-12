@@ -1,5 +1,5 @@
 import FullPageCard from "./FullPageCard";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 
 function buildComponent({ children = <div>test children</div> } = {}) {
@@ -11,6 +11,7 @@ function buildComponent({ children = <div>test children</div> } = {}) {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  root.render(buildComponent());
 });

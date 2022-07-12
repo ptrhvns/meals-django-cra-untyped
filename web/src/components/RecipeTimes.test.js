@@ -1,8 +1,8 @@
-import ReactDOM from "react-dom";
 import RecipeTimes from "./RecipeTimes";
+import { act, render, screen } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 import { merge } from "lodash";
-import { render, screen } from "@testing-library/react";
 
 function buildComponent(props = {}) {
   props = merge({ data: { id: 1 } }, props);
@@ -15,8 +15,9 @@ function buildComponent(props = {}) {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 describe("when data.recipe_times is empty", () => {

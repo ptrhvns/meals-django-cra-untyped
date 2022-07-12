@@ -1,5 +1,5 @@
-import ReactDOM from "react-dom";
 import Spinner from "./Spinner";
+import { createRoot } from "react-dom/client";
 
 function buildComponent(props = {}) {
   props = { children: <div>test</div>, spin: false, ...props };
@@ -7,6 +7,7 @@ function buildComponent(props = {}) {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  root.render(buildComponent());
 });

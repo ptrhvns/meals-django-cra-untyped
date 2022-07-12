@@ -13,12 +13,23 @@ const propTypes = {
 function RecipeRating({ data }) {
   const stars = [];
   let className;
+  let testid;
 
   for (let i = 1; i <= 5; i++) {
     className =
       i <= data.rating ? "recipe-rating__star-on" : "recipe-rating__star-off";
 
-    stars.push(<FontAwesomeIcon className={className} icon={faStar} key={i} />);
+    testid =
+      i <= data.rating ? "recipe-rating__star-on" : "recipe-rating__star-off";
+
+    stars.push(
+      <FontAwesomeIcon
+        data-testid={testid}
+        className={className}
+        icon={faStar}
+        key={i}
+      />
+    );
   }
 
   return (
@@ -39,7 +50,10 @@ function RecipeRating({ data }) {
           Rating hasn't been set yet.
         </p>
       ) : (
-        <div className="recipe-rating__content">
+        <div
+          className="recipe-rating__content"
+          data-testid="recipe-rating__content"
+        >
           {stars}{" "}
           <span className="recipe-rating__stars-number">({data.rating})</span>
         </div>

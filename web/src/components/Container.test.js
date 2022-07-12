@@ -1,6 +1,6 @@
 import Container from "./Container";
-import ReactDOM from "react-dom";
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 
 function buildComponent(props = {}) {
   props = { children: <div>test</div>, variant: "content", ...props };
@@ -8,8 +8,9 @@ function buildComponent(props = {}) {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 it("renders className prop", () => {

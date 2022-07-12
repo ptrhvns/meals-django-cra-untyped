@@ -13,14 +13,14 @@ jest.mock("../components/AsyncAutocomplete");
 
 import AsyncAutocomplete from "../components/AsyncAutocomplete";
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import RecipeTagCreateForm from "./RecipeTagCreateForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
 import { within } from "@testing-library/dom";
 
 function buildComponent(props = {}) {
@@ -55,8 +55,9 @@ beforeEach(() => {
 });
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 it("renders correct <title>", async () => {

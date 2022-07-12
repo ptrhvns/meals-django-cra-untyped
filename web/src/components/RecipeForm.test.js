@@ -8,11 +8,11 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-import ReactDOM from "react-dom";
 import RecipeForm from "./RecipeForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -36,8 +36,9 @@ async function submitForm(
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 const post = jest.fn();
@@ -65,7 +66,7 @@ describe("when the form has been submitted", () => {
     const user = userEvent.setup();
     const container = render(buildComponent());
     const title = "Good Soup";
-    await act(() => submitForm(user, container, { title }));
+    await submitForm(user, container, { title });
 
     expect(post).toHaveBeenCalledWith({
       data: { title },
@@ -79,7 +80,7 @@ describe("when the form has been submitted", () => {
       post.mockResolvedValue({ isError: true, message });
       const user = userEvent.setup();
       const container = render(buildComponent());
-      await act(() => submitForm(user, container));
+      await submitForm(user, container);
       expect(container.queryByText(message)).toBeTruthy();
       const alert = screen.getByTestId("alert");
       await user.click(within(alert).getByRole("button", { name: "Dismiss" }));
@@ -93,7 +94,7 @@ describe("when the form has been submitted", () => {
       post.mockResolvedValue({ errors, isError: true });
       const user = userEvent.setup();
       const container = render(buildComponent());
-      await act(() => submitForm(user, container));
+      await submitForm(user, container);
       expect(container.queryByText(head(errors.title))).toBeTruthy();
     });
   });
@@ -104,7 +105,7 @@ describe("when the form has been submitted", () => {
       post.mockResolvedValue({ data: { id: recipeId } });
       const user = userEvent.setup();
       const container = render(buildComponent());
-      await act(() => submitForm(user, container));
+      await submitForm(user, container);
 
       expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
         replace: true,

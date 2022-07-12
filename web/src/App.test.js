@@ -1,6 +1,6 @@
 import App from "./App";
 import AuthnProvider from "./providers/AuthnProvider";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 
@@ -17,6 +17,7 @@ function buildComponent() {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  root.render(buildComponent());
 });

@@ -1,8 +1,8 @@
-import ReactDOM from "react-dom";
 import RecipeNotes from "./RecipeNotes";
+import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 import { merge } from "lodash";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 
 function buildComponent(props = {}) {
   props = merge({ data: { id: 1 } }, props);
@@ -14,9 +14,10 @@ function buildComponent(props = {}) {
   );
 }
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(() => root.render(buildComponent()));
 });
 
 describe("when notes is missing from data prop", () => {

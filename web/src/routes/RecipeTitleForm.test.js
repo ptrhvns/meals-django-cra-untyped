@@ -10,11 +10,11 @@ jest.mock("react-router-dom", () => ({
 }));
 
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import RecipeTitleForm from "./RecipeTitleForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
@@ -32,9 +32,10 @@ function buildComponent(props = {}) {
   );
 }
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(async () => root.render(buildComponent()));
 });
 
 const get = jest.fn();
@@ -76,7 +77,7 @@ describe("when the form has been submitted", () => {
     it("renders a field error", async () => {
       const user = userEvent.setup();
       render(buildComponent());
-      await waitFor(() => screen.queryByLabelText("Title"));
+      await waitFor(() => screen.getByLabelText("Title"));
       const input = screen.getByLabelText("Title");
       await user.clear(input);
       await user.click(screen.getByRole("button", { name: "Save" }));
@@ -93,8 +94,8 @@ describe("when the form has been submitted", () => {
     get.mockResolvedValue({ data: { title } });
     const user = userEvent.setup();
     render(buildComponent());
-    await waitFor(() => screen.queryByLabelText("Title"));
-    await act(() => submitForm(user, { title }));
+    await waitFor(() => screen.getByLabelText("Title"));
+    await submitForm(user, { title });
     expect(post).toHaveBeenCalledWith({
       data: { title },
       route: "recipeTitleUpdate",
@@ -108,8 +109,8 @@ describe("when the form has been submitted", () => {
       post.mockReturnValue(Promise.resolve({ isError: true, message }));
       const user = userEvent.setup();
       render(buildComponent());
-      await waitFor(() => screen.queryByLabelText("Title"));
-      await act(() => submitForm(user));
+      await waitFor(() => screen.getByLabelText("Title"));
+      await submitForm(user);
       expect(screen.queryByText(message)).toBeTruthy();
       const alert = screen.getByTestId("alert");
       await user.click(within(alert).getByRole("button", { name: "Dismiss" }));
@@ -131,8 +132,8 @@ describe("when the form has been submitted", () => {
       );
       const user = userEvent.setup();
       render(buildComponent());
-      await waitFor(() => screen.queryByLabelText("Title"));
-      await act(() => submitForm(user));
+      await waitFor(() => screen.getByLabelText("Title"));
+      await submitForm(user);
       expect(screen.queryByText(head(errors.title))).toBeTruthy();
     });
   });
@@ -144,8 +145,8 @@ describe("when the form has been submitted", () => {
       post.mockResolvedValue({});
       const user = userEvent.setup();
       render(buildComponent());
-      await waitFor(() => screen.queryByLabelText("Title"));
-      await act(() => submitForm(user));
+      await waitFor(() => screen.getByLabelText("Title"));
+      await submitForm(user);
       expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
     });
   });

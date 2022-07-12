@@ -10,14 +10,14 @@ jest.mock("react-router-dom", () => ({
 }));
 
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import RecipeNotesEditor from "./RecipeNotesEditor";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { within } from "@testing-library/dom";
 
 function buildComponent(props = {}) {
@@ -55,9 +55,10 @@ beforeEach(() => {
   useParams.mockReturnValue({ recipeId: 1 });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(async () => root.render(buildComponent()));
 });
 
 it("renders correct <title>", async () => {

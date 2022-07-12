@@ -10,11 +10,11 @@ jest.mock("../hooks/useAuthn", () => ({
 
 import AuthnProvider from "../providers/AuthnProvider";
 import Navbar from "./Navbar";
-import ReactDOM from "react-dom";
 import useApi from "../hooks/useApi";
 import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
 import { act, render } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 
@@ -35,20 +35,18 @@ beforeEach(() => {
   useApi.mockReturnValue({ post });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
+it("renders successfully", async () => {
   useAuthn.mockReturnValue({ isAuthenticated: true, logout: jest.fn() });
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(() => root.render(buildComponent()));
 });
 
 describe("when user is logged out", () => {
   it("renders the login button", () => {
     useAuthn.mockReturnValue({ isAuthenticated: false });
-
-    act(() => {
-      const { queryByRole } = render(buildComponent());
-      expect(queryByRole("link", { name: "Log in" })).toBeTruthy();
-    });
+    const { queryByRole } = render(buildComponent());
+    expect(queryByRole("link", { name: "Log in" })).toBeTruthy();
   });
 });
 
@@ -98,13 +96,9 @@ describe("when user clicks on logout button", () => {
     useAuthn.mockReturnValue({ isAuthenticated: true, logout });
     post.mockResolvedValue({});
     const user = userEvent.setup();
-
-    await act(async () => {
-      const { getByRole } = render(buildComponent());
-      await user.click(getByRole("button", { name: "Menu" }));
-      await user.click(getByRole("button", { name: "Log out" }));
-    });
-
+    const { getByRole } = render(buildComponent());
+    await user.click(getByRole("button", { name: "Menu" }));
+    await user.click(getByRole("button", { name: "Log out" }));
     expect(post).toHaveBeenCalled();
     expect(logout).toHaveBeenCalled();
   });

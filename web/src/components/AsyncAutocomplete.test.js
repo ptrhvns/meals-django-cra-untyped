@@ -1,7 +1,7 @@
 import AsyncAutocomplete from "./AsyncAutocomplete";
-import ReactDOM from "react-dom";
 import userEvent from "@testing-library/user-event";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { useForm } from "react-hook-form";
 
 function TestComponent(props = {}) {
@@ -31,9 +31,10 @@ async function changeActiveMatch(user, key, match) {
   });
 }
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(async () => root.render(buildComponent()));
 });
 
 it("calls register prop with registerOptions prop", () => {

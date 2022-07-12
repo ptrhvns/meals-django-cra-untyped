@@ -8,12 +8,12 @@ jest.mock("../hooks/useAuthn", () => ({
   default: jest.fn(),
 }));
 
-import ReactDOM from "react-dom";
 import Signup from "./Signup";
 import useApi from "../hooks/useApi";
+import { act, render, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitFor } from "@testing-library/react";
 
 function buildComponent() {
   return (
@@ -33,8 +33,9 @@ beforeEach(() => {
 });
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 it("renders the correct <title>", async () => {

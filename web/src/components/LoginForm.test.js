@@ -11,12 +11,12 @@ jest.mock("react-router-dom", () => ({
 
 import AuthnProvider from "../providers/AuthnProvider";
 import LoginForm from "./LoginForm";
-import ReactDOM from "react-dom";
+import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
-import { act, render, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
-import useApi from "../hooks/useApi";
 
 function buildComponent() {
   return (
@@ -28,15 +28,16 @@ function buildComponent() {
   );
 }
 
-async function submitForm(user, { getByLabelText, getByRole }) {
-  await user.type(getByLabelText("Username"), "smith");
-  await user.type(getByLabelText("Password"), "alongpassword");
-  await user.click(getByRole("button", { name: "Log in" }));
+async function submitForm(user) {
+  await user.type(screen.getByLabelText("Username"), "smith");
+  await user.type(screen.getByLabelText("Password"), "alongpassword");
+  await user.click(screen.getByRole("button", { name: "Log in" }));
 }
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(async () => root.render(buildComponent()));
 });
 
 const post = jest.fn();
@@ -54,18 +55,22 @@ describe("when the form has been submitted", () => {
   describe("when the required form fields are missing", () => {
     it("renders field errors", async () => {
       const user = userEvent.setup();
-      const { getByRole, getByText } = render(buildComponent());
-      await user.click(getByRole("button", { name: "Log in" }));
-      getByText("Username is required.");
-      getByText("Password is required.");
+      render(buildComponent());
+      await user.click(screen.getByRole("button", { name: "Log in" }));
+      await waitFor(() =>
+        expect(screen.queryByText("Username is required.")).toBeTruthy()
+      );
+      await waitFor(() =>
+        expect(screen.queryByText("Password is required.")).toBeTruthy()
+      );
     });
   });
 
   it("submits form data to the API", async () => {
     post.mockReturnValue(Promise.resolve({}));
     const user = userEvent.setup();
-    const container = render(buildComponent());
-    await act(() => submitForm(user, container));
+    render(buildComponent());
+    await submitForm(user);
 
     expect(post).toHaveBeenCalledWith({
       data: {
@@ -82,11 +87,11 @@ describe("when the form has been submitted", () => {
       const message = "An error occurred.";
       post.mockReturnValue(Promise.resolve({ isError: true, message }));
       const user = userEvent.setup();
-      const container = render(buildComponent());
-      await act(() => submitForm(user, container));
-      expect(container.queryByText(message)).toBeTruthy();
-      await user.click(container.getByRole("button", { name: "Dismiss" }));
-      expect(container.queryByText(message)).not.toBeTruthy();
+      render(buildComponent());
+      await submitForm(user);
+      await waitFor(() => expect(screen.queryByText(message)).toBeTruthy());
+      await user.click(screen.getByRole("button", { name: "Dismiss" }));
+      expect(screen.queryByText(message)).not.toBeTruthy();
     });
   });
 
@@ -106,10 +111,12 @@ describe("when the form has been submitted", () => {
       );
 
       const user = userEvent.setup();
-      const container = render(buildComponent());
-      await act(() => submitForm(user, container));
-      expect(container.queryByText(head(errors.password))).toBeTruthy();
-      expect(container.queryByText(head(errors.username))).toBeTruthy();
+      render(buildComponent());
+      await submitForm(user);
+      await waitFor(() =>
+        expect(screen.queryByText(head(errors.password))).toBeTruthy()
+      );
+      expect(screen.queryByText(head(errors.username))).toBeTruthy();
     });
   });
 
@@ -119,7 +126,7 @@ describe("when the form has been submitted", () => {
         post.mockResolvedValue({});
         const user = userEvent.setup();
         const container = render(buildComponent());
-        await act(() => submitForm(user, container));
+        await submitForm(user);
         expect(navigate).toHaveBeenCalledWith("/dashboard", { replace: true });
       });
     });
@@ -131,7 +138,7 @@ describe("when the form has been submitted", () => {
         useLocation.mockReturnValue({ state: { from: { pathname } } });
         const user = userEvent.setup();
         const container = render(buildComponent());
-        await act(() => submitForm(user, container));
+        await submitForm(user);
         expect(navigate).toHaveBeenCalledWith(pathname, { replace: true });
       });
     });

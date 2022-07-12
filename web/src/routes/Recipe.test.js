@@ -3,13 +3,49 @@ jest.mock("../hooks/useApi", () => ({
   default: jest.fn(),
 }));
 
+jest.mock("../components/RecipeNotes", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
+jest.mock("../components/RecipeRating", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
+jest.mock("../components/RecipeServings", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
+jest.mock("../components/RecipeTags", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
+jest.mock("../components/RecipeTimes", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
+jest.mock("../components/RecipeTitle", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import Recipe from "./Recipe";
+import RecipeNotes from "../components/RecipeNotes";
+import RecipeRating from "../components/RecipeRating";
+import RecipeServings from "../components/RecipeServings";
+import RecipeTags from "../components/RecipeTags";
+import RecipeTimes from "../components/RecipeTimes";
+import RecipeTitle from "../components/RecipeTitle";
 import useApi from "../hooks/useApi";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
 
 function buildComponent(props = {}) {
   return (
@@ -30,9 +66,10 @@ beforeEach(() => {
   useApi.mockReturnValue({ get });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(async () => root.render(buildComponent()));
 });
 
 describe("when recipe data is undefined", () => {

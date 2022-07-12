@@ -5,11 +5,11 @@ jest.mock("../components/RecipeList", () => ({
 
 import AuthnProvider from "../providers/AuthnProvider";
 import Dashboard from "./Dashboard";
-import ReactDOM from "react-dom";
 import RecipeList from "../components/RecipeList";
+import { act, render, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitFor } from "@testing-library/react";
 
 beforeEach(() => {
   RecipeList.mockReturnValue(<div />);
@@ -28,8 +28,9 @@ function buildComponent() {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 it("renders the correct <title>", async () => {

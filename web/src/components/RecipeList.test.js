@@ -3,10 +3,10 @@ jest.mock("../hooks/useApi", () => ({
   default: jest.fn(),
 }));
 
-import ReactDOM from "react-dom";
 import RecipeList from "./RecipeList";
-import { act, render, screen, waitFor, within } from "@testing-library/react";
 import useApi from "../hooks/useApi";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 
 function buildComponent(props = {}) {
@@ -20,13 +20,14 @@ function buildComponent(props = {}) {
 const get = jest.fn();
 
 beforeEach(() => {
-  get.mockResolvedValue({ data: { title: "Test Title" } });
+  get.mockResolvedValue({ data: [{ id: 1, title: "Test Title" }] });
   useApi.mockReturnValue({ get });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(() => root.render(buildComponent()));
 });
 
 it("renders loading status appropriately throughout", async () => {

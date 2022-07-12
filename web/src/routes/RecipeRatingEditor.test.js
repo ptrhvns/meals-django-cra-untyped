@@ -10,14 +10,14 @@ jest.mock("react-router-dom", () => ({
 }));
 
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import RecipeRatingEditor from "./RecipeRatingEditor";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { iteratee } from "lodash";
 import { MemoryRouter } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { within } from "@testing-library/dom";
 
@@ -46,9 +46,10 @@ beforeEach(() => {
   useParams.mockReturnValue({ recipeId: 1 });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(async () => root.render(buildComponent()));
 });
 
 it("renders correct <title>", async () => {
@@ -58,17 +59,17 @@ it("renders correct <title>", async () => {
 
 describe("when user selects a star", () => {
   [
-    (user, element) => user.click(element),
-    (user, element) => {
-      element.focus();
-      return user.keyboard("[Enter]");
+    async (user, element) => await user.click(element),
+    async (user, element) => {
+      act(() => element.focus());
+      await user.keyboard("[Enter]");
     },
   ].forEach((activate) => {
     it("sends rating change request to API", async () => {
       const user = userEvent.setup();
       const recipeId = 7;
       useParams.mockReturnValue({ recipeId });
-      render(buildComponent());
+      await act(async () => render(buildComponent()));
       await waitFor(() => screen.getByText("(3)"));
       const btn = screen.getByRole("button", { name: 5 });
       await activate(user, btn);
@@ -84,7 +85,7 @@ describe("when user selects a star", () => {
         const message = "Test error.";
         post.mockResolvedValue({ isError: true, message });
         const user = userEvent.setup();
-        render(buildComponent());
+        await act(async () => render(buildComponent()));
         await waitFor(() => screen.getByText("(3)"));
         const btn = screen.getByRole("button", { name: 5 });
         await activate(user, btn);

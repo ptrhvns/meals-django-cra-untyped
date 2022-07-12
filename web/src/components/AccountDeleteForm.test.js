@@ -15,11 +15,11 @@ jest.mock("react-router-dom", () => ({
 
 import AccountDeleteForm from "./AccountDeleteForm";
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import useApi from "../hooks/useApi";
 import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
 import { act, render, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -56,8 +56,9 @@ beforeEach(() => {
 });
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 it("renders 'Delete my account' button by default", () => {

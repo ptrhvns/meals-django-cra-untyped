@@ -3,11 +3,11 @@ jest.mock("../hooks/useApi", () => ({
   default: jest.fn(),
 }));
 
-import ReactDOM from "react-dom";
 import SignupForm from "./SignupForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
-import { act, render, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";
 
@@ -19,11 +19,11 @@ function buildComponent() {
   );
 }
 
-async function submitForm(user, { getByLabelText, getByRole }) {
-  await user.type(getByLabelText("Username"), "smith");
-  await user.type(getByLabelText("Email"), "smith@example.com");
-  await user.type(getByLabelText("Password"), "alongpassword");
-  await user.click(getByRole("button", { name: "Create account" }));
+async function submitForm(user) {
+  await user.type(screen.getByLabelText("Username"), "smith");
+  await user.type(screen.getByLabelText("Email"), "smith@example.com");
+  await user.type(screen.getByLabelText("Password"), "alongpassword");
+  await user.click(screen.getByRole("button", { name: "Create account" }));
 }
 
 const post = jest.fn();
@@ -33,20 +33,23 @@ beforeEach(() => {
   useApi.mockReturnValue({ post });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(() => root.render(buildComponent()));
 });
 
 describe("when the form has been submitted", () => {
   describe("when the required form fields are missing", () => {
     it("renders field errors", async () => {
       const user = userEvent.setup();
-      const { getByRole, getByText } = render(buildComponent());
-      await user.click(getByRole("button", { name: "Create account" }));
-      getByText("Username is required.");
-      getByText("Email is required.");
-      getByText("Password is required.");
+      render(buildComponent());
+      await user.click(screen.getByRole("button", { name: "Create account" }));
+      await waitFor(() =>
+        expect(screen.queryByText("Username is required.")).toBeTruthy()
+      );
+      expect(screen.queryByText("Email is required.")).toBeTruthy();
+      expect(screen.queryByText("Password is required.")).toBeTruthy();
     });
   });
 
@@ -54,7 +57,7 @@ describe("when the form has been submitted", () => {
     post.mockReturnValue(Promise.resolve({ message: "success" }));
     const user = userEvent.setup();
     const container = render(buildComponent());
-    await act(() => submitForm(user, container));
+    await submitForm(user);
 
     expect(post).toHaveBeenCalledWith({
       data: {
@@ -71,11 +74,11 @@ describe("when the form has been submitted", () => {
       const message = "An error occurred.";
       post.mockReturnValue(Promise.resolve({ isError: true, message }));
       const user = userEvent.setup();
-      const container = render(buildComponent());
-      await act(() => submitForm(user, container));
-      expect(container.queryByText(message)).toBeTruthy();
-      await user.click(container.getByRole("button", { name: "Dismiss" }));
-      expect(container.queryByText(message)).not.toBeTruthy();
+      render(buildComponent());
+      await submitForm(user);
+      await waitFor(() => expect(screen.queryByText(message)).toBeTruthy());
+      await user.click(screen.getByRole("button", { name: "Dismiss" }));
+      expect(screen.queryByText(message)).not.toBeTruthy();
     });
   });
 
@@ -96,11 +99,13 @@ describe("when the form has been submitted", () => {
       );
 
       const user = userEvent.setup();
-      const container = render(buildComponent());
-      await act(() => submitForm(user, container));
-      expect(container.queryByText(head(errors.email))).toBeTruthy();
-      expect(container.queryByText(head(errors.password))).toBeTruthy();
-      expect(container.queryByText(head(errors.username))).toBeTruthy();
+      render(buildComponent());
+      await submitForm(user);
+      await waitFor(() =>
+        expect(screen.queryByText(head(errors.email))).toBeTruthy()
+      );
+      expect(screen.queryByText(head(errors.password))).toBeTruthy();
+      expect(screen.queryByText(head(errors.username))).toBeTruthy();
     });
   });
 
@@ -109,8 +114,10 @@ describe("when the form has been submitted", () => {
       post.mockReturnValue(Promise.resolve({ message: "success" }));
       const user = userEvent.setup();
       const container = render(buildComponent());
-      await act(() => submitForm(user, container));
-      expect(container.queryByTestId("signup-form-confirmation")).toBeTruthy();
+      await submitForm(user);
+      await waitFor(() =>
+        expect(container.queryByTestId("signup-form-confirmation")).toBeTruthy()
+      );
     });
   });
 });

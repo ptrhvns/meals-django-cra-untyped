@@ -1,9 +1,9 @@
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import Settings from "./Settings";
+import { act, render, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitFor } from "@testing-library/react";
 
 function buildComponent() {
   return (
@@ -18,8 +18,9 @@ function buildComponent() {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 it("renders the correct <title>", async () => {

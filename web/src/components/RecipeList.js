@@ -13,26 +13,24 @@ function RecipeList() {
   const { get } = useApi();
   const { isUnmounted } = useIsMounted();
 
-  useEffect(
-    () =>
-      (async () => {
-        const response = await get({ route: "recipes" });
+  useEffect(() => {
+    (async () => {
+      const response = await get({ route: "recipes" });
 
-        // istanbul ignore next
-        if (isUnmounted()) {
-          return;
-        }
+      // istanbul ignore next
+      if (isUnmounted()) {
+        return;
+      }
 
-        setIsLoading(false);
+      setIsLoading(false);
 
-        if (response.isError) {
-          setLoadingError(response.message);
-        }
+      if (response.isError) {
+        setLoadingError(response.message);
+      }
 
-        setRecipes(response.data);
-      })(),
-    [get, isUnmounted]
-  );
+      setRecipes(response.data);
+    })();
+  }, [get, isUnmounted]);
 
   let content;
 

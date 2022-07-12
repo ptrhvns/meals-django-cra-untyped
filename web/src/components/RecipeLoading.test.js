@@ -1,6 +1,6 @@
-import ReactDOM from "react-dom";
 import RecipeLoading from "./RecipeLoading";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 
 function buildComponent(props = {}) {
   props = {
@@ -12,8 +12,9 @@ function buildComponent(props = {}) {
 }
 
 it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  act(() => root.render(buildComponent()));
 });
 
 describe("when isLoading prop is true", () => {

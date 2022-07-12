@@ -10,11 +10,11 @@ jest.mock("react-router-dom", () => ({
 }));
 
 import AuthnProvider from "../providers/AuthnProvider";
-import ReactDOM from "react-dom";
 import RecipeTimeForm from "./RecipeTimeForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
 import { act, render, screen, waitFor } from "@testing-library/react";
+import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import { keys, head, merge } from "lodash";
 import { MemoryRouter, useNavigate, useParams } from "react-router-dom";
@@ -45,9 +45,10 @@ beforeEach(() => {
   useParams.mockReturnValue({ recipeId: 1 });
 });
 
-it("renders successfully", () => {
-  const div = document.createElement("div");
-  ReactDOM.render(buildComponent(), div);
+it("renders successfully", async () => {
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  await act(() => root.render(buildComponent()));
 });
 
 describe("when timeId param is not present", () => {
@@ -109,6 +110,7 @@ describe("when form has been submitted", () => {
       useParams.mockReturnValue({ recipeId });
       post.mockResolvedValue({});
       render(buildComponent());
+      await waitFor(() => screen.getByLabelText("Type"));
       const data = await submitForm(user);
       expect(post).toHaveBeenCalledWith({
         data,
@@ -127,7 +129,7 @@ describe("when form has been submitted", () => {
       get.mockResolvedValue({ data: {} });
       post.mockResolvedValue({});
       render(buildComponent());
-      await waitFor(() => screen.getByText("Edit Recipe Time"));
+      await waitFor(() => screen.getByLabelText("Type"));
       const data = await submitForm(user);
       expect(post).toHaveBeenCalledWith({
         data,
@@ -145,9 +147,9 @@ describe("when form has been submitted", () => {
       const message = "Test error.";
       post.mockResolvedValue({ isError: true, message });
       render(buildComponent());
-      await waitFor(() => screen.getByText("Edit Recipe Time"));
+      await waitFor(() => screen.getByLabelText("Type"));
       await submitForm(user);
-      expect(screen.queryByText(message)).toBeTruthy();
+      await waitFor(() => expect(screen.queryByText(message)).toBeTruthy());
       const alert = screen.getByTestId("alert");
       await user.click(within(alert).getByRole("button", { name: "Dismiss" }));
       expect(screen.queryByText(message)).not.toBeTruthy();
@@ -167,6 +169,7 @@ describe("when form has been submitted", () => {
       };
       post.mockResolvedValue({ errors, isError: true, message: "Test error." });
       render(buildComponent());
+      await waitFor(() => screen.getByLabelText("Type"));
       await submitForm(user);
       await waitFor(() => {
         keys(errors).forEach((key) => {
@@ -183,6 +186,7 @@ describe("when form has been submitted", () => {
       useParams.mockReturnValue({ recipeId });
       post.mockResolvedValue({});
       render(buildComponent());
+      await waitFor(() => screen.getByLabelText("Type"));
       await submitForm(user);
       expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
     });
@@ -198,7 +202,7 @@ describe("when time has been deleted", () => {
       window.confirm = jest.fn(() => true);
       post.mockResolvedValue({});
       render(buildComponent());
-      await waitFor(() => screen.getByText("Edit Recipe Time"));
+      await waitFor(() => screen.getByLabelText("Type"));
       await user.click(screen.getByRole("button", { name: "Delete" }));
       expect(post).toHaveBeenCalledWith({
         route: "recipeTimeDestroy",
@@ -215,7 +219,7 @@ describe("when time has been deleted", () => {
         const message = "Test error.";
         post.mockResolvedValue({ isError: true, message });
         render(buildComponent());
-        await waitFor(() => screen.getByText("Edit Recipe Time"));
+        await waitFor(() => screen.getByLabelText("Type"));
         await user.click(screen.getByRole("button", { name: "Delete" }));
         expect(screen.queryByText(message)).toBeTruthy();
         const alert = screen.getByTestId("alert");
@@ -233,7 +237,7 @@ describe("when time has been deleted", () => {
         useParams.mockReturnValue({ recipeId, timeId: 8 });
         window.confirm = jest.fn(() => true);
         render(buildComponent());
-        await waitFor(() => screen.getByText("Edit Recipe Time"));
+        await waitFor(() => screen.getByLabelText("Type"));
         await user.click(screen.getByRole("button", { name: "Delete" }));
         expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
       });
@@ -246,7 +250,7 @@ describe("when time has been deleted", () => {
       window.confirm = jest.fn(() => false);
       useParams.mockReturnValue({ recipeId: 7, timeId: 8 });
       render(buildComponent());
-      await waitFor(() => screen.getByText("Edit Recipe Time"));
+      await waitFor(() => screen.getByLabelText("Type"));
       await user.click(screen.getByRole("button", { name: "Delete" }));
       expect(post).not.toHaveBeenCalled();
     });

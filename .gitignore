@@ -3,4 +3,3 @@ api/.coverage
 api/config/.env
 api/prof
 bin/project-stats
-tags

@@ -15,7 +15,6 @@ import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
 import { act, render } from "@testing-library/react";
 import { createRoot } from "react-dom/client";
-import { HelmetProvider } from "react-helmet-async";
 import { MemoryRouter } from "react-router-dom";
 
 function buildComponent() {
@@ -39,7 +38,7 @@ it("renders successfully", async () => {
   useAuthn.mockReturnValue({ isAuthenticated: true, logout: jest.fn() });
   const container = document.createElement("div");
   const root = createRoot(container);
-  await act(() => root.render(buildComponent()));
+  act(() => root.render(buildComponent()));
 });
 
 describe("when user is logged out", () => {

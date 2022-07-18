@@ -1,7 +1,6 @@
 import useOutsideClick from "./useOutsideClick";
 import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
-import { useState } from "react";
 
 function TestComponent({ callback }) {
   const ref = useOutsideClick(callback);

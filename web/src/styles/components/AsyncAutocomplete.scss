@@ -19,7 +19,6 @@
 }
 
 .async-autocomplete__match-active {
-  background-color: map.get(settings.$colors, "blue-bg");
-  color: map.get(settings.$colors, "blue-fg");
+  background-color: map.get(settings.$colors, "gray-bg-hover");
   cursor: pointer;
 }

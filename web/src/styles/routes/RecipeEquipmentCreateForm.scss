@@ -1,0 +1,40 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-equipment-create-form__content {
+  max-width: 35rem;
+}
+
+.recipe-equipment-create-form__form {
+  margin-top: 1.5rem;
+}
+
+.recipe-equipment-create-form__alert + .recipe-equipment-create-form__field {
+  margin-top: 1rem;
+}
+
+.recipe-equipment-create-form__input-wrapper {
+  margin-top: 0.5rem;
+}
+
+.recipe-equipment-create-form__input {
+  width: 100%;
+}
+
+.recipe-equipment-create-form__matches {
+  width: 100%;
+}
+
+.recipe-equipment-create-form__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.recipe-equipment-create-form__actions {
+  margin-top: 1.5rem;
+}
+
+.recipe-equipment-create-form__bottom-navigation {
+  border-top: 1px solid map.get(settings.$colors, "gray-divider");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}

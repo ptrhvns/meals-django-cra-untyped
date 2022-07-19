@@ -33,7 +33,16 @@ flake8-bandit = "^3.0.0"
 ipython = "^8.3.0"
 ipdb = "^0.13.9"
 Werkzeug = "^2.1.2"
+django-types = "^0.15.0"
+djangorestframework-types = "^0.8.0"
+celery-types = "^0.13.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "config.settings"

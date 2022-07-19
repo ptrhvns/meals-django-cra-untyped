@@ -1,0 +1,38 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-equipment {
+  border-top: 1px solid map.get(settings.$colors, "gray-l85");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.recipe-equipment__heading-wrapper {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.recipe_equipment__heading {
+  color: map.get(settings.$colors, "yellow-d45");
+  font-size: settings.$font-size-h4;
+}
+
+a.recipe-equipment__heading-action {
+  color: map.get(settings.$colors, "gray");
+}
+
+.recipe-equipment__empty-notice {
+  color: map.get(settings.$colors, "gray-fg");
+}
+
+.recipe-equipment__list-wrapper {
+  margin-top: 1rem;
+}
+
+.recipe-equipment__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

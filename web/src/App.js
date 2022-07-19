@@ -4,6 +4,8 @@ import Login from "./routes/Login";
 import NotFound from "./routes/NotFound";
 import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
+import RecipeEquipmentCreateForm from "./routes/RecipeEquipmentCreateForm";
+import RecipeEquipmentEditForm from "./routes/RecipeEquipmentEditForm";
 import RecipeNew from "./routes/RecipeNew";
 import RecipeNotesEditor from "./routes/RecipeNotesEditor";
 import RecipeRatingEditor from "./routes/RecipeRatingEditor";
@@ -20,13 +22,14 @@ import SignupConfirmation from "./routes/SignupConfirmation";
 import TermsAndConditions from "./routes/TermsAndConditions";
 import { Helmet } from "react-helmet-async";
 import { Routes, Route } from "react-router-dom";
+import { StrictMode } from "react";
 
 import "./App.scss";
 
 function App() {
   // istanbul ignore next
   return (
-    <>
+    <StrictMode>
       <Helmet>
         <title>Meals</title>
       </Helmet>
@@ -62,6 +65,22 @@ function App() {
           element={
             <RequireAuthn>
               <Recipe />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/equipment/new"
+          element={
+            <RequireAuthn>
+              <RecipeEquipmentCreateForm />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/equipment/:equipmentId/edit"
+          element={
+            <RequireAuthn>
+              <RecipeEquipmentEditForm />
             </RequireAuthn>
           }
         />
@@ -164,7 +183,7 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </StrictMode>
   );
 }
 

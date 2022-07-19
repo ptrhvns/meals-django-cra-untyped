@@ -187,6 +187,142 @@ def recipe_create(request):
 
 @rf_decorators.api_view(http_method_names=["GET"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment(request, equipment_id):
+    recipe_equipment = shortcuts.get_object_or_404(
+        models.RecipeEquipment, pk=equipment_id, user=request.user
+    )
+    serializer = serializers.RecipeEquipmentSerializer(recipe_equipment)
+    return response.Response({"data": serializer.data})
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment_associate(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.RecipeEquipmentAssocateSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    recipe_equipment = models.RecipeEquipment.objects.filter(
+        description__iexact=serializer.validated_data["description"], user=request.user
+    ).first()
+
+    created = False
+
+    if not recipe_equipment:
+        recipe_equipment = serializer.save(user=request.user)
+        created = True
+
+    if not recipe_equipment.recipes.contains(recipe):
+        recipe_equipment.recipes.add(recipe)
+
+    serializer = serializers.RecipeEquipmentAssocateSerializer(recipe_equipment)
+
+    return response.Response(
+        {"data": serializer.data},
+        status=(status.HTTP_201_CREATED if created else status.HTTP_200_OK),
+    )
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment_destroy(request, equipment_id):
+    recipe_equipment = shortcuts.get_object_or_404(
+        models.RecipeEquipment, pk=equipment_id, user=request.user
+    )
+    recipe_equipment.delete()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment_dissociate(request, equipment_id, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    recipe_equipment = shortcuts.get_object_or_404(
+        models.RecipeEquipment, pk=equipment_id, recipes=recipe, user=request.user
+    )
+    recipe.recipe_equipment.remove(recipe_equipment)
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+MAX_RECIPE_EQUIPMENT_IN_SEARCH = 10
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment_search(request):
+    if not (search_term := request.query_params.get("search_term")):
+        return response.Response({"data": {"matches": []}})
+
+    recipe_equipment = models.RecipeEquipment.objects.filter(
+        description__icontains=search_term, user=request.user
+    ).order_by(functions.Length("description").asc())[:MAX_RECIPE_EQUIPMENT_IN_SEARCH]
+
+    return response.Response(
+        {"data": {"matches": [r.description for r in recipe_equipment]}}
+    )
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment_update(request, equipment_id):
+    recipe_equipment = shortcuts.get_object_or_404(
+        models.RecipeEquipment, pk=equipment_id, user=request.user
+    )
+    serializer = serializers.RecipeEquipmentUpdateSerializer(
+        data=request.data, instance=recipe_equipment
+    )
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    serializer.save()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def recipe_equipment_update_for_recipe(request, equipment_id, recipe_id):
+    recipe_equipment = shortcuts.get_object_or_404(
+        models.RecipeEquipment, pk=equipment_id, user=request.user
+    )
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.RecipeEquipmentUpdateForRecipeSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    with transaction.atomic():
+        recipe.recipe_equipment.remove(recipe_equipment)
+        recipe_equipment, was_saved = models.RecipeEquipment.objects.get_or_create(
+            **serializer.validated_data, user=request.user
+        )
+        recipe.recipe_equipment.add(recipe_equipment)
+
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_notes(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
     serializer = serializers.RecipeNotesSerializer(recipe)
@@ -375,6 +511,7 @@ def recipe_tag_update(request, tag_id):
     serializer = serializers.RecipeTagUpdateSerializer(
         data=request.data, instance=recipe_tag
     )
+
     if not serializer.is_valid():
         return response.Response(
             {
@@ -383,6 +520,7 @@ def recipe_tag_update(request, tag_id):
             },
             status=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
+
     serializer.save()
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -407,7 +545,7 @@ def recipe_tag_update_for_recipe(request, tag_id, recipe_id):
 
     with transaction.atomic():
         recipe.recipe_tags.remove(recipe_tag)
-        recipe_tag, saved = models.RecipeTag.objects.get_or_create(
+        recipe_tag, was_saved = models.RecipeTag.objects.get_or_create(
             **serializer.validated_data, user=request.user
         )
         recipe.recipe_tags.add(recipe_tag)

@@ -17,6 +17,14 @@ class UserFactory(factory.django.DjangoModelFactory):
             obj.set_password(extracted)
 
 
+class RecipeEquipmentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.RecipeEquipment
+
+    description = factory.Sequence(lambda n: f"Equipment #{n + 1}")
+    user = factory.SubFactory(UserFactory)
+
+
 class RecipeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Recipe
@@ -29,7 +37,7 @@ class RecipeTagFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.RecipeTag
 
-    name = factory.Sequence(lambda n: f"Tag#{n + 1}")
+    name = factory.Sequence(lambda n: f"Tag #{n + 1}")
     user = factory.SubFactory(UserFactory)
 
 

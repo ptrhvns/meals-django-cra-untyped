@@ -21,7 +21,11 @@ function PageLayout({ children, contentClassName }) {
       <Navbar />
 
       <Container className="page-layout__viewport" variant="viewport">
-        <Container className={ccn} variant="content">
+        <Container
+          className={ccn}
+          data-testid="page-layout__content"
+          variant="content"
+        >
           {children}
         </Container>
       </Container>

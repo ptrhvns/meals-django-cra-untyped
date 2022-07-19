@@ -1,0 +1,33 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.dropdown-button__menu-button {
+  position: relative;
+}
+
+.dropdown-button__button-menu-wrapper {
+  background-color: map.get(settings.$colors, "white");
+  border-radius: settings.$border-radius;
+  border: 1px solid map.get(settings.$colors, "gray-border");
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  top: 2.6rem;
+  white-space: nowrap;
+  z-index: 9999;
+}
+
+.dropdown-button__button-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-button__button-menu-item {
+  padding: 0.5rem;
+  text-align: left;
+
+  &:hover {
+    background-color: map.get(settings.$colors, "gray-bg-hover");
+  }
+}

@@ -19,6 +19,9 @@ class Recipe(db_models.Model):
             core_validators.MaxValueValidator(5),
         ],
     )
+    recipe_equipment = db_models.ManyToManyField(
+        "RecipeEquipment", related_name="recipes"
+    )
     recipe_tags = db_models.ManyToManyField("RecipeTag", related_name="recipes")
     servings = db_models.DecimalField(
         blank=True,
@@ -34,6 +37,23 @@ class Recipe(db_models.Model):
 
     def __str__(self):
         return self.title
+
+
+class RecipeEquipment(db_models.Model):
+    description = db_models.CharField(max_length=256)
+    user = db_models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False,
+        null=False,
+        on_delete=db_models.CASCADE,
+        related_name="recipe_equipment",
+    )
+
+    class Meta:
+        unique_together = ["description", "user"]
+
+    def __str__(self):
+        return self.description
 
 
 class RecipeTag(db_models.Model):

@@ -3,6 +3,11 @@ jest.mock("../hooks/useApi", () => ({
   default: jest.fn(),
 }));
 
+jest.mock("../components/RecipeEquipment", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
 jest.mock("../components/RecipeNotes", () => ({
   __esModule: true,
   default: jest.fn(() => <div />),

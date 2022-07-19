@@ -40,6 +40,30 @@ class SignupConfirmationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=256, required=True)
 
 
+class RecipeEquipmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeEquipment
+        fields = ("id", "description")
+
+
+class RecipeEquipmentAssocateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeEquipment
+        fields = ("id", "description")
+
+
+class RecipeEquipmentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeEquipment
+        fields = ("description",)
+
+
+class RecipeEquipmentUpdateForRecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RecipeEquipment
+        fields = ("description",)
+
+
 class RecipeNotesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
@@ -153,12 +177,14 @@ class RecipeSerializer(serializers.ModelSerializer):
             "id",
             "notes",
             "rating",
+            "recipe_equipment",
             "recipe_tags",
             "recipe_times",
             "servings",
             "title",
         )
 
+    recipe_equipment = RecipeEquipmentSerializer(many=True, required=False)
     recipe_tags = RecipeTagSerializer(many=True, required=False)
     recipe_times = RecipeTimeSerializer(many=True, required=False)
     servings = serializers.DecimalField(

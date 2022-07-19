@@ -1,0 +1,40 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-equipment-edit-form__content {
+  max-width: 35rem;
+}
+
+.recipe-equipment-edit-form__form {
+  margin-top: 1.5rem;
+}
+
+.recipe-equipment-edit-form__alert + .recipe-equipment-edit-form__field {
+  margin-top: 1rem;
+}
+
+.recipe-equipment-edit-form__input-wrapper {
+  margin-top: 0.5rem;
+}
+
+.recipe-equipment-edit-form__input {
+  width: 100%;
+}
+
+.recipe-equipment-edit-form__field-error {
+  margin-top: settings.$margin-top-field-error;
+}
+
+.recipe-equipment-edit-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.recipe-equipment-edit-form__bottom-navigation {
+  border-top: 1px solid map.get(settings.$colors, "gray-divider");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}

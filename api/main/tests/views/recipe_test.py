@@ -33,6 +33,7 @@ def test_getting_recipe_successfully(api_rf, mocker):
             "id": recipe.id,
             "notes": "",
             "rating": None,
+            "recipe_equipment": [],
             "recipe_tags": [],
             "recipe_times": [],
             "servings": None,

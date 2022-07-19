@@ -112,32 +112,6 @@ describe("when user submits form (saves equipment for this recipe)", () => {
   });
 });
 
-describe("when user clicks on save menu and then clicks away", () => {
-  it("hides save menu", async () => {
-    const user = userEvent.setup();
-    await renderAndWaitUntilReady(buildComponent());
-    await user.click(screen.getByRole("button", { name: "Save for ..." }));
-    await waitFor(() => screen.getByText("... this recipe"));
-    await user.click(screen.getByLabelText("Description"));
-    await waitFor(() =>
-      expect(screen.queryByText("... this recipe")).not.toBeTruthy()
-    );
-  });
-});
-
-describe("when user clicks on delete menu and then clicks away", () => {
-  it("hides delete menu", async () => {
-    const user = userEvent.setup();
-    await renderAndWaitUntilReady(buildComponent());
-    await user.click(screen.getByRole("button", { name: "Delete from ..." }));
-    await waitFor(() => screen.getByText("... this recipe"));
-    await user.click(screen.getByLabelText("Description"));
-    await waitFor(() =>
-      expect(screen.queryByText("... this recipe")).not.toBeTruthy()
-    );
-  });
-});
-
 describe("when user saves equipment for this recipe", () => {
   async function fillOutAndSubmitForm(user, equipment = "NewEquipment") {
     const input = screen.getByLabelText("Description");

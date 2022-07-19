@@ -1,17 +1,13 @@
 import Alert from "../components/Alert";
+import DropdownButton from "../components/DropdownButton";
 import FieldError from "../components/FieldError";
 import PageLayout from "../components/PageLayout";
 import RecipeLoading from "../components/RecipeLoading";
-import Spinner from "../components/Spinner";
 import useApi from "../hooks/useApi";
 import useIsMounted from "../hooks/useIsMounted";
-import useOutsideClick from "../hooks/useOutsideClick";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
-import {
-  faCaretDown,
-  faCircleArrowLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
@@ -26,15 +22,10 @@ function RecipeTagEditForm() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [loadingError, setLoadingError] = useState(null);
-  const [showDeleteMenu, setShowDeleteMenu] = useState(false);
-  const [showSaveMenu, setShowSaveMenu] = useState(false);
   const navigate = useNavigate();
   const { get, post } = useApi();
   const { isUnmounted } = useIsMounted();
   const { recipeId, tagId } = useParams();
-
-  const deleteMenuRef = useOutsideClick(() => setShowDeleteMenu(false));
-  const saveMenuRef = useOutsideClick(() => setShowSaveMenu(false));
 
   const {
     formState: { errors },
@@ -95,22 +86,11 @@ function RecipeTagEditForm() {
     setAlertMessage(null);
   };
 
-  const handleSaveMenuButtonClick = () => {
-    setShowSaveMenu(true);
-  };
-
-  const handleSaveForThisRecipeClick = (event) => {
-    // Don't bubble to parent button which will just open menu again.
-    event.stopPropagation();
-    setShowSaveMenu(false);
+  const handleSaveForThisRecipe = () => {
     handleFormSubmit(getValues()); // Delegate to default action for form.
   };
 
-  const handleSaveForAllRecipesClick = async (event) => {
-    // Don't bubble to parent button which will just open menu again.
-    event.stopPropagation();
-    setShowSaveMenu(false);
-
+  const handleSaveForAllRecipes = async () => {
     setIsSaving(true);
 
     const response = await post({
@@ -134,15 +114,7 @@ function RecipeTagEditForm() {
     navigate(`/recipe/${recipeId}`);
   };
 
-  const handleDeleteMenuButtonClick = () => {
-    setShowDeleteMenu(true);
-  };
-
-  const handleDeleteForThisRecipe = async (event) => {
-    // Don't bubble to parent button which will just open menu again.
-    event.stopPropagation();
-    setShowDeleteMenu(false);
-
+  const handleDeleteForThisRecipe = async () => {
     if (
       !window.confirm(
         "Are you sure you want to delete this tag for this recipe?"
@@ -173,11 +145,7 @@ function RecipeTagEditForm() {
     navigate(`/recipe/${recipeId}`);
   };
 
-  const handleDeleteForAllRecipes = async (event) => {
-    // Don't bubble to parent button which will just open menu again.
-    event.stopPropagation();
-    setShowDeleteMenu(false);
-
+  const handleDeleteForAllRecipes = async () => {
     if (
       !window.confirm(
         "Are you sure you want to delete this tag for all recipes?"
@@ -260,71 +228,39 @@ function RecipeTagEditForm() {
               </div>
 
               <div className="recipe-tag-edit-form__actions">
-                <button
-                  className="button-primary recipe-tag-edit-form__menu-button"
-                  onClick={handleSaveMenuButtonClick}
-                  type="button"
-                >
-                  <Spinner spin={isSaving}>
-                    <FontAwesomeIcon icon={faCaretDown} />
-                  </Spinner>{" "}
-                  Save for ...
-                  {showSaveMenu && (
-                    <div
-                      className="recipe-tag-edit-form__button-menu-wrapper"
-                      ref={saveMenuRef}
-                    >
-                      <ul className="recipe-tag-edit-form__button-menu">
-                        <li
-                          className="recipe-tag-edit-form__button-menu-save-item"
-                          onClick={handleSaveForThisRecipeClick}
-                        >
-                          ... this recipe
-                        </li>
-                        <li
-                          className="recipe-tag-edit-form__button-menu-save-item"
-                          onClick={handleSaveForAllRecipesClick}
-                        >
-                          ... all recipes
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </button>
+                <DropdownButton
+                  buttonClassName="button-primary"
+                  buttonText="Save for ..."
+                  buttonType="button"
+                  menuItems={[
+                    {
+                      handleClick: handleSaveForThisRecipe,
+                      text: "... this recipe",
+                    },
+                    {
+                      handleClick: handleSaveForAllRecipes,
+                      text: "... all recipes",
+                    },
+                  ]}
+                  spin={isSaving}
+                />
 
-                <div>
-                  <button
-                    className="button-danger recipe-tag-edit-form__menu-button"
-                    onClick={handleDeleteMenuButtonClick}
-                    type="button"
-                  >
-                    <Spinner spin={isDeleting}>
-                      <FontAwesomeIcon icon={faCaretDown} />
-                    </Spinner>{" "}
-                    Delete from ...
-                    {showDeleteMenu && (
-                      <div
-                        className="recipe-tag-edit-form__button-menu-wrapper"
-                        ref={deleteMenuRef}
-                      >
-                        <ul className="recipe-tag-edit-form__button-menu">
-                          <li
-                            className="recipe-tag-edit-form__button-menu-delete-item"
-                            onClick={handleDeleteForThisRecipe}
-                          >
-                            ... this recipe
-                          </li>
-                          <li
-                            className="recipe-tag-edit-form__button-menu-delete-item"
-                            onClick={handleDeleteForAllRecipes}
-                          >
-                            ... all recipes
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </button>
-                </div>
+                <DropdownButton
+                  buttonClassName="button-danger"
+                  buttonText="Delete from ..."
+                  buttonType="button"
+                  menuItems={[
+                    {
+                      handleClick: handleDeleteForThisRecipe,
+                      text: "... this recipe",
+                    },
+                    {
+                      handleClick: handleDeleteForAllRecipes,
+                      text: "... all recipes",
+                    },
+                  ]}
+                  spin={isDeleting}
+                />
               </div>
             </form>
           )}

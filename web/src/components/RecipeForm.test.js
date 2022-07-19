@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
 import RecipeForm from "./RecipeForm";
 import useApi from "../hooks/useApi";
 import userEvent from "@testing-library/user-event";
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { createRoot } from "react-dom/client";
 import { head } from "lodash";
 import { MemoryRouter } from "react-router-dom";

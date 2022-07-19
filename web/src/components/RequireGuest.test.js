@@ -16,10 +16,8 @@ jest.mock("react-router-dom", () => ({
   },
 }));
 
-import AuthnProvider from "../providers/AuthnProvider";
 import RequireGuest from "./RequireGuest";
 import useAuthn from "../hooks/useAuthn";
-import { Navigate } from "react-router-dom";
 import { render } from "@testing-library/react";
 
 function buildComponent() {

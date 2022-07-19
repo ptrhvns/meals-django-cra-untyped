@@ -84,7 +84,6 @@ describe("when user clicks on save button", () => {
   describe("when API responds with field error", () => {
     it("renders field error", async () => {
       const user = userEvent.setup();
-      const message = "Test error.";
       const errors = { notes: ["Notes is invalid."] };
       post.mockResolvedValue({ errors, isError: true, message: "Test error." });
       await renderAndWaitUntilReady(buildComponent());

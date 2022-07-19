@@ -33,10 +33,10 @@ beforeEach(() => {
   useApi.mockReturnValue({ post });
 });
 
-it("renders successfully", async () => {
+it("renders successfully", () => {
   const container = document.createElement("div");
   const root = createRoot(container);
-  await act(() => root.render(buildComponent()));
+  act(() => root.render(buildComponent()));
 });
 
 describe("when the form has been submitted", () => {
@@ -56,7 +56,7 @@ describe("when the form has been submitted", () => {
   it("submits form data to the API", async () => {
     post.mockReturnValue(Promise.resolve({ message: "success" }));
     const user = userEvent.setup();
-    const container = render(buildComponent());
+    render(buildComponent());
     await submitForm(user);
 
     expect(post).toHaveBeenCalledWith({

@@ -125,7 +125,7 @@ describe("when the form has been submitted", () => {
       it("navigates browser to /dashboard", async () => {
         post.mockResolvedValue({});
         const user = userEvent.setup();
-        const container = render(buildComponent());
+        render(buildComponent());
         await submitForm(user);
         expect(navigate).toHaveBeenCalledWith("/dashboard", { replace: true });
       });
@@ -137,7 +137,7 @@ describe("when the form has been submitted", () => {
         const pathname = "/test/path";
         useLocation.mockReturnValue({ state: { from: { pathname } } });
         const user = userEvent.setup();
-        const container = render(buildComponent());
+        render(buildComponent());
         await submitForm(user);
         expect(navigate).toHaveBeenCalledWith(pathname, { replace: true });
       });

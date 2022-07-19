@@ -35,7 +35,7 @@ function buildComponent(props = {}) {
   );
 }
 
-async function fillOutAndSubmitForm(user, { name = "TestTag" } = {}) {
+async function fillOutAndSubmitForm(user) {
   // AsyncAutocomplete is mocked out, so no need to fill out input.
   await user.click(screen.getByRole("button", { name: "Save" }));
 }

@@ -18,11 +18,10 @@ jest.mock("react-router-dom", () => ({
   useLocation: jest.fn(),
 }));
 
-import AuthnProvider from "../providers/AuthnProvider";
 import RequireAuthn from "./RequireAuthn";
 import useAuthn from "../hooks/useAuthn";
-import { Navigate, useLocation } from "react-router-dom";
 import { render } from "@testing-library/react";
+import { useLocation } from "react-router-dom";
 
 function buildComponent() {
   return (

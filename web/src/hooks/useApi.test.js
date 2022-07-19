@@ -17,8 +17,8 @@ import { setupServer } from "msw/node";
 import { useNavigate } from "react-router-dom";
 
 const server = setupServer(
-  rest.get(ROUTES.csrfToken(), (req, res, ctx) => res(ctx.status(204))),
-  rest.post(ROUTES.signup(), () => res(ctx.status(204)))
+  rest.get(ROUTES.csrfToken(), (_req, res, ctx) => res(ctx.status(204))),
+  rest.post(ROUTES.signup(), (_req, res, ctx) => res(ctx.status(204)))
 );
 
 afterAll(() => server.close());
@@ -48,7 +48,7 @@ describe("send()", () => {
   describe("when given data cannot be converted to JSON", () => {
     it("returns an error", async () => {
       server.use(
-        rest.get(ROUTES.csrfToken(), (req, res, ctx) => res(ctx.status(204)))
+        rest.get(ROUTES.csrfToken(), (_req, res, ctx) => res(ctx.status(204)))
       );
 
       const invalidData = BigInt(1); // BigInt invalid in JSON.stringify().
@@ -100,7 +100,7 @@ describe("send()", () => {
   describe("when request can not be sent", () => {
     it("returns an error", async () => {
       server.use(
-        rest.get(ROUTES.csrfToken(), (req, res, ctx) => res.networkError())
+        rest.get(ROUTES.csrfToken(), (_req, res, _ctx) => res.networkError())
       );
 
       let result;
@@ -125,7 +125,7 @@ describe("send()", () => {
       const invalidJSON = "{";
 
       server.use(
-        rest.get(ROUTES.csrfToken(), (req, res, ctx) =>
+        rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
           res(
             ctx.body(invalidJSON),
             ctx.set("Content-Type", "application/json"),
@@ -156,7 +156,7 @@ describe("send()", () => {
       describe(`when response status is ${status}`, () => {
         it("logs user out", async () => {
           server.use(
-            rest.get(ROUTES.csrfToken(), (req, res, ctx) =>
+            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(status), ctx.json({ message: "Test error." }))
             )
           );
@@ -177,7 +177,7 @@ describe("send()", () => {
 
         it("navigates user to login route", async () => {
           server.use(
-            rest.get(ROUTES.csrfToken(), (req, res, ctx) =>
+            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(status), ctx.json({ message: "Test error." }))
             )
           );
@@ -205,7 +205,7 @@ describe("send()", () => {
           const message = "Test error.";
 
           server.use(
-            rest.get(ROUTES.csrfToken(), (req, res, ctx) =>
+            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(500), ctx.json({ message }))
             )
           );
@@ -227,7 +227,7 @@ describe("send()", () => {
       describe("when response does not contain a message", () => {
         it("returns an error with a default message", async () => {
           server.use(
-            rest.get(ROUTES.csrfToken(), (req, res, ctx) =>
+            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(500), ctx.json({}))
             )
           );
@@ -256,7 +256,7 @@ describe("send()", () => {
       let json = { data: "Test data." };
 
       server.use(
-        rest.get(ROUTES.csrfToken(), (req, res, ctx) =>
+        rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
           res(ctx.status(200), ctx.json(json))
         )
       );

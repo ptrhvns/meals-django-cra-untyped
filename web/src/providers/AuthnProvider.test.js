@@ -1,7 +1,7 @@
 import AuthnProvider from "./AuthnProvider";
 import useAuthn from "../hooks/useAuthn";
 import userEvent from "@testing-library/user-event";
-import { act, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
 function buildComponent(Component) {
   return (

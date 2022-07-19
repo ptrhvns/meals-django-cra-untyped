@@ -45,10 +45,10 @@ beforeEach(() => {
   useParams.mockReturnValue({ recipeId: 1 });
 });
 
-it("renders successfully", async () => {
+it("renders successfully", () => {
   const container = document.createElement("div");
   const root = createRoot(container);
-  await act(() => root.render(buildComponent()));
+  act(() => root.render(buildComponent()));
 });
 
 describe("when timeId param is not present", () => {

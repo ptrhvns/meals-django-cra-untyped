@@ -16,7 +16,6 @@ import userEvent from "@testing-library/user-event";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { createRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
-import { iteratee } from "lodash";
 import { MemoryRouter } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { within } from "@testing-library/dom";
@@ -69,7 +68,7 @@ describe("when user selects a star", () => {
       const user = userEvent.setup();
       const recipeId = 7;
       useParams.mockReturnValue({ recipeId });
-      await act(async () => render(buildComponent()));
+      render(buildComponent());
       await waitFor(() => screen.getByText("(3)"));
       const btn = screen.getByRole("button", { name: 5 });
       await activate(user, btn);
@@ -85,7 +84,7 @@ describe("when user selects a star", () => {
         const message = "Test error.";
         post.mockResolvedValue({ isError: true, message });
         const user = userEvent.setup();
-        await act(async () => render(buildComponent()));
+        render(buildComponent());
         await waitFor(() => screen.getByText("(3)"));
         const btn = screen.getByRole("button", { name: 5 });
         await activate(user, btn);

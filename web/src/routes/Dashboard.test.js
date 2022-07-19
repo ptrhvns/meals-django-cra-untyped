@@ -34,6 +34,6 @@ it("renders successfully", () => {
 });
 
 it("renders the correct <title>", async () => {
-  const component = render(buildComponent());
+  render(buildComponent());
   await waitFor(() => expect(document.title).toContain("Dashboard"));
 });

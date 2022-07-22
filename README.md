@@ -33,21 +33,17 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Install programming language version managers (see external instructions):
 
   - [pyenv](https://github.com/pyenv/pyenv)
-  - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
   - [nodenv](https://github.com/nodenv/nodenv)
 
-- Install Python a virtual environment:
+- Install Python:
 
   ```sh
   cd api
   PYTHON_VERSON=$(awk -F/ '{print $1}' .python-version)
   pyenv install $PYTHON_VERSION
-  pyenv virtualenv $PYTHON_VERSON meals
-  pyenv shell "${PYTHON_VERSON}/envs/meals"
   ```
 
-- Install [Poetry](https://python-poetry.org) for Python dependency management
-  (we use `pyenv-virtualenv` to manage virtualenv).
+- Install [Poetry](https://python-poetry.org) for Python dependency management.
 
 - Install Node.js:
 
@@ -112,8 +108,11 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 - Install application packages:
 
   ```sh
+  cd api
+  poetry shell
   poetry install
-  (cd web; npm install)
+  cd ../web
+  npm install
   ```
 
 - Setup environment variables for api application:
@@ -149,13 +148,15 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
   ```sh
   cd api
-  python manage.py runserver_plus
+  poetry shell
+  python manage.py runserver
   ```
 
 - Start Celery (runs background jobs):
 
   ```sh
   cd api
+  poetry shell
   watchmedo auto-restart --directory=./ -p '*tasks*.py' -R -- celery -A config worker -l INFO
   ```
 
@@ -199,6 +200,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
   ```sh
   cd api
+  poetry shell
   pytest
   ```
 
@@ -206,6 +208,7 @@ The following assumes the use of a Linux (Ubuntu 20.04) development environment.
 
   ```sh
   cd api
+  poetry shell
 
   # Pick one of:
   pytest --cov --cov-report html # HTML report

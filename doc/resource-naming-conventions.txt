@@ -1,0 +1,20 @@
+# Web
+
+/resource            Resource()           display a singleton resource
+/resource/:id        Resource()           display a resource by ID
+/resource/:id/delete ResourceDeleteForm() display a form to delete a resource ("Delete")
+/resource/:id/edit   Resource()           display a form for editing a resource by ID ("Edit", "Update")
+/resource/edit       ResourceForm()       display a form for editing a singleton resource ("Edit", "Update")
+/resource/new        ResourceForm()       display a form for creating a resource ("New", "Create")
+/resources           Resources()          display a list of resources
+
+# API
+
+GET  /api/resource/             resource()         get a singleton resource
+GET  /api/resource/:id/         resource()         get a resource by ID
+GET  /api/resources/            resources()        get a list of resources
+POST /api/resource/:id/destroy/ resource_destroy() delete a resource by ID
+POST /api/resource/:id/update/  resource_update()  update a resource by ID
+POST /api/resource/create/      resource_create()  create a resource
+POST /api/resource/destroy/     resource_destroy() delete a singleton resource
+POST /api/resource/update/      resource_update()  update a singleton resource

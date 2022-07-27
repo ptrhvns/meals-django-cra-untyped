@@ -36,7 +36,6 @@ Werkzeug = "^2.1.2"
 django-types = "^0.15.0"
 djangorestframework-types = "^0.8.0"
 celery-types = "^0.13.1"
-flake8-cognitive-complexity = "^0.1.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

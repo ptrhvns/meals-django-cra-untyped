@@ -2,10 +2,10 @@
 
 /resource            Resource()           display a singleton resource
 /resource/:id        Resource()           display a resource by ID
-/resource/:id/delete ResourceDeleteForm() display a form to delete a resource ("Delete")
-/resource/:id/edit   Resource()           display a form for editing a resource by ID ("Edit", "Update")
-/resource/edit       ResourceForm()       display a form for editing a singleton resource ("Edit", "Update")
-/resource/new        ResourceForm()       display a form for creating a resource ("New", "Create")
+/resource/:id/delete ResourceDeleteForm() display a form to delete a resource
+/resource/:id/edit   ResourceEditForm()   display a form for editing a resource by ID
+/resource/edit       ResourceEditForm()   display a form for editing a singleton resource
+/resource/new        ResourceCreateForm() display a form for creating a resource
 /resources           Resources()          display a list of resources
 
 # API

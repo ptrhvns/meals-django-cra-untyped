@@ -6,6 +6,13 @@ from main import views
 urlpatterns = [
     urls.path("account/destroy/", views.account_destroy, name="account_destroy"),
     urls.path("csrf_token/", views.csrf_token, name="csrf_token"),
+    urls.path("ingredient/<int:ingredient_id>/", views.ingredient, name="ingredient"),
+    urls.path("ingredient/<int:ingredient_id>/destroy/", views.ingredient_destroy, name="ingredient_destroy"),
+    urls.path("ingredient/<int:ingredient_id>/update/", views.ingredient_update, name="ingredient_update"),
+    urls.path("ingredient/recipe/<int:recipe_id>/associate/", views.ingredient_associate, name="ingredient_associate"),
+    urls.path("ingredient_brand/search/", views.ingredient_brand_search, name="ingredient_brand_search"),
+    urls.path("ingredient_description/search/", views.ingredient_description_search, name="ingredient_description_search"),
+    urls.path("ingredient_unit/search/", views.ingredient_unit_search, name="ingredient_unit_search"),
     urls.path("login/", views.login, name="login"),
     urls.path("logout/", views.logout, name="logout"),
     urls.path("recipe/<int:recipe_id>/", views.recipe, name="recipe"),

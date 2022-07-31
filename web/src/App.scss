@@ -15,10 +15,15 @@
 @use "styles/components/PageLayout";
 @use "styles/components/RecipeEquipment";
 @use "styles/components/RecipeForm";
+@use "styles/components/RecipeIngredients";
 @use "styles/components/RecipeList";
 @use "styles/components/RecipeLoading";
 @use "styles/components/RecipeNotes";
 @use "styles/components/RecipeRating";
+@use "styles/components/RecipeSection";
+@use "styles/components/RecipeSectionContent";
+@use "styles/components/RecipeSectionEmptyContent";
+@use "styles/components/RecipeSectionHeader";
 @use "styles/components/RecipeServings";
 @use "styles/components/RecipeTags";
 @use "styles/components/RecipeTimes";
@@ -33,6 +38,8 @@
 @use "styles/routes/Recipe";
 @use "styles/routes/RecipeEquipmentCreateForm";
 @use "styles/routes/RecipeEquipmentEditForm";
+@use "styles/routes/RecipeIngredientCreateForm";
+@use "styles/routes/RecipeIngredientEditForm";
 @use "styles/routes/RecipeNew";
 @use "styles/routes/RecipeNotesEditor";
 @use "styles/routes/RecipeRatingEditor";

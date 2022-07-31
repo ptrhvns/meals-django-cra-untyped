@@ -55,3 +55,36 @@ class TokenFactory(factory.django.DjangoModelFactory):
         model = models.Token
 
     user = factory.SubFactory(UserFactory)
+
+
+class IngredientBrandFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.IngredientBrand
+
+    name = factory.Sequence(lambda n: f"Brand {n}")
+    user = factory.SubFactory(UserFactory)
+
+
+class IngredientDescriptionFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.IngredientDescription
+
+    text = factory.Sequence(lambda n: f"description {n}")
+    user = factory.SubFactory(UserFactory)
+
+
+class IngredientUnitFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.IngredientUnit
+
+    name = factory.Sequence(lambda n: f"unit {n}")
+    user = factory.SubFactory(UserFactory)
+
+
+class IngredientFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.Ingredient
+
+    amount = "1"
+    description = factory.SubFactory(IngredientDescriptionFactory)
+    recipe = factory.SubFactory(RecipeFactory)

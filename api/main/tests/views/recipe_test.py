@@ -31,6 +31,7 @@ def test_getting_recipe_successfully(api_rf, mocker):
     assert response.data == {
         "data": {
             "id": recipe.id,
+            "ingredients": [],
             "notes": "",
             "rating": None,
             "recipe_equipment": [],

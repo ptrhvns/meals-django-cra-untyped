@@ -7,10 +7,7 @@ import useApi from "../hooks/useApi";
 import useIsMounted from "../hooks/useIsMounted";
 import { buildTitle } from "../lib/utils";
 import { compact, join, pick } from "lodash";
-import {
-  faCircleArrowLeft,
-  faCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faCirclePlus, } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { handleResponseErrors } from "../lib/utils";
 import { Helmet } from "react-helmet-async";

@@ -1,0 +1,6 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-section-empty-content__notice {
+  color: map.get(settings.$colors, "gray-fg");
+}

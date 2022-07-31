@@ -3,7 +3,14 @@ jest.mock("../hooks/useApi", () => ({
   default: jest.fn(),
 }));
 
+// XXX can't use a loop to mock these - jest complains
+
 jest.mock("../components/RecipeEquipment", () => ({
+  __esModule: true,
+  default: jest.fn(() => <div />),
+}));
+
+jest.mock("../components/RecipeIngredients", () => ({
   __esModule: true,
   default: jest.fn(() => <div />),
 }));
@@ -40,12 +47,6 @@ jest.mock("../components/RecipeTitle", () => ({
 
 import AuthnProvider from "../providers/AuthnProvider";
 import Recipe from "./Recipe";
-import RecipeNotes from "../components/RecipeNotes";
-import RecipeRating from "../components/RecipeRating";
-import RecipeServings from "../components/RecipeServings";
-import RecipeTags from "../components/RecipeTags";
-import RecipeTimes from "../components/RecipeTimes";
-import RecipeTitle from "../components/RecipeTitle";
 import useApi from "../hooks/useApi";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { createRoot } from "react-dom/client";

@@ -1,0 +1,18 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-section-header__wrapper {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.recipe-section-header__heading {
+  color: map.get(settings.$colors, "yellow-d45");
+  font-size: settings.$font-size-h4;
+}
+
+a.recipe-section-header__action {
+  color: map.get(settings.$colors, "gray");
+}

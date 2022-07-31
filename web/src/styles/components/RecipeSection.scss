@@ -1,0 +1,8 @@
+@use "../shared/settings";
+@use "sass:map";
+
+.recipe-section {
+  border-top: 1px solid map.get(settings.$colors, "gray-l85");
+  margin-top: 2rem;
+  padding-top: 1rem;
+}

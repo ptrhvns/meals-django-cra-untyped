@@ -32,7 +32,7 @@ describe("when servings is present in data prop", () => {
     it("renders servings without decimal places", () => {
       const servings = 4.0;
       render(buildComponent({ data: { servings } }));
-      expect(screen.queryByText("Servings:")).toBeTruthy();
+      expect(screen.queryByText("Total:")).toBeTruthy();
       expect(screen.queryByText(Math.floor(servings))).toBeTruthy();
     });
   });
@@ -41,7 +41,7 @@ describe("when servings is present in data prop", () => {
     it("renders servings with decimal places", () => {
       const servings = 4.75;
       render(buildComponent({ data: { servings } }));
-      expect(screen.queryByText("Servings:")).toBeTruthy();
+      expect(screen.queryByText("Total:")).toBeTruthy();
       expect(screen.queryByText(servings)).toBeTruthy();
     });
   });

@@ -6,6 +6,8 @@ import PrivacyPolicy from "./routes/PrivacyPolicy";
 import Recipe from "./routes/Recipe";
 import RecipeEquipmentCreateForm from "./routes/RecipeEquipmentCreateForm";
 import RecipeEquipmentEditForm from "./routes/RecipeEquipmentEditForm";
+import RecipeIngredientCreateForm from "./routes/RecipeIngredientCreateForm";
+import RecipeIngredientEditForm from "./routes/RecipeIngredientEditForm";
 import RecipeNew from "./routes/RecipeNew";
 import RecipeNotesEditor from "./routes/RecipeNotesEditor";
 import RecipeRatingEditor from "./routes/RecipeRatingEditor";
@@ -81,6 +83,22 @@ function App() {
           element={
             <RequireAuthn>
               <RecipeEquipmentEditForm />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/ingredients/new"
+          element={
+            <RequireAuthn>
+              <RecipeIngredientCreateForm />
+            </RequireAuthn>
+          }
+        />
+        <Route
+          path="/recipe/:recipeId/ingredient/:ingredientId/edit"
+          element={
+            <RequireAuthn>
+              <RecipeIngredientEditForm />
             </RequireAuthn>
           }
         />

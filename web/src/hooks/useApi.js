@@ -7,9 +7,16 @@ import { useNavigate } from "react-router-dom";
 
 // istanbul ignore next
 // prettier-ignore
-export const ROUTES = {
+export const API_ROUTES = {
   accountDestroy: () => "/api/account/destroy/",
   csrfToken: () => "/api/csrf_token/",
+  ingredient: ({ ingredientId }) => `/api/ingredient/${ingredientId}/`,
+  ingredientAssociate: ({ recipeId }) => `/api/ingredient/recipe/${recipeId}/associate/`,
+  ingredientBrandSearch: ({ searchTerm }) => `/api/ingredient_brand/search/?search_term=${encodeURI(searchTerm)}`,
+  ingredientDescriptionSearch: ({ searchTerm }) => `/api/ingredient_description/search/?search_term=${encodeURI(searchTerm)}`,
+  ingredientDestroy: ({ ingredientId }) => `/api/ingredient/${ingredientId}/destroy/`,
+  ingredientUnitSearch: ({ searchTerm }) => `/api/ingredient_unit/search/?search_term=${encodeURI(searchTerm)}`,
+  ingredientUpdate: ({ ingredientId }) => `/api/ingredient/${ingredientId}/update/`,
   login: () => "/api/login/",
   logout: () => "/api/logout/",
   recipe: ({ recipeId }) => `/api/recipe/${recipeId}/`,
@@ -47,6 +54,12 @@ export const ROUTES = {
   signupConfirmation: () => "/api/signup_confirmation/",
 };
 
+// istanbul ignore next
+// prettier-ignore
+export const WEB_ROUTES = {
+  login: () => '/login'
+}
+
 const DEFAULT_HEADERS = {
   Accept: "application/json",
   "Content-Type": "application/json",
@@ -79,7 +92,7 @@ export default function useApi() {
       let url;
 
       try {
-        url = ROUTES[route](routeData);
+        url = API_ROUTES[route](routeData);
       } catch (error) {
         return {
           isError: true,
@@ -102,7 +115,7 @@ export default function useApi() {
         !response.ok &&
         (response.status === 401 || response.status === 403)
       ) {
-        logout(() => navigate(ROUTES.login()));
+        logout(() => navigate(WEB_ROUTES.login()));
       }
 
       let json;

@@ -153,3 +153,90 @@ class Token(db_models.Model):
 
     def __str__(self):
         return self.token
+
+
+class IngredientBrand(db_models.Model):
+    name = db_models.CharField(max_length=256)
+    user = db_models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False,
+        null=False,
+        on_delete=db_models.CASCADE,
+        related_name="ingredient_brands",
+    )
+
+    class Meta:
+        unique_together = ["name", "user"]
+
+    def __str__(self):
+        return self.name
+
+
+class IngredientDescription(db_models.Model):
+    text = db_models.CharField(max_length=256)
+    user = db_models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False,
+        null=False,
+        on_delete=db_models.CASCADE,
+        related_name="ingredient_descriptions",
+    )
+
+    class Meta:
+        unique_together = ["text", "user"]
+
+    def __str__(self):
+        return self.text
+
+
+class IngredientUnit(db_models.Model):
+    name = db_models.CharField(max_length=256)
+    user = db_models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False,
+        null=False,
+        on_delete=db_models.CASCADE,
+        related_name="ingredient_units",
+    )
+
+    class Meta:
+        unique_together = ["name", "user"]
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(db_models.Model):
+    amount = db_models.CharField(max_length=16)
+    brand = db_models.ForeignKey(
+        IngredientBrand,
+        blank=True,
+        null=True,
+        on_delete=db_models.CASCADE,
+        related_name="ingredients",
+    )
+    description = db_models.ForeignKey(
+        IngredientDescription, on_delete=db_models.CASCADE, related_name="ingredients"
+    )
+    recipe = db_models.ForeignKey(
+        Recipe, on_delete=db_models.CASCADE, related_name="ingredients"
+    )
+    unit = db_models.ForeignKey(
+        IngredientUnit,
+        blank=True,
+        null=True,
+        on_delete=db_models.CASCADE,
+        related_name="ingredients",
+    )
+
+    def __str__(self):
+        return " ".join(
+            a
+            for a in [
+                self.amount,
+                self.unit.name if self.unit else None,
+                self.brand.name if self.brand else None,
+                self.description.text if self.description else None,
+            ]
+            if a
+        )

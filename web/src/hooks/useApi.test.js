@@ -9,7 +9,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 import Cookies from "js-cookie";
-import useApi, { ROUTES } from "./useApi";
+import useApi, { API_ROUTES, WEB_ROUTES } from "./useApi";
 import useAuthn from "./useAuthn";
 import { render } from "@testing-library/react";
 import { rest } from "msw";
@@ -17,8 +17,8 @@ import { setupServer } from "msw/node";
 import { useNavigate } from "react-router-dom";
 
 const server = setupServer(
-  rest.get(ROUTES.csrfToken(), (_req, res, ctx) => res(ctx.status(204))),
-  rest.post(ROUTES.signup(), (_req, res, ctx) => res(ctx.status(204)))
+  rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) => res(ctx.status(204))),
+  rest.post(API_ROUTES.signup(), (_req, res, ctx) => res(ctx.status(204)))
 );
 
 afterAll(() => server.close());
@@ -48,7 +48,9 @@ describe("send()", () => {
   describe("when given data cannot be converted to JSON", () => {
     it("returns an error", async () => {
       server.use(
-        rest.get(ROUTES.csrfToken(), (_req, res, ctx) => res(ctx.status(204)))
+        rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
+          res(ctx.status(204))
+        )
       );
 
       const invalidData = BigInt(1); // BigInt invalid in JSON.stringify().
@@ -76,7 +78,7 @@ describe("send()", () => {
   describe("when given route is invalid", () => {
     it("returns an error", async () => {
       server.use(
-        rest.get(ROUTES.csrfToken(), (_, res, ctx) => res(ctx.status(204)))
+        rest.get(API_ROUTES.csrfToken(), (_, res, ctx) => res(ctx.status(204)))
       );
 
       const invalidRoute = "invalidRoute";
@@ -100,7 +102,9 @@ describe("send()", () => {
   describe("when request can not be sent", () => {
     it("returns an error", async () => {
       server.use(
-        rest.get(ROUTES.csrfToken(), (_req, res, _ctx) => res.networkError())
+        rest.get(API_ROUTES.csrfToken(), (_req, res, _ctx) =>
+          res.networkError()
+        )
       );
 
       let result;
@@ -125,7 +129,7 @@ describe("send()", () => {
       const invalidJSON = "{";
 
       server.use(
-        rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
+        rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
           res(
             ctx.body(invalidJSON),
             ctx.set("Content-Type", "application/json"),
@@ -156,7 +160,7 @@ describe("send()", () => {
       describe(`when response status is ${status}`, () => {
         it("logs user out", async () => {
           server.use(
-            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
+            rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(status), ctx.json({ message: "Test error." }))
             )
           );
@@ -177,7 +181,7 @@ describe("send()", () => {
 
         it("navigates user to login route", async () => {
           server.use(
-            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
+            rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(status), ctx.json({ message: "Test error." }))
             )
           );
@@ -194,7 +198,7 @@ describe("send()", () => {
 
           await result;
           logout.mock.lastCall[0]();
-          expect(navigate).toHaveBeenCalledWith(ROUTES.login());
+          expect(navigate).toHaveBeenCalledWith(WEB_ROUTES.login());
         });
       });
     });
@@ -205,7 +209,7 @@ describe("send()", () => {
           const message = "Test error.";
 
           server.use(
-            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
+            rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(500), ctx.json({ message }))
             )
           );
@@ -227,7 +231,7 @@ describe("send()", () => {
       describe("when response does not contain a message", () => {
         it("returns an error with a default message", async () => {
           server.use(
-            rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
+            rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
               res(ctx.status(500), ctx.json({}))
             )
           );
@@ -256,7 +260,7 @@ describe("send()", () => {
       let json = { data: "Test data." };
 
       server.use(
-        rest.get(ROUTES.csrfToken(), (_req, res, ctx) =>
+        rest.get(API_ROUTES.csrfToken(), (_req, res, ctx) =>
           res(ctx.status(200), ctx.json(json))
         )
       );
@@ -331,7 +335,7 @@ describe("post()", () => {
 
     await result;
 
-    expect(GETURL).toContain(ROUTES.csrfToken());
+    expect(GETURL).toContain(API_ROUTES.csrfToken());
     expect(wasGETUsedFirst).toEqual(true);
     expect(wasPOSTUsedLast).toEqual(true);
     expect(xCSRFTokenHeader).toEqual(token);

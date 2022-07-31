@@ -2,7 +2,7 @@ import datetime
 import logging
 import zoneinfo
 
-from django import http, shortcuts
+from django import db, http, shortcuts
 from django.conf import settings
 from django.contrib import auth
 from django.db import transaction
@@ -16,6 +16,8 @@ from rest_framework import permissions, response, status
 from main import client, models, serializers, tasks
 
 logger = logging.getLogger(__name__)
+
+MAX_AUTOCOMPLETE_MATCHES = 5
 
 
 def bad_request(request, exception=None):
@@ -92,6 +94,189 @@ def account_destroy(request):
 @csrf.ensure_csrf_cookie
 @rf_decorators.api_view(http_method_names=["GET"])
 def csrf_token(request):
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient(request, ingredient_id):
+    ingredient = shortcuts.get_object_or_404(
+        models.Ingredient, pk=ingredient_id, recipe__user=request.user
+    )
+
+    serializer = serializers.IngredientSerializer(ingredient)
+    return response.Response({"data": serializer.data})
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient_associate(request, recipe_id):
+    recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
+    serializer = serializers.RecipeIngredientAssociateSerializer(data=request.data)
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    try:
+        with transaction.atomic():
+            ingredient_data = {}
+
+            if "amount" in serializer.validated_data:
+                ingredient_data["amount"] = serializer.validated_data["amount"]
+
+            if "unit" in serializer.validated_data:
+                ingredient_data["unit"] = models.IngredientUnit.objects.get_or_create(
+                    defaults={"name": serializer.validated_data["unit"]},
+                    name__iexact=serializer.validated_data["unit"],
+                    user=request.user,
+                )[0]
+
+            if "brand" in serializer.validated_data:
+                ingredient_data["brand"] = models.IngredientBrand.objects.get_or_create(
+                    defaults={"name": serializer.validated_data["brand"]},
+                    name__iexact=serializer.validated_data["brand"],
+                    user=request.user,
+                )[0]
+
+            ingredient_data[
+                "description"
+            ] = models.IngredientDescription.objects.get_or_create(
+                defaults={"text": serializer.validated_data["description"]},
+                text__iexact=serializer.validated_data["description"],
+                user=request.user,
+            )[
+                0
+            ]
+
+            ingredient = models.Ingredient.objects.create(
+                recipe=recipe, **ingredient_data
+            )
+    except db.Error:
+        return response.Response(
+            {"message": _("Your information could not be saved.")},
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    return response.Response(
+        {"data": {"id": ingredient.id, **serializer.data}},
+        status=(
+            status.HTTP_201_CREATED
+            if any(ingredient_data.keys()) or ingredient
+            else status.HTTP_200_OK
+        ),
+    )
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient_brand_search(request):
+    if not (search_term := request.query_params.get("search_term")):
+        return response.Response({"data": {"matches": []}})
+
+    recipe_brand = models.IngredientBrand.objects.filter(
+        name__icontains=search_term, user=request.user
+    ).order_by(functions.Length("name").asc())[:MAX_AUTOCOMPLETE_MATCHES]
+
+    return response.Response({"data": {"matches": [r.name for r in recipe_brand]}})
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient_description_search(request):
+    if not (search_term := request.query_params.get("search_term")):
+        return response.Response({"data": {"matches": []}})
+
+    recipe_description = models.IngredientDescription.objects.filter(
+        text__icontains=search_term, user=request.user
+    ).order_by(functions.Length("text").asc())[:MAX_AUTOCOMPLETE_MATCHES]
+
+    return response.Response(
+        {"data": {"matches": [r.text for r in recipe_description]}}
+    )
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient_destroy(request, ingredient_id):
+    ingredient = shortcuts.get_object_or_404(
+        models.Ingredient, pk=ingredient_id, recipe__user=request.user
+    )
+
+    ingredient.delete()
+    return response.Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@rf_decorators.api_view(http_method_names=["GET"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient_unit_search(request):
+    if not (search_term := request.query_params.get("search_term")):
+        return response.Response({"data": {"matches": []}})
+
+    recipe_unit = models.IngredientUnit.objects.filter(
+        name__icontains=search_term, user=request.user
+    ).order_by(functions.Length("name").asc())[:MAX_AUTOCOMPLETE_MATCHES]
+
+    return response.Response({"data": {"matches": [r.name for r in recipe_unit]}})
+
+
+@rf_decorators.api_view(http_method_names=["POST"])
+@rf_decorators.permission_classes([permissions.IsAuthenticated])
+def ingredient_update(request, ingredient_id):
+    ingredient = shortcuts.get_object_or_404(
+        models.Ingredient, pk=ingredient_id, recipe__user=request.user
+    )
+
+    serializer = serializers.IngredientUpdateSerializer(
+        data=request.data, instance=ingredient
+    )
+
+    if not serializer.is_valid():
+        return response.Response(
+            {
+                "errors": serializer.errors,
+                "message": _("The information you provided was invalid."),
+            },
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
+    try:
+        with transaction.atomic():
+            if "amount" in serializer.validated_data:
+                ingredient.amount = serializer.validated_data["amount"]
+
+            if "unit" in serializer.validated_data:
+                ingredient.unit = models.IngredientUnit.objects.get_or_create(
+                    defaults={"name": serializer.validated_data["unit"]},
+                    name__iexact=serializer.validated_data["unit"],
+                    user=request.user,
+                )[0]
+
+            if "brand" in serializer.validated_data:
+                ingredient.brand = models.IngredientBrand.objects.get_or_create(
+                    defaults={"name": serializer.validated_data["brand"]},
+                    name__iexact=serializer.validated_data["brand"],
+                    user=request.user,
+                )[0]
+
+            ingredient.description = models.IngredientDescription.objects.get_or_create(
+                defaults={"text": serializer.validated_data["description"]},
+                text__iexact=serializer.validated_data["description"],
+                user=request.user,
+            )[0]
+
+            ingredient.save()
+    except db.Error:
+        return response.Response(
+            {"message": _("Your information could not be saved.")},
+            status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        )
+
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -199,7 +384,7 @@ def recipe_equipment(request, equipment_id):
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_equipment_associate(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
-    serializer = serializers.RecipeEquipmentAssocateSerializer(data=request.data)
+    serializer = serializers.RecipeEquipmentAssociateSerializer(data=request.data)
 
     if not serializer.is_valid():
         return response.Response(
@@ -223,7 +408,7 @@ def recipe_equipment_associate(request, recipe_id):
     if not recipe_equipment.recipes.contains(recipe):
         recipe_equipment.recipes.add(recipe)
 
-    serializer = serializers.RecipeEquipmentAssocateSerializer(recipe_equipment)
+    serializer = serializers.RecipeEquipmentAssociateSerializer(recipe_equipment)
 
     return response.Response(
         {"data": serializer.data},
@@ -252,9 +437,6 @@ def recipe_equipment_dissociate(request, equipment_id, recipe_id):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
-MAX_RECIPE_EQUIPMENT_IN_SEARCH = 10
-
-
 @rf_decorators.api_view(http_method_names=["GET"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_equipment_search(request):
@@ -263,7 +445,7 @@ def recipe_equipment_search(request):
 
     recipe_equipment = models.RecipeEquipment.objects.filter(
         description__icontains=search_term, user=request.user
-    ).order_by(functions.Length("description").asc())[:MAX_RECIPE_EQUIPMENT_IN_SEARCH]
+    ).order_by(functions.Length("description").asc())[:MAX_AUTOCOMPLETE_MATCHES]
 
     return response.Response(
         {"data": {"matches": [r.description for r in recipe_equipment]}}
@@ -449,7 +631,7 @@ def recipe_tag(request, tag_id):
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_associate(request, recipe_id):
     recipe = shortcuts.get_object_or_404(models.Recipe, pk=recipe_id, user=request.user)
-    serializer = serializers.RecipeTagAssocateSerializer(data=request.data)
+    serializer = serializers.RecipeTagAssociateSerializer(data=request.data)
 
     if not serializer.is_valid():
         return response.Response(
@@ -473,7 +655,7 @@ def recipe_tag_associate(request, recipe_id):
     if not recipe_tag.recipes.contains(recipe):
         recipe_tag.recipes.add(recipe)
 
-    serializer = serializers.RecipeTagAssocateSerializer(recipe_tag)
+    serializer = serializers.RecipeTagAssociateSerializer(recipe_tag)
 
     return response.Response(
         {"data": serializer.data},
@@ -553,9 +735,6 @@ def recipe_tag_update_for_recipe(request, tag_id, recipe_id):
     return response.Response(status=status.HTTP_204_NO_CONTENT)
 
 
-MAX_RECIPE_TAGS_IN_SEARCH = 10
-
-
 @rf_decorators.api_view(http_method_names=["GET"])
 @rf_decorators.permission_classes([permissions.IsAuthenticated])
 def recipe_tag_search(request):
@@ -564,7 +743,7 @@ def recipe_tag_search(request):
 
     recipe_tags = models.RecipeTag.objects.filter(
         name__icontains=search_term, user=request.user
-    ).order_by(functions.Length("name").asc())[:MAX_RECIPE_TAGS_IN_SEARCH]
+    ).order_by(functions.Length("name").asc())[:MAX_AUTOCOMPLETE_MATCHES]
 
     return response.Response({"data": {"matches": [r.name for r in recipe_tags]}})
 

@@ -28,14 +28,18 @@ a.recipe-servings__heading-action {
 }
 
 .recipe-servings__value-wrapper {
+  margin-top: 1rem;
+}
+
+.recipe-servings__value-link {
   background-color: map.get(settings.$colors, "gray-l90");
   border-radius: settings.$border-radius;
+  color: map.get(settings.$colors, "blue-d65");
   display: inline-block;
-  margin-top: 1rem;
   padding: 0.5rem 1rem;
 
-  a {
-    color: map.get(settings.$colors, "blue-d65");
+  &:hover {
+    background-color: map.get(settings.$colors, "gray-l95");
   }
 }
 
@@ -45,6 +49,7 @@ a.recipe-servings__heading-action {
 }
 
 .recipe-servings__value {
+  color: map.get(settings.$colors, "blue-d65");
   font-weight: 600;
   margin-left: 1ex;
 }

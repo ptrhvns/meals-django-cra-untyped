@@ -28,7 +28,10 @@ function RecipeServings({ data }) {
         </p>
       ) : (
         <span className="recipe-servings__value-wrapper">
-          <Link to={`/recipe/${data.id}/servings/edit`}>
+          <Link
+            className="recipe-servings__value-link"
+            to={`/recipe/${data.id}/servings/edit`}
+          >
             <span className="recipe-servings__value-label">Total:</span>
             <span className="recipe-servings__value">
               {Math.floor(data.servings) === data.servings

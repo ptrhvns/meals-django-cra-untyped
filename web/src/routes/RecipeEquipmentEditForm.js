@@ -78,7 +78,7 @@ function RecipeEquipmentEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDismissAlert = () => {
@@ -141,7 +141,7 @@ function RecipeEquipmentEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDeleteForAllRecipes = async () => {
@@ -172,7 +172,7 @@ function RecipeEquipmentEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   return (

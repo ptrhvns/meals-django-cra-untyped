@@ -188,7 +188,9 @@ describe("when form has been submitted", () => {
       render(buildComponent());
       await waitFor(() => screen.getByLabelText("Type"));
       await submitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });
@@ -239,7 +241,9 @@ describe("when time has been deleted", () => {
         render(buildComponent());
         await waitFor(() => screen.getByLabelText("Type"));
         await user.click(screen.getByRole("button", { name: "Delete" }));
-        expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+        expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+          replace: true,
+        });
       });
     });
   });

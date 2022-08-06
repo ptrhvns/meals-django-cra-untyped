@@ -111,7 +111,9 @@ describe("when user submits form", () => {
       post.mockResolvedValue({});
       render(buildComponent());
       await fillOutAndSubmitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });

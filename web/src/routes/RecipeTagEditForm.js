@@ -79,7 +79,7 @@ function RecipeTagEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDismissAlert = () => {
@@ -111,7 +111,7 @@ function RecipeTagEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDeleteForThisRecipe = async () => {
@@ -142,7 +142,7 @@ function RecipeTagEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDeleteForAllRecipes = async () => {
@@ -173,7 +173,7 @@ function RecipeTagEditForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   return (

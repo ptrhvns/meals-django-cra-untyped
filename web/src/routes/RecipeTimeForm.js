@@ -81,7 +81,7 @@ function RecipeTimeForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDismissAlert = () => {
@@ -107,7 +107,7 @@ function RecipeTimeForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   return (

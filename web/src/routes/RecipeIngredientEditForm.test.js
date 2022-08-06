@@ -131,7 +131,9 @@ describe("when user submits form", () => {
       useParams.mockReturnValue({ recipeId });
       await renderAndWaitUntilReady(buildComponent());
       await fillOutAndSubmitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });
@@ -173,7 +175,9 @@ describe("when user deletes ingredient", () => {
         useParams.mockReturnValue({ recipeId });
         await renderAndWaitUntilReady(buildComponent());
         await user.click(screen.getByRole("button", { name: "Delete" }));
-        expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+        expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+          replace: true,
+        });
       });
     });
   });

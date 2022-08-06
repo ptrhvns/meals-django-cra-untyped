@@ -49,7 +49,7 @@ function RecipeIngredientCreateForm() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDismissAlert = () => {

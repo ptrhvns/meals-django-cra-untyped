@@ -81,7 +81,7 @@ function RecipeNotesEditor() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDismissAlert = () => {
@@ -110,7 +110,7 @@ function RecipeNotesEditor() {
         return;
       }
 
-      navigate(`/recipe/${recipeId}`);
+      navigate(`/recipe/${recipeId}`, { replace: true });
     });
   };
 

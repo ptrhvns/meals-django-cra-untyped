@@ -147,7 +147,9 @@ describe("when the form has been submitted", () => {
       render(buildComponent());
       await waitFor(() => screen.getByLabelText("Title"));
       await submitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });

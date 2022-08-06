@@ -82,7 +82,7 @@ function RecipeServingsEditor() {
       return;
     }
 
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipe/${recipeId}`, { replace: true });
   };
 
   const handleDismissAlert = () => {
@@ -135,7 +135,7 @@ function RecipeServingsEditor() {
         return;
       }
 
-      navigate(`/recipe/${recipeId}`);
+      navigate(`/recipe/${recipeId}`, { replace: true });
     });
   };
 

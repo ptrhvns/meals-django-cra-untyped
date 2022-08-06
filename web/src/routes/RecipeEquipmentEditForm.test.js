@@ -107,7 +107,9 @@ describe("when user submits form (saves equipment for this recipe)", () => {
       useParams.mockReturnValue({ recipeId });
       await renderAndWaitUntilReady(buildComponent());
       await fillOutAndSubmitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });
@@ -157,7 +159,9 @@ describe("when user saves equipment for this recipe", () => {
       useParams.mockReturnValue({ recipeId });
       await renderAndWaitUntilReady(buildComponent());
       await fillOutAndSubmitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });
@@ -254,7 +258,9 @@ describe("when user saves equipment for all recipes", () => {
           useParams.mockReturnValue({ recipeId });
           await renderAndWaitUntilReady(buildComponent());
           await deleteFromThisRecipe(user);
-          expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+          expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+            replace: true,
+          });
         });
       });
     });
@@ -303,7 +309,9 @@ describe("when user saves equipment for all recipes", () => {
           useParams.mockReturnValue({ recipeId });
           await renderAndWaitUntilReady(buildComponent());
           await deleteFromAllRecipes(user);
-          expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+          expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+            replace: true,
+          });
         });
       });
     });

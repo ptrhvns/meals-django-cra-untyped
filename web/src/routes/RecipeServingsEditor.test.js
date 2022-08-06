@@ -168,7 +168,9 @@ describe("when user clicks on save button", () => {
       post.mockResolvedValue({});
       await renderAndWaitUntilReady(buildComponent());
       await submitForm(user);
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });
@@ -212,7 +214,9 @@ describe("when user clicks on reset button", () => {
       post.mockResolvedValue({});
       await renderAndWaitUntilReady(buildComponent());
       await user.click(screen.getByRole("button", { name: "Reset" }));
-      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`);
+      expect(navigate).toHaveBeenCalledWith(`/recipe/${recipeId}`, {
+        replace: true,
+      });
     });
   });
 });
